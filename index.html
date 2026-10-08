@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك أسئلة الهستولوجي التفاعلي - CVS Histology | د. فتحي أحمد رجب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070b19;
+            --bg-card: #10172a;
+            --bg-option: #172038;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --correct-bg: rgba(16, 185, 129, 0.15);
+            --correct-border: #10b981;
+            --wrong-bg: rgba(239, 68, 68, 0.15);
+            --wrong-border: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #0d152c 0%, #050811 100%);
+            border-bottom: 2px solid var(--gold);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .badge-uni {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        header h1 span {
+            color: var(--gold);
+        }
+
+        .author-box {
+            margin-top: 12px;
+            font-size: 1rem;
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+
+        /* Sticky Stats Bar */
+        .stats-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(16, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .stat-item {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .stat-item span {
+            padding: 2px 10px;
+            border-radius: 8px;
+            margin-right: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .s-total span { background: rgba(212, 175, 55, 0.2); color: var(--gold); }
+        .s-correct span { background: var(--correct-bg); color: var(--correct-border); }
+        .s-wrong span { background: var(--wrong-bg); color: var(--wrong-border); }
+
+        .btn-reset {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 5px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+
+        /* Controls & Filters */
+        .container {
+            max-width: 900px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid #2e3b5e;
+            background: var(--bg-card);
+            color: #fff;
+            font-family: 'Cairo', 'Inter', sans-serif;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--gold);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+        }
+
+        .tab-btn {
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid #263354;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-color: var(--gold);
+        }
+
+        /* Questions Styling (LTR for Medical English) */
+        .q-card {
+            background: var(--bg-card);
+            border: 1px solid #1e2946;
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+            direction: ltr;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .q-num {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .q-sec-tag {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .q-text {
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: var(--bg-option);
+            border: 1px solid #283659;
+            color: #e2e8f0;
+            padding: 13px 16px;
+            border-radius: 10px;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.96rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--gold);
+            background: #1e2a4a;
+        }
+
+        .opt-letter {
+            min-width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.07);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 0.85rem;
+        }
+
+        .option-btn.correct {
+            background: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #fff !important;
+            font-weight: 600;
+        }
+
+        .option-btn.correct .opt-letter {
+            background: var(--correct-border);
+            color: #000;
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-bg) !important;
+            border-color: var(--wrong-border) !important;
+            color: #fca5a5 !important;
+        }
+
+        .option-btn.wrong .opt-letter {
+            background: var(--wrong-border);
+            color: #fff;
+        }
+
+        .feedback-box {
+            margin-top: 14px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            display: none;
+            background: rgba(255,255,255,0.04);
+            border-left: 4px solid var(--gold);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid #1e2946;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="badge-uni">كلية الطب - جامعة الأزهر بالقاهرة 🫀</div>
+    <h1>بنك الأسئلة التفاعلي <span>CVS Histology</span></h1>
+    <p style="color: var(--text-muted); font-size: 0.95rem;">شامل 168 سؤالاً متعدد الاختيارات (MCQs) مع التصحيح التفاعلي الفوري</p>
+    <div class="author-box">✨ إعداد وتطوير: د. فتحي أحمد رجب ✨</div>
+</header>
+
+<div class="stats-bar">
+    <div class="stat-item s-total">إجمالي الأسئلة: <span id="st-total">168</span></div>
+    <div class="stat-item s-correct">إجابات صحيحة: <span id="st-correct">0</span></div>
+    <div class="stat-item s-wrong">إجابات خاطئة: <span id="st-wrong">0</span></div>
+    <div class="stat-item s-total">النسبة: <span id="st-perc">0%</span></div>
+    <button class="btn-reset" onclick="resetQuiz()">إعادة الاختبار 🔄</button>
+</div>
+
+<div class="container">
+    <div class="controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 ابحث عن أي سؤال باللغة الإنجليزية (مثال: Purkinje, Aorta, Capillary)..." oninput="renderQuestions()">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="setSection(0, this)">كل الأقسام (168)</button>
+            <button class="tab-btn" onclick="setSection(1, this)">Sec 1: Heart & Muscle (1-51)</button>
+            <button class="tab-btn" onclick="setSection(2, this)">Sec 2: Skeleton & Valves (52-68)</button>
+            <button class="tab-btn" onclick="setSection(3, this)">Sec 3: Blood Vessels (69-131)</button>
+            <button class="tab-btn" onclick="setSection(4, this)">Sec 4: Vessel Histology (132-140)</button>
+            <button class="tab-btn" onclick="setSection(5, this)">Sec 5: Peripheral Circ. (141-168)</button>
+        </div>
+    </div>
+
+    <div id="quiz-container"></div>
+</div>
+
+<footer>
+    تم تطوير المنصة بواسطة <strong>د. فتحي أحمد رجب</strong> • جميع الحقوق محفوظة © 2026
+</footer>
+
+<script>
+const rawQuestions = [
+[1,1,"As regards the histology of cardiac muscle, which of the following is TRUE?",["It can regenerate from satellite cells","It contains intermediate filaments only, with no other cytoskeletal proteins","It has numerous caveolae like smooth muscle","It is a multinucleated (syncytial) cell","It joins to adjacent cells by intercalated discs"],"E"],
+[2,1,"In a histological section of the heart wall, Purkinje fibers are located in the:",["Epicardium","Fibrous layer of parietal pericardium","Myocardium proper (mid-wall)","Serous layer of parietal pericardium","Subendocardium"],"E"],
+[3,1,"In a histological section of the heart wall, coronary vessels are typically found in the:",["Endocardium","Subendocardium","Myocardium only","Epicardium","Fibrous pericardium"],"D"],
+[4,1,"The pale staining of Purkinje fibers in H&E sections is mainly due to:",["Numerous glycogen deposits and few myofibrils","Numerous mitochondria with no glycogen","Well-developed lysosomes","Well-developed rough endoplasmic reticulum","Well-developed smooth endoplasmic reticulum"],"A"],
+[5,1,"All of the following are normally found in the moderator band EXCEPT:",["Purkinje fibers","Cardiac (contractile) muscle cells","Blood capillaries","Smooth muscle fibers","Connective tissue"],"D"],
+[6,1,"The main type of junction in the intercalated disc responsible for electrical coupling between cardiomyocytes (seen by EM) is the:",["Desmosome","Fascia adherens","Gap junction","Tight junction","Hemidesmosome"],"C"],
+[7,1,"The bundle of His (trunk of the AV bundle) mainly courses within the:",["Atrium","Ventricle (interventricular septum)","Heart valves","Aorta","Pulmonary trunk"],"B"],
+[8,1,"T tubules of the cardiac sarcomere are present at the level of the:",["I band","Z line","A band","A-I junction","I-H junction"],"B"],
+[9,1,"Purkinje fibers appear pale in H&E sections mainly because they contain:",["Numerous myofibrils and little glycogen","Few myofibrils, abundant glycogen, and numerous mitochondria","A thick basement membrane","Numerous secretory granules","Dense collagen bundles"],"B"],
+[10,1,"Which of the following statements about cardiac muscle is TRUE?",["It is spindle-shaped like smooth muscle","It is a multinucleated cell like skeletal muscle","Adjacent cells are joined by intercalated discs","It has numerous caveolae","It contains keratin intermediate filaments"],"C"],
+[11,1,"One of the following is NOT normally present in the moderator band:",["Purkinje fibers","Fat cells","Cardiac cells","Smooth muscle fibers","Blood capillaries"],"D"],
+[12,1,"Purkinje fibers are located in which layer of the heart wall?",["Myocardium (mid-thickness)","Epicardium","Subendocardium","Serous layer of parietal pericardium","Fibrous layer of parietal pericardium"],"C"],
+[13,1,"Cardiac Purkinje fibers are characterized by:",["Being absent from the moderator band","Being larger than ordinary ventricular cardiomyocytes","Containing numerous, densely packed myofibrils","Filtering toxins from the blood","Being heavily pigmented with lipofuscin"],"B"],
+[14,1,"Cardiac muscle fibers have all of the following features EXCEPT:",["One centrally located nucleus","Cross striations","Branching and anastomosing to form a network","Well-developed triads at the A-I junction","Glycogen granules at either pole of the nucleus"],"D"],
+[15,1,"One of the following statements about cardiac muscle fibers is INCORRECT:",["They form the myocardium of the heart wall","They are long-lived cells","They do not show cross striations","They contain many mitochondria","They contain diads instead of triads"],"C"],
+[16,1,"In the cardiac muscle sarcomere, T tubules are present at the level of the:",["I band","Z line","A band","A-I junction","I-H junction"],"B"],
+[17,1,"The endocardium is lined by:",["Simple cubical epithelium","Simple squamous epithelium","Stratified squamous epithelium","Simple columnar epithelium","Pseudostratified columnar epithelium"],"B"],
+[18,1,"One of the following statements about cardiac muscle fibers is WRONG:",["They show cross striations","They branch and anastomose","They are joined by intercalated discs","They contain many mitochondria","They have multiple, peripheral nuclei"],"E"],
+[19,1,"Regarding atrial natriuretic factor (ANF), only ONE statement is WRONG. Which is it?",["It is present mainly in the left atrium","It is stored in electron-dense granules","It is released by stretch of the atrial wall","It regulates blood pressure","It acts on the kidney, causing diuresis"],"A"],
+[20,1,"'Endothelium' refers to the epithelium lining the:",["Lung alveoli","The pleura","Bowman's capsule","The loop of Henle","Blood vessels and capillaries"],"E"],
+[21,1,"As regards the light microscopic (LM) appearance of cardiac muscle cells, one of the following is WRONG:",["They are cylindrical, branching, and anastomosing","They show deep basophilic granular sarcoplasm","They show markedly irregular, indistinct striations unlike any pattern seen elsewhere","They have a single, central, oval nucleus","A delicate endomysium surrounds each muscle fiber"],"C"],
+[22,1,"All the following characteristics of Purkinje fibers are TRUE EXCEPT one:",["They are larger in diameter than ordinary cardiac muscle fibers","They stain paler than cardiac muscle fibers","They occur in groups within the moderator band","Their main function is forceful contraction","They are rich in glycogen with few myofibrils"],"D"],
+[23,1,"One of the following statements about the epicardium is WRONG:",["It is the visceral layer of the pericardium","It is a type of serous membrane","It is formed of simple squamous mesothelium on subepithelial connective tissue","It contains branches of the coronary vessels","It contains Purkinje muscle fibers"],"E"],
+[24,1,"Adjacent cardiac muscle cells are connected mainly by:",["Tight junctions only","Desmosomes only","Intercalated discs","Gap junctions only","Microvilli"],"C"],
+[25,1,"The main function of Purkinje fibers is to:",["Produce collagen","Conduct cardiac impulses rapidly","Form the heart valves","Store fat","Produce blood cells"],"B"],
+[26,1,"In a histological photograph, a wavy transverse line crossing cardiac muscle fibers at irregular intervals (the intercalated disc) is best described by which statement?",["It is present at the A-I junction","It bisects the A band","It connects adjacent cardiac muscle cells","It contains keratin intermediate filaments","It is only seen in Purkinje fibers"],"C"],
+[27,1,"The three layers of the heart wall, from innermost to outermost, are arranged as:",["Myocardium - Endocardium - Epicardium","Endocardium - Myocardium - Epicardium","Epicardium - Myocardium - Endocardium","Endocardium - Epicardium - Myocardium","Pericardium - Myocardium - Endocardium"],"B"],
+[28,1,"The subendocardium is functionally significant mainly because it contains:",["Coronary vessels","Adipose tissue","Branches of the cardiac conducting system (e.g., Purkinje fibers)","Mesothelium","Vasa vasorum"],"C"],
+[29,1,"Which layer of the heart wall is the thickest?",["Endocardium","Myocardium","Epicardium","Subendocardium","Parietal pericardium"],"B"],
+[30,1,"The perimysium of cardiac muscle is best described as:",["A network of reticular fibers surrounding each individual fiber","Highly vascularized connective tissue (collagen & elastic fibers) between bundles of fibers","A layer found only in Purkinje fibers","Absent in cardiac muscle","Composed purely of smooth muscle"],"B"],
+[31,1,"The endomysium of cardiac muscle consists mainly of:",["Thick collagen bundles with numerous fibroblasts","A network of reticular fibers surrounding each individual muscle fiber","Elastic lamellae","Adipose tissue","Fenestrated membranes"],"B"],
+[32,1,"Cardiac muscle fibers differ from skeletal muscle fibers in that they typically show:",["Peripheral multiple nuclei","Fainter cross striations, as myofibrils are not perfectly in register due to branching","Complete absence of striations","No connective tissue coverings at all","A true syncytium with no cell boundaries whatsoever"],"B"],
+[33,1,"The nucleus of a typical (contractile) cardiomyocyte is best described as:",["Multiple, peripheral, flattened","Single, central, oval","Single, peripheral, elongated","Absent (the cell is anucleate)","Multiple, central, round"],"B"],
+[34,1,"Around the nuclear poles of a cardiomyocyte, the myofibrils diverge, leaving sarcoplasm that contains all of the following EXCEPT:",["Numerous mitochondria","Glycogen granules","Lipofuscin pigment","A myelin sheath","Golgi apparatus and other organelles"],"D"],
+[35,1,"Compared to skeletal muscle T tubules, cardiac muscle T tubules are:",["Smaller and fewer, located at the A-I junction","Larger and more numerous, located at the Z line","Completely absent","Located at the H band","Found only in Purkinje fibers"],"B"],
+[36,1,"The main function of T tubules in cardiac muscle is:",["Storage of glycogen","Excitation-contraction coupling and increasing surface area for metabolite exchange","Cell-to-cell adhesion","Formation of the fibrous skeleton","Rapid electrical coupling between adjacent cells"],"B"],
+[37,1,"Unlike skeletal muscle, the sarcoplasmic reticulum of cardiac muscle:",["Forms well-developed triads with continuous terminal cisternae","Is less organized, forming diads with T tubules instead of triads","Is completely absent","Surrounds only the nucleus","Contains no calcium at all"],"B"],
+[38,1,"The transverse portion of the intercalated disc is structurally formed mainly of:",["Gap junctions only","Fascia adherens (zonula adherens) and macula adherens
