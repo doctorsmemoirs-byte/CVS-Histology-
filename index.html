@@ -371,7 +371,7 @@ body {
     transition: width 0.3s ease;
 }
 
-/* Mode Selector Bar (Training vs Exam) */
+/* Mode Selector Bar */
 .mode-selector {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -568,7 +568,6 @@ body {
     background: var(--selected-bg);
 }
 
-/* Exam Mode Selected State (Before Submitting Exam) */
 .option-btn.exam-selected {
     background: var(--selected-bg) !important;
     border-color: var(--gold-bright) !important;
@@ -905,14 +904,69 @@ footer {
 </footer>
 
 <script>
-// 1. الأصوات الخاصة بصاحب الموقع (ضع ملفات correct.mp3 و wrong.mp3 في GitHub)
-const MY_CORRECT_SOUND = 'correct.mp3';
-const MY_WRONG_SOUND   = 'wrong.mp3';
+// ============================================================================
+// 1. نظام تبديل الأصوات المتعددة الذكي (Multi-Sound Playlist System)
+// ارفع في حسابك على GitHub أي عدد تريد من الأصوات بهذه الأسماء:
+// للإجابات الصحيحة: correct1.mp3, correct2.mp3, correct3.mp3, correct4.mp3, correct5.mp3
+// للإجابات الخاطئة: wrong1.mp3, wrong2.mp3, wrong3.mp3, wrong4.mp3, wrong5.mp3
+// سيقوم الكود تلقائياً باكتشاف الملفات التي رفعتها والتبديل بينها في كل سؤال!
+// ============================================================================
 
-let correctAudio = new Audio(MY_CORRECT_SOUND);
-let wrongAudio   = new Audio(MY_WRONG_SOUND);
+const CORRECT_SOUND_FILES = [
+    'correct1.mp3',
+    'correct2.mp3',
+    'correct3.mp3',
+    'correct4.mp3',
+    'correct5.mp3',
+    'correct.mp3'
+];
+
+const WRONG_SOUND_FILES = [
+    'wrong1.mp3',
+    'wrong2.mp3',
+    'wrong3.mp3',
+    'wrong4.mp3',
+    'wrong5.mp3',
+    'wrong.mp3'
+];
+
+let loadedCorrectAudios = [];
+let loadedWrongAudios = [];
+let correctPlayIndex = 0;
+let wrongPlayIndex = 0;
+let currentPlayingAudio = null;
 let isMuted = false;
 
+// فحص وتحميل الملفات الصوتية الموجودة فعلياً في المستودع تلقائياً
+function preloadPlaylists() {
+    CORRECT_SOUND_FILES.forEach(fileName => {
+        const audio = new Audio();
+        audio.preload = 'auto';
+        audio.addEventListener('canplaythrough', () => {
+            if (!loadedCorrectAudios.includes(audio)) {
+                loadedCorrectAudios.push(audio);
+            }
+        }, { once: true });
+        audio.src = fileName;
+    });
+
+    WRONG_SOUND_FILES.forEach(fileName => {
+        const audio = new Audio();
+        audio.preload = 'auto';
+        audio.addEventListener('canplaythrough', () => {
+            if (!loadedWrongAudios.includes(audio)) {
+                loadedWrongAudios.push(audio);
+            }
+        }, { once: true });
+        audio.src = fileName;
+    });
+}
+
+preloadPlaylists();
+
+// نغمات احتياطية متنوعة في حال لم تكن ملفات الـ mp3 قد رُفعت بعد
+let synthCorrectStep = 0;
+let synthWrongStep = 0;
 function playSynthTone(isCorrect) {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -920,46 +974,87 @@ function playSynthTone(isCorrect) {
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
+
         if (isCorrect) {
+            const melodies = [
+                [523.25, 659.25, 783.99],
+                [587.33, 739.99, 880.00],
+                [440.00, 554.37, 659.25, 880.00]
+            ];
+            const notes = melodies[synthCorrectStep % melodies.length];
+            synthCorrectStep++;
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(523.25, ctx.currentTime);
-            osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.08);
-            osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.16);
+            notes.forEach((freq, i) => {
+                osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
+            });
             gain.gain.setValueAtTime(0.18, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.38);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + notes.length * 0.1 + 0.15);
             osc.start();
-            osc.stop(ctx.currentTime + 0.38);
+            osc.stop(ctx.currentTime + notes.length * 0.1 + 0.15);
         } else {
+            const buzzes = [
+                [220, 150],
+                [190, 130],
+                [250, 180, 120]
+            ];
+            const notes = buzzes[synthWrongStep % buzzes.length];
+            synthWrongStep++;
             osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(210, ctx.currentTime);
-            osc.frequency.setValueAtTime(150, ctx.currentTime + 0.14);
+            notes.forEach((freq, i) => {
+                osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+            });
             gain.gain.setValueAtTime(0.18, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + notes.length * 0.13 + 0.12);
             osc.start();
-            osc.stop(ctx.currentTime + 0.35);
+            osc.stop(ctx.currentTime + notes.length * 0.13 + 0.12);
         }
     } catch (e) {}
 }
 
 function playFeedbackSound(isCorrect) {
     if (isMuted) return;
-    const snd = isCorrect ? correctAudio : wrongAudio;
-    snd.currentTime = 0;
-    snd.play().catch(() => playSynthTone(isCorrect));
+
+    // إيقاف أي صوت سابق شغال حتى لا تتداخل الأصوات
+    if (currentPlayingAudio) {
+        currentPlayingAudio.pause();
+        currentPlayingAudio.currentTime = 0;
+    }
+
+    const pool = isCorrect ? loadedCorrectAudios : loadedWrongAudios;
+
+    if (pool.length > 0) {
+        // اختيار الصوت التالي بالترتيب التبادلي (أو عشوائياً بدون تكرار)
+        let chosenAudio;
+        if (isCorrect) {
+            chosenAudio = pool[correctPlayIndex % pool.length];
+            correctPlayIndex++;
+        } else {
+            chosenAudio = pool[wrongPlayIndex % pool.length];
+            wrongPlayIndex++;
+        }
+        currentPlayingAudio = chosenAudio;
+        chosenAudio.currentTime = 0;
+        chosenAudio.play().catch(() => playSynthTone(isCorrect));
+    } else {
+        playSynthTone(isCorrect);
+    }
 }
 
 function toggleMute() {
     isMuted = !isMuted;
+    if (isMuted && currentPlayingAudio) {
+        currentPlayingAudio.pause();
+    }
     document.getElementById('muteBtn').innerText = isMuted ? '🔇' : '🔊';
 }
 
-// 2. المؤثرات البصرية على الشاشة في وضع التدريب (زينة وأخضر للصح / أحمر وإكسات للخطأ)
+// 2. المؤثرات البصرية على الشاشة في وضع التدريب
 let fxTimer = null;
 function triggerScreenFX(isCorrect) {
     const overlay = document.getElementById('fx-overlay');
     overlay.innerHTML = '';
     overlay.className = '';
-    void overlay.offsetWidth; // Reflow
+    void overlay.offsetWidth;
 
     if (isCorrect) {
         overlay.classList.add('flash-green');
@@ -999,7 +1094,7 @@ function triggerScreenFX(isCorrect) {
     }, 2200);
 }
 
-// 3. المظهر (الداكن الفخم افتراضياً + الفاتح)
+// 3. المظهر
 function initTheme() {
     const saved = localStorage.getItem('fathy_cvs_theme') || 'dark';
     applyTheme(saved);
@@ -1209,7 +1304,7 @@ const sectionNames = {
 };
 
 // 5. إدارة الحالة (State Management)
-let quizMode = localStorage.getItem('fathy_cvs_mode') || 'training'; // 'training' or 'exam'
+let quizMode = localStorage.getItem('fathy_cvs_mode') || 'training';
 let examSubmitted = JSON.parse(localStorage.getItem('fathy_cvs_exam_sub') || 'false');
 let userAnswers = JSON.parse(localStorage.getItem('fathy_cvs_histo_ans') || '{}');
 let bookmarkedIds = JSON.parse(localStorage.getItem('fathy_cvs_bookmarks') || '[]');
@@ -1276,7 +1371,7 @@ function getFiltered() {
 
 function selectAnswer(qId, letter) {
     if (quizMode === 'training') {
-        if (userAnswers[qId]) return; // Locked after answering in training mode
+        if (userAnswers[qId]) return;
         userAnswers[qId] = letter;
         localStorage.setItem('fathy_cvs_histo_ans', JSON.stringify(userAnswers));
 
@@ -1288,12 +1383,10 @@ function selectAnswer(qId, letter) {
         updateStats();
         renderQuestions();
 
-        // إذا أنهى جميع الأسئلة الـ 168 في وضع التدريب تظهر له الدرجة تلقائياً
         if (Object.keys(userAnswers).length === rawQuestions.length) {
             setTimeout(() => finishAndShowScore(), 900);
         }
     } else {
-        // وضع الاختبار: يمكنه اختيار وتغيير إجابته حتى يسلم الاختبار
         if (examSubmitted) return;
         userAnswers[qId] = letter;
         localStorage.setItem('fathy_cvs_histo_ans', JSON.stringify(userAnswers));
