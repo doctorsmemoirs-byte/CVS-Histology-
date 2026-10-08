@@ -1,349 +1,674 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بنك أسئلة الهستولوجي التفاعلي - CVS Histology | د. فتحي أحمد رجب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #070b19;
-            --bg-card: #10172a;
-            --bg-option: #172038;
-            --gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --correct-bg: rgba(16, 185, 129, 0.15);
-            --correct-border: #10b981;
-            --wrong-bg: rgba(239, 68, 68, 0.15);
-            --wrong-border: #ef4444;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardiovascular System — Histology Question Bank | جامعة الأزهر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Centralized Design Tokens - Calm Medical Palette */
+:root {
+    --bg-main: #F5F7F3;
+    --bg-card: #FFFFFF;
+    --bg-secondary: #E7EFE6;
+    --brand-primary: #52796F;
+    --btn-primary: #52796F;
+    --btn-primary-text: #FFFFFF;
+    --selected-bg: #E7EFE6;
+    --correct-bg: #DCECE1;
+    --correct-border: #52796F;
+    --incorrect-bg: #F9E5E2;
+    --incorrect-border: #B85D57;
+    --text-main: #263832;
+    --text-secondary: #536159;
+    --border-color: #DFE5DE;
+    --focus-ring: rgba(82, 121, 111, 0.35);
+    --shadow-subtle: 0 2px 10px rgba(38, 56, 50, 0.04);
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+[data-theme="dark"] {
+    --bg-main: #18231F;
+    --bg-card: #202E27;
+    --bg-secondary: #26332C;
+    --brand-primary: #9EC7B0;
+    --btn-primary: #709D82;
+    --btn-primary-text: #10251A;
+    --selected-bg: #30473A;
+    --correct-bg: #294638;
+    --correct-border: #9EC7B0;
+    --incorrect-bg: #482B2A;
+    --incorrect-border: #D48784;
+    --text-main: #F0F4F0;
+    --text-secondary: #B3C1B7;
+    --border-color: #35463E;
+    --focus-ring: rgba(158, 199, 176, 0.4);
+    --shadow-subtle: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Cairo', sans-serif;
-            line-height: 1.6;
-            padding-bottom: 60px;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        /* Header Styling */
-        header {
-            background: linear-gradient(135deg, #0d152c 0%, #050811 100%);
-            border-bottom: 2px solid var(--gold);
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Cairo', 'Inter', sans-serif;
+    line-height: 1.65;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    padding-bottom: 64px;
+    -webkit-font-smoothing: antialiased;
+}
 
-        .badge-uni {
-            display: inline-block;
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 4px 16px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
+/* Header & Navigation */
+.top-header {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
-        header h1 {
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 8px;
-            font-weight: 800;
-        }
+.header-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
 
-        header h1 span {
-            color: var(--gold);
-        }
+.module-info {
+    display: flex;
+    flex-direction: column;
+}
 
-        .author-box {
-            margin-top: 12px;
-            font-size: 1rem;
-            color: var(--gold-light);
-            font-weight: 600;
-        }
+.uni-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
 
-        /* Sticky Stats Bar */
-        .stats-bar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(16, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
+.module-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+    font-family: 'Inter', 'Cairo', sans-serif;
+}
 
-        .stat-item {
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-        .stat-item span {
-            padding: 2px 10px;
-            border-radius: 8px;
-            margin-right: 4px;
-            font-family: 'Inter', sans-serif;
-        }
+.btn-utility {
+    background-color: var(--bg-secondary);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-family: 'Cairo', 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
 
-        .s-total span { background: rgba(212, 175, 55, 0.2); color: var(--gold); }
-        .s-correct span { background: var(--correct-bg); color: var(--correct-border); }
-        .s-wrong span { background: var(--wrong-bg); color: var(--wrong-border); }
+.btn-utility:hover {
+    border-color: var(--brand-primary);
+}
 
-        .btn-reset {
-            background: transparent;
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 5px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            transition: 0.2s;
-        }
+.btn-utility:focus-visible,
+.btn-primary:focus-visible,
+.option-btn:focus-visible,
+.search-input:focus-visible,
+.section-select:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
 
-        .btn-reset:hover {
-            background: var(--gold);
-            color: var(--bg-dark);
-        }
+/* Progress Section */
+.progress-wrapper {
+    max-width: 820px;
+    margin: 12px auto 0;
+}
 
-        /* Controls & Filters */
-        .container {
-            max-width: 900px;
-            margin: 25px auto;
-            padding: 0 15px;
-        }
+.progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    font-family: 'Inter', 'Cairo', sans-serif;
+}
 
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
+.progress-track {
+    width: 100%;
+    height: 6px;
+    background-color: var(--bg-secondary);
+    border-radius: 99px;
+    overflow: hidden;
+}
 
-        .search-input {
-            width: 100%;
-            padding: 12px 18px;
-            border-radius: 12px;
-            border: 1px solid #2e3b5e;
-            background: var(--bg-card);
-            color: #fff;
-            font-family: 'Cairo', 'Inter', sans-serif;
-            font-size: 1rem;
-            outline: none;
-        }
+.progress-fill {
+    height: 100%;
+    background-color: var(--brand-primary);
+    width: 0%;
+    transition: width 0.25s ease;
+}
 
-        .search-input:focus {
-            border-color: var(--gold);
-        }
+/* Main Container */
+.container {
+    max-width: 820px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
 
-        .tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-        }
+/* Filter & View Bar */
+.toolbar {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
-        .tab-btn {
-            background: var(--bg-card);
-            color: var(--text-muted);
-            border: 1px solid #263354;
-            padding: 8px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            white-space: nowrap;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 0.88rem;
-            transition: 0.2s;
-        }
+.toolbar-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--gold);
-            color: var(--bg-dark);
-            border-color: var(--gold);
-        }
+.section-select,
+.search-input {
+    flex: 1;
+    min-width: 220px;
+    min-height: 44px;
+    padding: 10px 14px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: 'Inter', 'Cairo', sans-serif;
+    font-size: 0.92rem;
+}
 
-        /* Questions Styling (LTR for Medical English) */
-        .q-card {
-            background: var(--bg-card);
-            border: 1px solid #1e2946;
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 20px;
-            direction: ltr;
-            text-align: left;
-            font-family: 'Inter', sans-serif;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-        }
+.toolbar-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+}
 
-        .q-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
+.stats-summary {
+    display: flex;
+    gap: 14px;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
 
-        .q-num {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-        }
+.stats-summary strong {
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+}
 
-        .q-sec-tag {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
+/* Audio Drawer (Collapsible) */
+.audio-drawer {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.88rem;
+}
 
-        .q-text {
-            font-size: 1.08rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 18px;
-            line-height: 1.5;
-        }
+.audio-drawer.open {
+    display: flex;
+}
 
-        .options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+.file-label {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.82rem;
+    display: inline-block;
+}
 
-        .option-btn {
-            background: var(--bg-option);
-            border: 1px solid #283659;
-            color: #e2e8f0;
-            padding: 13px 16px;
-            border-radius: 10px;
-            text-align: left;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.96rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+input[type="file"] {
+    display: none;
+}
 
-        .option-btn:hover:not(:disabled) {
-            border-color: var(--gold);
-            background: #1e2a4a;
-        }
+/* Question Card (LTR Medical Layout) */
+.q-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    direction: ltr;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    box-shadow: var(--shadow-subtle);
+}
 
-        .opt-letter {
-            min-width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            background: rgba(255,255,255,0.07);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--gold);
-            font-size: 0.85rem;
-        }
+.q-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
 
-        .option-btn.correct {
-            background: var(--correct-bg) !important;
-            border-color: var(--correct-border) !important;
-            color: #fff !important;
-            font-weight: 600;
-        }
+.q-counter {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
 
-        .option-btn.correct .opt-letter {
-            background: var(--correct-border);
-            color: #000;
-        }
+.q-section-name {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
 
-        .option-btn.wrong {
-            background: var(--wrong-bg) !important;
-            border-color: var(--wrong-border) !important;
-            color: #fca5a5 !important;
-        }
+.q-stem {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 22px;
+    line-height: 1.6;
+}
 
-        .option-btn.wrong .opt-letter {
-            background: var(--wrong-border);
-            color: #fff;
-        }
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
-        .feedback-box {
-            margin-top: 14px;
-            padding: 12px 15px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            display: none;
-            background: rgba(255,255,255,0.04);
-            border-left: 4px solid var(--gold);
-        }
+.option-btn {
+    width: 100%;
+    min-height: 52px;
+    background-color: var(--bg-card);
+    border: 1.5px solid var(--border-color);
+    color: var(--text-main);
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
 
-        footer {
-            text-align: center;
-            padding: 30px 15px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid #1e2946;
-            margin-top: 40px;
-        }
-    </style>
+.option-btn:hover:not(:disabled) {
+    background-color: var(--bg-secondary);
+    border-color: var(--brand-primary);
+}
+
+.option-btn.selected {
+    background-color: var(--selected-bg);
+    border-color: var(--brand-primary);
+    font-weight: 500;
+}
+
+.opt-badge {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background-color: var(--bg-secondary);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.option-btn.selected .opt-badge {
+    background-color: var(--brand-primary);
+    color: var(--btn-primary-text);
+    border-color: var(--brand-primary);
+}
+
+/* Confirmed States - Accessible Labels & Colors */
+.option-btn.correct {
+    background-color: var(--correct-bg) !important;
+    border-color: var(--correct-border) !important;
+    color: var(--text-main) !important;
+    font-weight: 600;
+}
+
+.option-btn.correct .opt-badge {
+    background-color: var(--correct-border);
+    color: var(--btn-primary-text);
+    border-color: var(--correct-border);
+}
+
+.option-btn.wrong {
+    background-color: var(--incorrect-bg) !important;
+    border-color: var(--incorrect-border) !important;
+    color: var(--text-main) !important;
+}
+
+.option-btn.wrong .opt-badge {
+    background-color: var(--incorrect-border);
+    color: #FFFFFF;
+    border-color: var(--incorrect-border);
+}
+
+.opt-status-tag {
+    margin-left: auto;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.tag-correct {
+    color: var(--brand-primary);
+}
+
+.tag-wrong {
+    color: var(--incorrect-border);
+}
+
+/* Card Action Row */
+.card-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.btn-primary {
+    background-color: var(--btn-primary);
+    color: var(--btn-primary-text);
+    border: none;
+    min-height: 46px;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-family: 'Inter', 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+    opacity: 0.92;
+}
+
+.btn-primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* Explanation & Feedback Area */
+.explanation-box {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 10px;
+    background-color: var(--bg-secondary);
+    border-left: 4px solid var(--brand-primary);
+    font-size: 0.94rem;
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+.explanation-box.is-wrong {
+    border-left-color: var(--incorrect-border);
+}
+
+.feedback-headline {
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.explanation-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+}
+
+/* Single Question Navigation Bar */
+.single-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    direction: ltr;
+}
+
+footer {
+    max-width: 820px;
+    margin: 40px auto 0;
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    border-top: 1px solid var(--border-color);
+}
+
+@media (max-width: 600px) {
+    .top-header {
+        padding: 12px 14px;
+    }
+    .q-card {
+        padding: 20px 16px;
+    }
+    .q-stem {
+        font-size: 1.02rem;
+    }
+    .option-btn {
+        padding: 12px;
+        font-size: 0.94rem;
+    }
+    .btn-primary {
+        width: 100%;
+    }
+}
+</style>
 </head>
 <body>
 
-<header>
-    <div class="badge-uni">كلية الطب - جامعة الأزهر بالقاهرة 🫀</div>
-    <h1>بنك الأسئلة التفاعلي <span>CVS Histology</span></h1>
-    <p style="color: var(--text-muted); font-size: 0.95rem;">شامل 168 سؤالاً متعدد الاختيارات (MCQs) مع التصحيح التفاعلي الفوري</p>
-    <div class="author-box">✨ إعداد وتطوير: د. فتحي أحمد رجب ✨</div>
+<header class="top-header">
+    <div class="header-inner">
+        <div class="module-info">
+            <span class="uni-label">كلية الطب بالقاهرة — جامعة الأزهر • إعداد د. فتحي أحمد رجب</span>
+            <h1 class="module-title">Cardiovascular System — Histology</h1>
+        </div>
+        <div class="header-actions">
+            <button class="btn-utility" id="viewModeBtn" onclick="toggleViewMode()" title="التبديل بين عرض سؤال واحد أو القائمة الكاملة">
+                <span id="viewModeLabel">عرض سؤال بسؤال</span>
+            </button>
+            <button class="btn-utility" onclick="toggleAudioDrawer()" title="إعدادات الصوت">
+                <span>الصوت</span>
+            </button>
+            <button class="btn-utility" id="themeToggleBtn" onclick="toggleTheme()" aria-label="تبديل المظهر">
+                <span id="themeToggleText">الوضع الداكن</span>
+            </button>
+        </div>
+    </div>
+    <div class="progress-wrapper">
+        <div class="progress-meta">
+            <span id="progressText">Answered: 0 of 168</span>
+            <span id="scoreText">Score: 0%</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBarAria">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
 </header>
 
-<div class="stats-bar">
-    <div class="stat-item s-total">إجمالي الأسئلة: <span id="st-total">168</span></div>
-    <div class="stat-item s-correct">إجابات صحيحة: <span id="st-correct">0</span></div>
-    <div class="stat-item s-wrong">إجابات خاطئة: <span id="st-wrong">0</span></div>
-    <div class="stat-item s-total">النسبة: <span id="st-perc">0%</span></div>
-    <button class="btn-reset" onclick="resetQuiz()">إعادة الاختبار 🔄</button>
-</div>
-
-<div class="container">
-    <div class="controls">
-        <input type="text" id="searchInput" class="search-input" placeholder="🔍 ابحث عن أي سؤال باللغة الإنجليزية (مثال: Purkinje, Aorta, Capillary)..." oninput="renderQuestions()">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="setSection(0, this)">كل الأقسام (168)</button>
-            <button class="tab-btn" onclick="setSection(1, this)">Sec 1: Heart & Muscle (1-51)</button>
-            <button class="tab-btn" onclick="setSection(2, this)">Sec 2: Skeleton & Valves (52-68)</button>
-            <button class="tab-btn" onclick="setSection(3, this)">Sec 3: Blood Vessels (69-131)</button>
-            <button class="tab-btn" onclick="setSection(4, this)">Sec 4: Vessel Histology (132-140)</button>
-            <button class="tab-btn" onclick="setSection(5, this)">Sec 5: Peripheral Circ. (141-168)</button>
+<main class="container">
+    <!-- Optional Audio Drawer -->
+    <div class="audio-drawer" id="audioDrawer">
+        <div>
+            <strong>إعدادات المؤثرات الصوتية الاختيارية:</strong>
+            <span id="sound-status" style="color: var(--brand-primary); margin-right: 8px;"></span>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <label class="file-label">
+                ملف الإجابة الصحيحة
+                <input type="file" accept="audio/*" onchange="loadCustomSound(event, 'correct')">
+            </label>
+            <label class="file-label">
+                ملف الإجابة الخاطئة
+                <input type="file" accept="audio/*" onchange="loadCustomSound(event, 'wrong')">
+            </label>
+            <button class="btn-utility" id="muteBtn" onclick="toggleMute()">الصوت: مفعل</button>
         </div>
     </div>
 
+    <!-- Filters & Search -->
+    <section class="toolbar" aria-label="أدوات التصفية والبحث">
+        <div class="toolbar-row">
+            <select id="sectionSelect" class="section-select" onchange="onFilterChange()" aria-label="اختر القسم">
+                <option value="0">All Sections (168 Questions)</option>
+                <option value="1">Section 1: Heart, Cardiac Muscle & Cardiomyocytes (1–51)</option>
+                <option value="2">Section 2: Fibrous Skeleton & Heart Valves (52–68)</option>
+                <option value="3">Section 3: Blood Vessels — Arteries & Veins (69–131)</option>
+                <option value="4">Section 4: Histology of Vessels & Capillaries (132–140)</option>
+                <option value="5">Section 5: Peripheral Circulation & Lymphatics (141–168)</option>
+            </select>
+            <input type="search" id="searchInput" class="search-input" placeholder="Search questions or terms (e.g., Purkinje, Aorta)..." oninput="onFilterChange()" dir="ltr">
+        </div>
+        <div class="toolbar-bottom">
+            <div class="stats-summary">
+                <span>الإجابات الصحيحة: <strong id="st-correct">0</strong></span>
+                <span>الإجابات الخاطئة: <strong id="st-wrong">0</strong></span>
+                <span>المتبقي: <strong id="st-rem">168</strong></span>
+            </div>
+            <button class="btn-utility" onclick="resetQuiz()">إعادة ضبط الإجابات</button>
+        </div>
+    </section>
+
+    <!-- Questions Container -->
     <div id="quiz-container"></div>
-</div>
+</main>
 
 <footer>
-    تم تطوير المنصة بواسطة <strong>د. فتحي أحمد رجب</strong> • جميع الحقوق محفوظة © 2026
+    كلية الطب (بنين) بالقاهرة — جامعة الأزهر • تطوير وإعداد: <strong>د. فتحي أحمد رجب</strong>
 </footer>
 
 <script>
-const rawQuestions = [
+// 1. Theme Management (Respects OS Preference + LocalStorage Persistence)
+function initTheme() {
+    const savedTheme = localStorage.getItem('azhar_med_theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const activeTheme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+    applyTheme(activeTheme);
+}
+
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggleText').innerText = 'الوضع الفاتح';
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        document.getElementById('themeToggleText').innerText = 'الوضع الداكن';
+    }
+}
+
+function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const nextTheme = isDark ? 'light' : 'dark';
+    localStorage.setItem('azhar_med_theme', nextTheme);
+    applyTheme(nextTheme);
+}
+
+initTheme();
+
+// 2. Audio Management
+let correctAudio = new Audio('correct.mp3');
+let wrongAudio = new Audio('wrong.mp3');
+let isMuted = false;
+
+function toggleAudioDrawer() {
+    document.getElementById('audioDrawer').classList.toggle('open');
+}
+
+function loadCustomSound(event, type) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    if (type === 'correct') {
+        correctAudio = new Audio(url);
+        document.getElementById('sound-status').innerText = 'تم تحديث صوت الإجابة الصحيحة';
+    } else {
+        wrongAudio = new Audio(url);
+        document.getElementById('sound-status').innerText = 'تم تحديث صوت الإجابة الخاطئة';
+    }
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    document.getElementById('muteBtn').innerText = isMuted ? 'الصوت: صامت' : 'الصوت: مفعل';
+}
+
+function playFeedbackSound(isCorrect) {
+    if (isMuted) return;
+    const sound = isCorrect ? correctAudio : wrongAudio;
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+}
+
+// 3. Question Database & Explanations
+const specificExplanations = {
+    75: "Both the coronary artery and umbilical artery are described as 'special type' muscular arteries. This key follows the 'thick wall with well-developed IEL/EEL' description, which matches the coronary artery; the umbilical artery is instead characterized by a poorly-developed IEL (see Q78)."
+};
+
+const rawQuestions=[
 [1,1,"As regards the histology of cardiac muscle, which of the following is TRUE?",["It can regenerate from satellite cells","It contains intermediate filaments only, with no other cytoskeletal proteins","It has numerous caveolae like smooth muscle","It is a multinucleated (syncytial) cell","It joins to adjacent cells by intercalated discs"],"E"],
 [2,1,"In a histological section of the heart wall, Purkinje fibers are located in the:",["Epicardium","Fibrous layer of parietal pericardium","Myocardium proper (mid-wall)","Serous layer of parietal pericardium","Subendocardium"],"E"],
 [3,1,"In a histological section of the heart wall, coronary vessels are typically found in the:",["Endocardium","Subendocardium","Myocardium only","Epicardium","Fibrous pericardium"],"D"],
@@ -381,4 +706,352 @@ const rawQuestions = [
 [35,1,"Compared to skeletal muscle T tubules, cardiac muscle T tubules are:",["Smaller and fewer, located at the A-I junction","Larger and more numerous, located at the Z line","Completely absent","Located at the H band","Found only in Purkinje fibers"],"B"],
 [36,1,"The main function of T tubules in cardiac muscle is:",["Storage of glycogen","Excitation-contraction coupling and increasing surface area for metabolite exchange","Cell-to-cell adhesion","Formation of the fibrous skeleton","Rapid electrical coupling between adjacent cells"],"B"],
 [37,1,"Unlike skeletal muscle, the sarcoplasmic reticulum of cardiac muscle:",["Forms well-developed triads with continuous terminal cisternae","Is less organized, forming diads with T tubules instead of triads","Is completely absent","Surrounds only the nucleus","Contains no calcium at all"],"B"],
-[38,1,"The transverse portion of the intercalated disc is structurally formed mainly of:",["Gap junctions only","Fascia adherens (zonula adherens) and macula adherens
+[38,1,"The transverse portion of the intercalated disc is structurally formed mainly of:",["Gap junctions only","Fascia adherens (zonula adherens) and macula adherens (desmosomes attached to desmin)","Tight junctions only","Hemidesmosomes","Occluding junctions"],"B"],
+[39,1,"The longitudinal portion of the intercalated disc is characterized mainly by:",["High-stress fascia adherens","Numerous gap junctions allowing rapid spread of excitation","Desmosomes only","Absence of any junctions","Location strictly at the level of the Z line"],"B"],
+[40,1,"Which portion of the intercalated disc bears most of the mechanical stress during contraction?",["The transverse portion","The longitudinal portion","Both portions equally","Neither; stress is borne entirely by the sarcolemma","The T tubules"],"A"],
+[41,1,"Contractile cardiomyocytes form the majority of the myocardium in:",["Only the atria","Only the ventricles","Both the atria and the ventricles","Only the conducting system","Only the epicardium"],"C"],
+[42,1,"Endocrine cardiomyocytes are located mainly in:",["The ventricles","The atria, especially the right atrium","The epicardium","The AV node exclusively","The interventricular septum"],"B"],
+[43,1,"Compared with contractile cardiomyocytes, endocrine cardiomyocytes are characterized by:",["More myofibrils and fewer secretory granules","Fewer myofibrils and numerous electron-dense secretory granules containing atrial natriuretic factor","Complete absence of a nucleus","Larger diameter with binucleation","Especially well-developed typical intercalated discs"],"B"],
+[44,1,"Nodal cells of the cardiac conducting system are found in all of the following sites EXCEPT the:",["Sinoatrial node","Atrioventricular node","Trunk of the bundle of His","Ventricular myocardium (as Purkinje fibers)","None of the above - all are correct sites for nodal cells"],"D"],
+[45,1,"Compared to the surrounding atrial muscle fibers, nodal cells are:",["Larger, with more myofibrils","Smaller, with fewer myofibrils, and lacking typical intercalated discs","Binucleated and rich in glycogen, identical to Purkinje fibers","Structurally identical to contractile cardiomyocytes","Found only in the ventricles"],"B"],
+[46,1,"Compared to contractile cardiomyocytes, Purkinje fibers transmit cardiac impulses at a rate that is approximately:",["The same speed","About half the speed","About 4-5 times faster","About 100 times slower","They do not conduct impulses at all"],"C"],
+[47,1,"Which cell type of the conducting system is typically larger than ventricular muscle fibers and often binucleated?",["Nodal cells","Purkinje fibers","Endocrine cardiomyocytes","Ordinary contractile cardiomyocytes","Fibroblasts of the endocardium"],"B"],
+[48,1,"The large glycogen content of Purkinje fibers makes them:",["More susceptible to hypoxic injury than contractile cardiomyocytes","More resistant to hypoxia than contractile cardiomyocytes","Unable to conduct electrical impulses","Similar to skeletal muscle in their staining pattern","Deficient in mitochondria"],"B"],
+[49,1,"Regarding growth and regeneration of cardiac muscle, which statement is TRUE?",["Cardiac muscle fibers regenerate readily via satellite cells","Cardiac muscle fibers are a static cell population, lack satellite cells, and cannot regenerate","Injured cardiac fibers are replaced by new cardiomyocytes","Cardiac hypertrophy never occurs in adult life","Cardiomyocytes divide actively by mitosis throughout adult life"],"B"],
+[50,1,"Injured cardiac muscle fibers are typically replaced by:",["New cardiomyocytes derived from satellite cells","Fibrous (scar) connective tissue","Smooth muscle","Adipose tissue","Newly formed Purkinje fibers"],"B"],
+[51,1,"Increased functional demand on the heart (e.g., chronic hypertension) typically produces which adaptive change in the myocardium?",["Hyperplasia (increase in cell number)","Compensatory hypertrophy (increase in cell size)","Atrophy","Regeneration from circulating stem cells","Metaplasia into skeletal muscle"],"B"],
+[52,2,"The functional components of the heart include all of the following EXCEPT:",["Cardiac muscle","Coronary vessels","A conducting system","A fibrous skeleton","Cartilage rings"],"E"],
+[53,2,"The four fibrous rings of the cardiac skeleton encircle the base of all of the following EXCEPT the:",["Aorta","Pulmonary trunk","Right atrioventricular orifice","Left atrioventricular orifice","Superior vena cava"],"E"],
+[54,2,"The histological structure of the fibrous rings of the heart is best described as:",["Loose areolar connective tissue","Dense irregular connective tissue","Hyaline cartilage","Elastic cartilage","Adipose tissue"],"B"],
+[55,2,"The main function of the fibrous rings of the heart is to:",["Conduct the cardiac electrical impulse","Provide an attachment site for the cusps of the four heart valves","Nourish the myocardium","Form the moderator band","Secrete atrial natriuretic factor"],"B"],
+[56,2,"The two fibrous trigones of the heart:",["Are composed of hyaline cartilage","Connect the fibrous rings and represent a thickening of the fibrous skeleton","Contain abundant cardiac muscle fibers","Form the sinoatrial node","Are part of the epicardium"],"B"],
+[57,2,"The membranous part of the interventricular and interatrial septa is characterized by:",["Abundant cardiac muscle fibers","Dense connective tissue devoid of cardiac muscle, containing a short length of the A-V bundle","Being the site of the sinoatrial node","Simple squamous epithelium only, with no connective tissue","Numerous elastic lamellae as in the aorta"],"B"],
+[58,2,"Which of the following is NOT a function of the fibrous skeleton of the heart?",["Support of the heart","Attachment site for cardiac muscle","Conduction of electrical impulses between atria and ventricles","Acting as an electrical insulator between the atria and ventricles","Anchoring the cusps of the valves"],"C"],
+[59,2,"The fibrous skeleton acting as an 'electrical insulator' means that it:",["Speeds up conduction between the atria and ventricles","Prevents free flow of electrical impulses between the atria and ventricles, except through the AV bundle","Generates the cardiac impulse","Is highly vascular tissue","Contains numerous Purkinje fibers"],"B"],
+[60,2,"Each heart valve cusp (leaflet) is composed of how many histological layers?",["Two layers: fibrosa and ventricularis only","Three layers: fibrosa, spongiosa, and ventricularis","Four layers, including a distinct endocardial lining separate from the ventricularis","A single layer of dense connective tissue","Two layers: spongiosa and myocardium"],"B"],
+[61,2,"The layer of the heart valve that forms its core and provides major load-bearing/mechanical integrity is the:",["Fibrosa","Spongiosa","Ventricularis","Endothelium","Chordae tendineae"],"A"],
+[62,2,"The fibrosa of a heart valve is structurally continuous with the:",["Papillary muscles","Dense irregular connective tissue of the fibrous rings","Moderator band","Subendocardium only","Myocardium"],"B"],
+[63,2,"The spongiosa layer of a heart valve is best described as:",["The core of the valve, bearing the major mechanical load","Dense irregular connective tissue continuous with the fibrous rings","Loose connective tissue located on the atrial/arterial side, acting as a shock absorber","A layer that continues into the chordae tendineae","A layer entirely absent from the atrioventricular valves"],"C"],
+[64,2,"The function of the spongiosa layer of a heart valve is to:",["Bear the major mechanical load of the cusp","Absorb shock and reduce the strength of vibrations associated with valve closure","Attach the valve to the papillary muscles","Conduct cardiac impulses","Supply the valve with blood"],"B"],
+[65,2,"The ventricularis layer of a heart valve is characterized by:",["Location on the atrial side of the valve","Dense connective tissue rich in elastic fibers, adjacent to the ventricular surface, covered by endothelium","Composition of loose connective tissue only","Complete absence of any covering epithelium","Being absent in the semilunar valves"],"B"],
+[66,2,"In atrioventricular valves, the ventricularis layer continues into the:",["Fibrous rings","Chordae tendineae","Moderator band","Coronary sinus","Bundle of His"],"B"],
+[67,2,"Chordae tendineae are best described as:",["Muscular projections from the ventricular wall","Fibrous cords covered by endothelium, extending from the valve's free edges to the papillary muscles","Part of the fibrous trigone","Layers of the epicardium","Nodal tissue of the conducting system"],"B"],
+[68,2,"Papillary muscles are best described as:",["Fibrous cords connecting valve cusps to the chordae tendineae","Muscular projections from the ventricular wall to which the chordae tendineae attach","Part of the fibrous skeleton","Structures located only in the atria","A type of nodal cell"],"B"],
+[69,3,"Fenestrated capillaries with a diaphragm are typically present in the:",["Muscles and brain","Connective tissue","Exocrine glands","Renal glomeruli","Stratified epithelial tissue"],"D"],
+[70,3,"The aorta and inferior vena cava are both lined by which type of epithelium?",["Simple cuboidal epithelium","Simple squamous epithelium (endothelium)","Stratified squamous epithelium","Simple columnar epithelium","Transitional epithelium"],"B"],
+[71,3,"Which of the following vessels shows longitudinally arranged smooth muscle in its tunica adventitia?",["Arterioles","Capillaries","Large veins (e.g., inferior vena cava)","Basilar artery","Metarterioles"],"C"],
+[72,3,"Which of the following vessels has the highest amount of elastic fibers in its tunica media?",["Descending aorta","Inferior vena cava","Pulmonary vein","Superior vena cava","Thoracic duct"],"A"],
+[73,3,"Well-developed internal and external elastic laminae are most characteristic of:",["Collecting venules","Medium-sized arteries","Medium-sized veins","Metarterioles","Post-capillary venules"],"B"],
+[74,3,"Which of the following is a medium-sized artery with well-developed internal and external elastic laminae?",["Blood sinusoid","Coronary artery","Metarteriole","Thoracic duct","Ulnar vein"],"B"],
+[75,3,"Which of the following muscular arteries is typically described as having a thick wall with well-developed internal and external elastic laminae?",["Coronary artery","Umbilical artery","Great saphenous vein","Superior vena cava","Thoracic duct"],"A"],
+[76,3,"The thickest tunic in the wall of a typical vein is the:",["Tunica intima","Tunica media","Tunica adventitia","Internal elastic lamina","External elastic lamina"],"C"],
+[77,3,"A pluripotential (stem) cell found around post-capillary venules is the:",["Fibroblast","Macrophage","Pericyte","Mast cell","Plasma cell"],"C"],
+[78,3,"A medium-sized artery characterized by mucoid connective tissue in its adventitia and a poorly developed internal elastic lamina is the:",["Coronary artery","Umbilical artery","Radial artery","Basilar artery","Femoral artery"],"B"],
+[79,3,"Regarding the tunica adventitia of the inferior vena cava, which of the following statements is INCORRECT?",["It forms about 70% of the wall thickness","It contains longitudinally arranged smooth muscle fibers","It contains numerous vasa vasorum","It has NO vasa vasorum at all","It is composed of dense fibroelastic connective tissue"],"D"],
+[80,3,"The vessel with an incomplete smooth muscle coat that regulates blood flow into the capillary bed is the:",["Arteriole","Metarteriole","Venule","Muscular artery","Elastic artery"],"B"],
+[81,3,"According to standard histology teaching, the diameter of a typical blood capillary is approximately:",["40 mm","40 µm","7-9 µm","20 nm","100 µm"],"C"],
+[82,3,"Blood capillaries are lined by:",["Simple cuboidal epithelium","Simple squamous epithelium","Stratified squamous epithelium","Simple columnar epithelium","Pseudostratified columnar epithelium"],"B"],
+[83,3,"A well-developed internal elastic lamina is characteristic of which of the following vessels?",["Medium-sized veins","Inferior vena cava","Superior vena cava","Basilar artery","Umbilical artery"],"D"],
+[84,3,"Medium-sized veins are best characterized by:",["A thick tunica media","A relatively thick tunica adventitia","A well-developed internal elastic lamina","A well-developed external elastic lamina","Complete absence of vasa vasorum"],"B"],
+[85,3,"Vasa vasorum are best described as vessels that are:",["Found in the tunica adventitia of small arteries only","Found in the tunica intima of large arteries","Found in the tunica adventitia of large vessels, nourishing the outer wall","A type of small lymphatic vessel","Present to nourish cells of the tunica intima directly"],"C"],
+[86,3,"Which of the following vessels contains longitudinally arranged smooth muscle within its tunica adventitia?",["Basilar artery","Renal vein","Superior vena cava","Inferior vena cava","Arch of the aorta"],"D"],
+[87,3,"The aorta is classified histologically as a(n):",["Elastic artery","Muscular artery","Arteriole","Metarteriole","Distributing artery"],"A"],
+[88,3,"A prominent internal elastic lamina is most clearly seen in:",["Inferior vena cava","Arterioles","Aorta","Muscular (medium-sized) arteries","Medium-sized veins"],"D"],
+[89,3,"Which of the following is TRUE regarding the arteriole?",["It has a very prominent, thick internal elastic lamina at all calibers","It is about 4-5 millimeters in diameter","Its wall always contains numerous vasa vasorum","It has a relatively thick wall compared to its narrow lumen, and no external elastic lamina","It has multiple valves"],"D"],
+[90,3,"Brain capillary endothelial cells are attached to each other mainly by:",["Desmosomes","Fascia occludens (a variant term sometimes used loosely for gap junctions)","Gap junctions","Zonula adherens","Zonula occludens (tight junctions)"],"E"],
+[91,3,"A well-developed internal elastic lamina is characteristically seen in the:",["Basilar artery","Inferior vena cava","Medium-sized veins","Superior vena cava","Umbilical artery"],"A"],
+[92,3,"Which of the following best describes vasa vasorum?",["Blood sinusoids","A named coronary artery","Lymphatic capillaries","Metarterioles","Small vessels in the adventitia of large vessels that nourish the outer vessel wall"],"E"],
+[93,3,"In acute inflammation, the major site of vascular leakage (increased permeability) is the:",["Blood sinusoid","Collecting venule","Metarteriole","Muscular venule","Post-capillary venule"],"E"],
+[94,3,"Only ONE statement about the cerebral (basilar) artery is TRUE. Which is it?",["It has longitudinal smooth muscle fibers in its adventitia","It has a well-developed internal elastic lamina","Its tunica media is especially rich in elastic fibers","Its lumen contains many valves","Its adventitia is formed of mucoid connective tissue"],"B"],
+[95,3,"The smallest blood vessels in the circulatory system are the:",["Arteries","Veins","Capillaries","Arterioles","Venules"],"C"],
+[96,3,"In a photomicrograph of a medium-sized artery, structure '1' (a wavy, refractile band at the intima-media junction) and structure '2' (a thinner wavy band at the media-adventitia junction) are best identified as:",["Structure 1 = internal elastic lamina (intima/media junction); Structure 2 = external elastic lamina (media/adventitia junction), consistent with a medium-sized artery","Structure 1 and 2 are both valves, consistent with a medium-sized vein","Structure 1 = external elastic lamina; Structure 2 = internal elastic lamina","Structure 1 and 2 are both absent in this vessel type","Structure 1 = vasa vasorum; Structure 2 = nervi vasorum"],"A"],
+[97,3,"The wall of a typical blood vessel (excluding capillaries) is composed, from lumen outward, of which sequence of tunics?",["Adventitia - Media - Intima","Intima - Media - Adventitia","Media - Intima - Adventitia","Adventitia - Intima - Media","Intima - Adventitia - Media"],"B"],
+[98,3,"The tunica intima of a blood vessel is composed of:",["Smooth muscle and elastic fibers only","Endothelium plus subendothelial connective tissue (± internal elastic lamina)","Dense irregular connective tissue with vasa vasorum","Mesothelium and adipose tissue","Cardiac muscle fibers"],"B"],
+[99,3,"Endothelial cells of the tunica intima are joined together mainly by:",["Desmosomes","Gap junctions only","Occluding (tight) junctions","Hemidesmosomes","Fascia adherens"],"C"],
+[100,3,"The internal elastic lamina is formed by condensation of elastic fibers within the:",["Tunica media","Tunica adventitia","Subendothelial connective tissue of the tunica intima","Basement membrane of the endothelium","Vasa vasorum"],"C"],
+[101,3,"The internal elastic lamina is fenestrated in order to:",["Allow blood cells to cross directly into the media","Allow diffusion of nutrients to nourish the deeper vessel wall","Anchor smooth muscle cells to the intima","Provide additional elasticity to the media","Help form the external elastic lamina"],"B"],
+[102,3,"The tunica media of a blood vessel typically contains all of the following EXCEPT:",["Concentric, spirally arranged smooth muscle fibers","Elastic fibers","Collagen fibers","Extracellular matrix of proteoglycans","A continuous layer of mesothelium"],"E"],
+[103,3,"The fibers and extracellular matrix of the tunica media are produced mainly by:",["Fibroblasts","Endothelial cells","Smooth muscle cells","Pericytes","Macrophages"],"C"],
+[104,3,"The tunica adventitia of a blood vessel typically contains all of the following EXCEPT:",["Fibroelastic tissue with longitudinally arranged collagen and elastic fibers","Fibroblasts","Vasa vasorum","Nervi vasorum (vasomotor autonomic nerves)","A continuous endothelial lining"],"E"],
+[105,3,"Arteries are classified according to size into which three types?",["Elastic, muscular, and capillary","Large (elastic/conducting), medium-sized (muscular/distributing), and arterioles","Large, small, and sinusoidal","Continuous, fenestrated, and sinusoidal","Coronary, pulmonary, and systemic"],"B"],
+[106,3,"In large elastic (conducting) arteries such as the aorta, the tunica intima forms approximately what percentage of the wall?",["10%","30%","50%","70%","90%"],"A"],
+[107,3,"In large elastic arteries, the tunica media forms approximately 70% of the wall and consists mainly of:",["Smooth muscle only","Fenestrated elastic lamellae, with number/thickness related to blood pressure and age","Collagen fibers only","Mesothelium","Reticular fibers"],"B"],
+[108,3,"In large elastic arteries, the internal and external elastic laminae are:",["Completely absent","Extremely thick and easily distinguished from surrounding tissue","Present but NOT prominent, since they blend with the elastic membranes of the media","Found only in the adventitia","Only seen in arterioles"],"C"],
+[109,3,"In large elastic arteries, vasa vasorum in the tunica adventitia are:",["Absent, since the wall is thin","Few in number","Numerous, because the thick wall cannot be nourished by diffusion from the lumen alone","Restricted to the tunica intima","Replaced entirely by lymphatic capillaries"],"C"],
+[110,3,"Medium-sized (muscular/distributing) arteries include all of the following EXCEPT the:",["Femoral artery","Radial artery","Coronary artery","Aorta","Most other named arteries"],"D"],
+[111,3,"In medium-sized muscular arteries, the prominent internal elastic lamina often appears thrown into folds. This is mainly due to:",["Fenestration by macrophages","Post-mortem contraction of smooth muscle fibers in the tunica media","Excess collagen deposition","The presence of valves","Compression by vasa vasorum"],"B"],
+[112,3,"In medium-sized muscular arteries, the tunica media forms approximately what percentage of the wall?",["10%","30%","50%","70%","90%"],"C"],
+[113,3,"Regarding vasa vasorum in medium-sized arteries, which statement is correct?",["They are completely absent","They are few, since the thinner wall can be partly nourished by diffusion","They are more numerous than in any large vessel","They are found only in veins","They replace the entire tunica adventitia"],"B"],
+[114,3,"Regarding the coronary artery as a special type of artery, which statement is TRUE?",["Its tunica media is thinner than muscular arteries of the same size","Its tunica media is thicker than muscular arteries of the same size","Its tunica intima never shows musculo-elastic thickening","Its adventitia has a low collagen-to-elastic fiber ratio","It is classified histologically as an elastic artery"],"B"],
+[115,3,"The high collagen-to-elastic fiber ratio in the adventitia of the coronary artery reflects:",["Low tensile strength and high stretchability","High tensile strength and relatively low stretchability","The presence of valves","A fenestrated wall structure","Complete absence of vasa vasorum"],"B"],
+[116,3,"Musculo-elastic thickenings normally seen in the tunica intima of the coronary artery may contribute to the development of:",["Varicose veins","Atherosclerosis","Lymphedema","Aneurysm of the aorta only","Deep vein thrombosis"],"B"],
+[117,3,"The main function of arterioles is to:",["Conduct blood at high pressure over long distances","Control peripheral resistance and regulate blood flow into the capillaries","Store large volumes of blood","Produce atrial natriuretic factor","Drain lymph back to the venous system"],"B"],
+[118,3,"The tunica media of an arteriole is formed of:",["Multiple concentric layers of smooth muscle with prominent elastic lamellae","One to two layers of smooth muscle fibers","Dense irregular connective tissue only","Cardiac muscle fibers","Fenestrated endothelium"],"B"],
+[119,3,"Which statement about the arteriole is TRUE?",["It has a well-developed external elastic lamina","It has a relatively thick wall compared to its narrow lumen, and no external elastic lamina","Its adventitia is the thickest layer of its wall","Its internal elastic lamina becomes more prominent as the vessel narrows","It contains valves like a medium-sized vein"],"B"],
+[120,3,"Comparing large arteries and large veins, which statement is TRUE?",["Veins have a thicker tunica media than arteries","Veins have a thinner intima, a relatively thinner media (~30%), and a thicker relative adventitia (~70%) compared to arteries","Arteries have valves while veins do not","Veins have prominent internal and external elastic laminae while arteries do not","Arteries have a wide, collapsed lumen compared to veins"],"B"],
+[121,3,"Regarding the tunica intima of large veins (e.g., venae cavae, subclavian, portal veins), which is TRUE?",["It has a well-developed internal elastic lamina","It is thin, with NO internal elastic lamina","It contains numerous valves","It shows fenestrated elastic lamellae","It contains cardiac muscle fibers"],"B"],
+[122,3,"The tunica media of large veins forms approximately what percentage of the wall, and is composed mainly of:",["70%; fenestrated elastic lamellae","30%; concentric smooth muscle layers with collagen fibers, and no external elastic lamina","50%; cardiac muscle","10%; endothelium only","90%; adipose tissue"],"B"],
+[123,3,"Near their entry into the heart, the venae cavae and pulmonary trunk show which unique adventitial feature?",["A thick internal elastic lamina","Extensions of atrial cardiac muscle fibers into the adventitia","Complete absence of vasa vasorum","A layer of hyaline cartilage","Numerous lymphatic valves"],"B"],
+[124,3,"The circular and longitudinal arrangement of smooth muscle in the wall of large veins mainly functions to:",["Prevent any blood flow at rest","Provide a peristaltic pumping action helping propel blood toward the heart","Store oxygen for the myocardium","Filter the blood before it reaches the heart","Generate the cardiac impulse"],"B"],
+[125,3,"Medium-sized veins differ from medium-sized arteries in that they typically have:",["A narrower, circular, empty lumen","A wider, collapsed lumen that may contain RBCs, and the presence of valves","A well-developed internal and external elastic lamina","An overall thicker wall","Fewer vasa vasorum"],"B"],
+[126,3,"Valves in medium-sized veins are:",["Absent everywhere in the body","Abundant, especially in veins of the upper and lower limbs, preventing backflow of blood","Found only in arteries","Composed of cardiac muscle tissue","Present only in the venae cavae"],"B"],
+[127,3,"Vasa vasorum are especially numerous in medium-sized veins mainly because:",["The vessel wall is extremely thin and needs no nutrition","Luminal blood in veins has low oxygen content and fewer nutrients, requiring a dedicated blood supply to the wall","Veins have no tunica media","Veins are under very high pressure","Veins lack an adventitia"],"B"],
+[128,3,"The great saphenous vein, as a special type of vein, is characterized by:",["A thin media with minimal smooth muscle","An unusually thick smooth-muscle media plus numerous longitudinal smooth muscle fibers in both the subendothelium and the adventitia","Complete absence of an internal elastic lamina","Being a deep vein with a very short course","A thick internal elastic lamina, as in a muscular artery"],"B"],
+[129,3,"Clinically, the great saphenous vein is important because it is commonly used as a graft in which surgical procedure?",["Renal transplantation","Coronary artery bypass graft (CABG) surgery","Corneal transplantation","Liver transplantation","Hip replacement surgery"],"B"],
+[130,3,"Varicose veins typically result from:",["Excess smooth muscle in the tunica media","Incompetent (damaged) valves in superficial veins, allowing blood to pool and the vein to dilate","Fenestration of the endothelium","A congenital absence of the tunica adventitia","Excess elastic fibers in the vessel wall"],"B"],
+[131,3,"Comparing the tunica adventitia of large arteries and large veins, which statement is correct?",["Large arteries have a thicker (≈70%) adventitia than veins","Large veins have a thicker (≈70%) adventitia relative to their thinner (≈30%) media, while in large arteries the adventitia (≈20%) is thinner than the media (≈70%)","Neither vessel type has a true adventitia","Only veins possess vasa vasorum","Only arteries have longitudinal smooth muscle in the adventitia"],"B"],
+[132,4,"The general histological structure of the wall of a blood vessel (excluding capillaries) is best summarized as:",["A single layer of endothelium with no connective tissue","Three tunics: intima (endothelium + subendothelial CT ± internal elastic lamina), media (smooth muscle, elastic & collagen fibers ± external elastic lamina), and adventitia (connective tissue, vasa vasorum & nerves in large vessels)","Cardiac muscle surrounded by a serosa","Two tunics only: intima and adventitia","A basal lamina surrounded by pericytes only"],"B"],
+[133,4,"The key histological difference between elastic arteries and muscular arteries in the tunica media is that:",["Elastic arteries have many elastic lamellae plus smooth muscle (to withstand pressure and maintain flow), while muscular arteries are mostly smooth muscle with fewer elastic fibers (to distribute blood by regulating diameter)","Muscular arteries have more elastic lamellae than elastic arteries","Elastic arteries lack smooth muscle entirely","Muscular arteries have a media composed only of collagen","There is no meaningful histological difference between them"],"A"],
+[134,4,"Besides overall wall thickness, which additional histological difference distinguishes arteries from veins?",["Arteries have a wide, irregular lumen and lack valves; veins have a narrow, round lumen with valves","Arteries have a narrow, round lumen and lack valves; veins have a wide, irregular lumen and possess valves (in medium-sized veins)","Arteries always contain valves while veins never do","Veins have thicker tunica media than arteries","Arteries lack an adventitia while veins do not"],"B"],
+[135,4,"The diameter of a typical blood capillary is approximately:",["100 µm, enough to allow several RBCs to pass side by side","7-9 µm (also cited as up to 9-12 µm), enough for a single RBC to pass at a time","1 mm","1 nm","500 µm"],"B"],
+[136,4,"Which type of capillary is found in the liver, spleen, and bone marrow?",["Continuous capillaries","Fenestrated capillaries","Sinusoidal (discontinuous) capillaries","Lymphatic capillaries","Metarterioles"],"C"],
+[137,4,"Two important functions of pericytes are:",["Phagocytosis and antigen presentation","Contractile regulation of capillary blood flow, and acting as stem cells that can differentiate into smooth muscle cells or fibroblasts","Hormone secretion and lipid storage","Formation of the basal lamina of epithelium","Producing atrial natriuretic factor"],"B"],
+[138,4,"The principal site of leukocyte transmigration during inflammation, lined by endothelium and surrounding pericytes, is the:",["Muscular venule","Post-capillary venule","Metarteriole","Elastic artery","Lymphatic capillary"],"B"],
+[139,4,"Muscular venules differ from post-capillary venules mainly in that muscular venules:",["Lack any endothelial lining","Possess 1-2 layers of smooth muscle in the tunica media","Are the principal site of leukocyte migration","Have a diameter of only 15-30 µm","Contain cardiac muscle in their wall"],"B"],
+[140,4,"The key histological feature distinguishing lymphatic vessels from veins is that lymphatic vessels:",["Have thicker walls and fewer valves","Have thinner walls, more numerous valves, a discontinuous basal lamina, and most importantly lack red blood cells","Always contain a well-developed tunica media","Have no endothelial lining","Contain smooth muscle identical in amount to arteries"],"B"],
+[141,5,"Peripheral circulation is best defined as:",["The blood supply to the heart itself","The connection between arteries and veins, including capillaries and arteriovenous (A-V) shunts","The lymphatic drainage of the lower limbs only","The coronary circulation exclusively","The pulmonary circulation"],"B"],
+[142,5,"Capillaries make up approximately what percentage of total body vasculature?",["10%","25%","50%","90%","100%"],"D"],
+[143,5,"In a capillary, the endothelial basal lamina is split to enclose which cell type?",["Macrophage","Fibroblast","Pericyte","Mast cell","Plasma cell"],"C"],
+[144,5,"Continuous capillaries (muscular type) are characterized by all of the following EXCEPT:",["No fenestrations in the wall","A continuous basal lamina","Occluding junctions with overlapping marginal folds between endothelial cells","Numerous pinocytotic vesicles","Large fenestrations closed by a diaphragm"],"E"],
+[145,5,"Continuous capillaries contribute to the formation of which of the following barriers?",["Blood-brain barrier, blood-air barrier, and blood-thymus barrier","Blood-liver barrier only","Blood-bone marrow barrier","Blood-spleen barrier","None; continuous capillaries do not form barriers"],"A"],
+[146,5,"The most common type of capillary in the body — found in muscle, lung, skin, and nervous tissue — is the:",["Fenestrated capillary","Sinusoidal capillary","Continuous (muscular type) capillary","Lymphatic capillary","Metarteriole"],"C"],
+[147,5,"Fenestrated capillaries (visceral type) differ from continuous capillaries mainly in that they:",["Have a discontinuous basal lamina","Have numerous fenestrations in the endothelial cells, closed by a thin non-membranous diaphragm derived from the glycocalyx","Lack a basal lamina entirely","Are lined by macrophages instead of endothelial cells","Are found only in the central nervous system"],"B"],
+[148,5,"Fenestrated capillaries are typically found in:",["Skeletal muscle and skin only","Endocrine glands (secretion), the small intestine (absorption), and renal glomeruli","The liver and spleen only","The brain exclusively","The myocardium"],"B"],
+[149,5,"Sinusoidal capillaries (sinusoids) are characterized by all of the following EXCEPT:",["A large diameter (30-40 µm)","An irregular outline","Large fenestrations without diaphragms and wide intercellular gaps","A discontinuous basal lamina supported by reticular fibers","A regular, narrow, circular lumen"],"E"],
+[150,5,"Macrophages are commonly associated with which type of capillary?",["Continuous capillaries","Fenestrated capillaries","Sinusoidal capillaries","Lymphatic capillaries","Metarterioles"],"C"],
+[151,5,"Which type of capillary allows maximal exchange, including movement of whole cells, between blood and tissue?",["Continuous capillaries","Fenestrated capillaries","Sinusoidal capillaries","Lymphatic capillaries","Muscular venules"],"C"],
+[152,5,"An arteriovenous (A-V) anastomosis/shunt is best defined as:",["A capillary bed with an unusually wide lumen","A direct connection between an arteriole and a venule that bypasses the capillary bed","A connection between two arterioles","A type of lymphatic valve","A fenestrated capillary found in the skin"],"B"],
+[153,5,"The arteriolar side of an A-V shunt is characterized by:",["A very thin wall with no smooth muscle","A relatively thick smooth muscle layer and rich autonomic innervation","Complete absence of nerve supply","A wide, fenestrated endothelium","The presence of valves"],"B"],
+[154,5,"Contraction of the smooth muscle at the arteriolar side of an A-V shunt will:",["Close the shunt and direct blood into the capillary bed","Open the shunt and bypass the capillary bed","Have no effect on regional blood flow","Cause vasodilation of the capillary bed","Completely stop blood flow to the region"],"A"],
+[155,5,"Relaxation of the arteriolar smooth muscle of an A-V shunt will:",["Close the shunt","Open the shunt, sending a considerable volume of blood directly into the venule and bypassing the capillary bed","Constrict the capillary bed","Increase capillary exchange","Have no functional effect"],"B"],
+[156,5,"A-V shunts are typically found in all of the following sites EXCEPT:",["Skin of the palm and sole","Nose and lips","Erectile tissue of the penis","Myocardium of the left ventricle","None — all listed sites (A-C) are correct"],"D"],
+[157,5,"When a person is hot, sympathetic nerve fibers acting on cutaneous A-V shunts will:",["Open the shunts, conserving heat","Close the shunts, forcing blood through superficial capillaries to radiate heat","Have no effect on the shunts","Cause the shunts to become fenestrated","Convert the shunts into lymphatic vessels"],"B"],
+[158,5,"When a person is cold, sensory nerve fibers acting on cutaneous A-V shunts will:",["Close the shunts, forcing blood through capillaries to lose heat","Open the shunts, bypassing superficial capillaries to conserve heat","Have no effect on the shunts","Increase capillary fenestration","Increase lymphatic drainage"],"B"],
+[159,5,"The lymphatic system is best defined as:",["A system that supplies oxygenated blood to peripheral tissues","A drainage system that collects excess interstitial fluid (as lymph) and returns it to the blood","The system responsible for cardiac conduction","A system exclusively for transporting red blood cells","The arterial supply to lymphoid organs only"],"B"],
+[160,5,"Lymph is composed mainly of:",["Red blood cells and platelets","Protein-rich fluid removed from the intercellular spaces, and lipids too large to cross intestinal capillary fenestrations","Pure water with no protein or lipid content","Bile and digestive enzymes","Glycogen granules"],"B"],
+[161,5,"The protein and lipid components of lymph cannot be reabsorbed directly by the venous side of the blood circulation mainly because of their:",["Negative charge","Large molecular size","High temperature","Acidic pH","Low solubility in water"],"B"],
+[162,5,"Lymphatic capillaries are structurally characterized by all of the following EXCEPT:",["Blind-ended channels","Irregular shape","An incomplete (discontinuous) basal lamina","Anchoring filaments binding to surrounding connective tissue","A continuous basal lamina identical to that of blood capillaries"],"E"],
+[163,5,"The function of the anchoring filaments of lymphatic capillaries is to:",["Propel lymph forward by contraction","Keep the intercellular openings patent, especially when interstitial pressure rises, allowing fluid entry","Attach the capillary to the venous system directly","Prevent any fluid from entering the capillary","Form the valves of the lymphatic capillary"],"B"],
+[164,5,"Which cell type is associated with continuous and fenestrated capillaries (and post-capillary venules), as opposed to macrophages which are associated with sinusoids?",["Fibroblasts","Pericytes","Mast cells","Plasma cells","Adipocytes"],"B"],
+[165,5,"Regarding large lymphatic vessels compared to veins, which statement is TRUE?",["They are thicker-walled than veins","They resemble veins (having valves for unidirectional flow) but have thinner walls without a clear separation into intima, media, and adventitia","They completely lack valves","They contain as much smooth muscle as arteries","They carry RBCs, just like veins"],"B"],
+[166,5,"Large lymphatic vessels ultimately converge to form which two main channels that empty lymph back into the blood?",["The superior and inferior venae cavae","The thoracic duct and the right lymphatic duct","The hepatic portal vein and splenic vein","The pulmonary trunk and aorta","The coronary sinus and azygos vein"],"B"],
+[167,5,"Regarding the connections of lymphatic capillaries compared to blood capillaries, which is TRUE?",["Both are open at both ends, connecting to arterioles and venules","Lymphatic capillaries are blind-ended, connecting only to larger lymphatic vessels, while blood capillaries are open at both ends (connecting to arterioles and venules)","Blood capillaries are blind-ended while lymphatic capillaries are open at both ends","Neither type of capillary has any connections to larger vessels","Both types are blind-ended"],"B"],
+[168,5,"A structure described as 'resting on an incomplete basal lamina, lined by endothelial cells, and forming a blind-ended irregular channel with anchoring filaments' is best identified as a:",["Fenestrated blood capillary","Sinusoidal capillary","Lymphatic capillary","Muscular venule","Metarteriole"],"C"]
+];
+
+const sectionNames = {
+    1: "Section 1: Heart & Cardiomyocytes",
+    2: "Section 2: Fibrous Skeleton & Valves",
+    3: "Section 3: Blood Vessels",
+    4: "Section 4: Histology of Vessels",
+    5: "Section 5: Peripheral Circulation"
+};
+
+// State Management
+let pendingSelections = {}; // qId: selectedLetter (before confirmation)
+let confirmedAnswers = JSON.parse(localStorage.getItem('azhar_cvs_histo_answers') || '{}');
+let singleQuestionMode = false;
+let currentQuestionIndex = 0;
+
+function saveProgress() {
+    localStorage.setItem('azhar_cvs_histo_answers', JSON.stringify(confirmedAnswers));
+}
+
+function toggleViewMode() {
+    singleQuestionMode = !singleQuestionMode;
+    currentQuestionIndex = 0;
+    document.getElementById('viewModeLabel').innerText = singleQuestionMode ? 'عرض القائمة الكاملة' : 'عرض سؤال بسؤال';
+    renderQuestions();
+}
+
+function onFilterChange() {
+    currentQuestionIndex = 0;
+    renderQuestions();
+}
+
+function getFilteredQuestions() {
+    const sec = parseInt(document.getElementById('sectionSelect').value, 10);
+    const search = document.getElementById('searchInput').value.toLowerCase().trim();
+    return rawQuestions.filter(q => {
+        const matchSec = sec === 0 || q[1] === sec;
+        const matchSearch = !search || q[2].toLowerCase().includes(search) || q[3].some(opt => opt.toLowerCase().includes(search));
+        return matchSec && matchSearch;
+    });
+}
+
+function selectOption(qId, letter) {
+    if (confirmedAnswers[qId]) return;
+    pendingSelections[qId] = letter;
+    renderQuestions();
+}
+
+function confirmAnswer(qId) {
+    const selected = pendingSelections[qId];
+    if (!selected || confirmedAnswers[qId]) return;
+    confirmedAnswers[qId] = selected;
+    const q = rawQuestions.find(x => x[0] === qId);
+    playFeedbackSound(selected === q[4]);
+    saveProgress();
+    updateStats();
+    renderQuestions();
+}
+
+function navigateSingle(delta, totalFiltered) {
+    const nextIdx = currentQuestionIndex + delta;
+    if (nextIdx >= 0 && nextIdx < totalFiltered) {
+        currentQuestionIndex = nextIdx;
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function renderQuestions() {
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+    const filtered = getFilteredQuestions();
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<div class="q-card" style="text-align:center; color:var(--text-secondary);">No matching questions found.</div>`;
+        return;
+    }
+
+    const questionsToShow = singleQuestionMode ? [filtered[currentQuestionIndex]] : filtered;
+
+    questionsToShow.forEach((q, idx) => {
+        const [id, sec, text, options, ans] = q;
+        const confirmed = confirmedAnswers[id];
+        const pending = pendingSelections[id];
+        const displayPos = singleQuestionMode ? (currentQuestionIndex + 1) : (idx + 1);
+
+        const card = document.createElement('article');
+        card.className = 'q-card';
+
+        let optsHTML = '';
+        options.forEach((optText, optIdx) => {
+            const letter = letters[optIdx];
+            let btnClass = 'option-btn';
+            let statusTag = '';
+
+            if (confirmed) {
+                if (letter === ans) {
+                    btnClass += ' correct';
+                    statusTag = `<span class="opt-status-tag tag-correct">✓ Correct</span>`;
+                } else if (letter === confirmed && confirmed !== ans) {
+                    btnClass += ' wrong';
+                    statusTag = `<span class="opt-status-tag tag-wrong">✕ Incorrect</span>`;
+                }
+            } else if (pending === letter) {
+                btnClass += ' selected';
+            }
+
+            optsHTML += `
+                <button type="button" class="${btnClass}" ${confirmed ? 'disabled' : ''} onclick="selectOption(${id}, '${letter}')">
+                    <span class="opt-badge">${letter}</span>
+                    <span style="flex:1;">${optText}</span>
+                    ${statusTag}
+                </button>
+            `;
+        });
+
+        const correctFullText = options[letters.indexOf(ans)];
+        const extraNote = specificExplanations[id] ? `<div class="explanation-note"><strong>Academic Note:</strong> ${specificExplanations[id]}</div>` : '';
+
+        let actionAndFeedbackHTML = '';
+        if (!confirmed) {
+            actionAndFeedbackHTML = `
+                <div class="card-actions">
+                    <button type="button" class="btn-primary" ${!pending ? 'disabled' : ''} onclick="confirmAnswer(${id})">
+                        Confirm Answer
+                    </button>
+                </div>
+            `;
+        } else {
+            const isCorrect = confirmed === ans;
+            actionAndFeedbackHTML = `
+                <div class="explanation-box ${isCorrect ? '' : 'is-wrong'}" role="status">
+                    <div class="feedback-headline">
+                        ${isCorrect 
+                            ? `<span>✓ Correct Answer (${ans})</span>` 
+                            : `<span>✕ Incorrect Selection (${confirmed}) — Correct Answer is${ans}</span>`
+                        }
+                    </div>
+                    <div><strong>Verified Key:</strong> Option ${ans} — ${correctFullText}</div>
+                    ${extraNote}
+                </div>
+            `;
+        }
+
+        let singleNavHTML = '';
+        if (singleQuestionMode) {
+            singleNavHTML = `
+                <div class="single-nav">
+                    <button type="button" class="btn-utility" ${currentQuestionIndex === 0 ? 'disabled' : ''} onclick="navigateSingle(-1, ${filtered.length})">
+                        ← Previous Question
+                    </button>
+                    <button type="button" class="btn-primary" ${currentQuestionIndex >= filtered.length - 1 ? 'disabled' : ''} onclick="navigateSingle(1, ${filtered.length})">
+                        Next Question →
+                    </button>
+                </div>
+            `;
+        }
+
+        card.innerHTML = `
+            <div class="q-meta">
+                <span class="q-counter">Question ${displayPos} of ${filtered.length} (ID #${id})</span>
+                <span class="q-section-name">${sectionNames[sec]}</span>
+            </div>
+            <div class="q-stem">${text}</div>
+            <div class="options-list">${optsHTML}</div>
+            ${actionAndFeedbackHTML}
+            ${singleNavHTML}
+        `;
+        container.appendChild(card);
+    });
+}
+
+function updateStats() {
+    let correct = 0;
+    let wrong = 0;
+    Object.keys(confirmedAnswers).forEach(qId => {
+        const q = rawQuestions.find(item => item[0] == qId);
+        if (q) {
+            if (confirmedAnswers[qId] === q[4]) correct++;
+            else wrong++;
+        }
+    });
+
+    const total = rawQuestions.length;
+    const answered = correct + wrong;
+    const rem = total - answered;
+    const scorePerc = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+    const progressPerc = Math.round((answered / total) * 100);
+
+    document.getElementById('st-correct').innerText = correct;
+    document.getElementById('st-wrong').innerText = wrong;
+    document.getElementById('st-rem').innerText = rem;
+
+    document.getElementById('progressText').innerText = `Completed: ${answered} of ${total} (${progressPerc}%)`;
+    document.getElementById('scoreText').innerText = `Accuracy: ${scorePerc}%`;
+    document.getElementById('progressFill').style.width = `${progressPerc}%`;
+    document.getElementById('progressBarAria').setAttribute('aria-valuenow', progressPerc);
+}
+
+function resetQuiz() {
+    if (confirm('هل تريد مسح جميع الإجابات المحفوظة والبدء من جديد؟')) {
+        confirmedAnswers = {};
+        pendingSelections = {};
+        localStorage.removeItem('azhar_cvs_histo_answers');
+        updateStats();
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+window.onload = function() {
+    updateStats();
+    renderQuestions();
+};
+</script>
+</body>
+</html>
