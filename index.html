@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Luxury Navy & Gold Theme */
 :root {
     --bg-main: #0B1528;
     --bg-card: #132238;
@@ -42,7 +43,11 @@
     --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     background-color: var(--bg-main);
@@ -54,16 +59,27 @@ body {
     overflow-x: hidden;
 }
 
-.container { max-width: 820px; margin: 20px auto; padding: 0 14px; }
+.container {
+    max-width: 820px;
+    margin: 20px auto;
+    padding: 0 14px;
+}
 
+/* Full-Screen Visual Effects Overlay (Green Confetti & Red X's) */
 #fx-overlay {
-    position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden;
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 #fx-overlay.flash-green {
     background-color: rgba(16, 185, 129, 0.16);
     box-shadow: inset 0 0 90px rgba(16, 185, 129, 0.65);
 }
+
 #fx-overlay.flash-red {
     background-color: rgba(239, 68, 68, 0.22);
     box-shadow: inset 0 0 100px rgba(239, 68, 68, 0.75);
@@ -76,239 +92,670 @@ body {
     60% { transform: translateX(-6px); }
     80% { transform: translateX(6px); }
 }
-.shake-anim { animation: screenShake 0.4s ease; }
+
+.shake-anim {
+    animation: screenShake 0.4s ease;
+}
 
 .fx-particle {
-    position: absolute; top: -50px; user-select: none; pointer-events: none;
+    position: absolute;
+    top: -50px;
+    user-select: none;
+    pointer-events: none;
     animation: fallDown linear forwards;
 }
+
 @keyframes fallDown {
-    0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
-    100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+    }
 }
 
+/* Hero Banner Card */
 .hero-card {
     background: linear-gradient(180deg, #152744 0%, #0F1E36 100%);
     border: 1.5px solid rgba(229, 193, 88, 0.35);
     border-top: 3px solid var(--gold-bright);
-    border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-card);
-    margin-bottom: 22px; color: #FFFFFF;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 22px;
+    color: #FFFFFF;
 }
-.hero-img-box { position: relative; width: 100%; height: 230px; background-color: #0d1b30; overflow: hidden; }
-.hero-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.hero-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,30,54,0.05) 35%, #11223D 100%); }
-.hero-body { padding: 6px 22px 26px; text-align: center; }
 
-.uni-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 18px; text-align: right; }
-.uni-logo-circle {
-    width: 68px; height: 68px; border-radius: 50%; background: #FFFFFF; padding: 3px;
-    border: 2px solid var(--gold-bright); box-shadow: 0 0 18px rgba(244, 208, 104, 0.55);
-    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+.hero-img-box {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    background-color: #0d1b30;
+    overflow: hidden;
 }
-.uni-logo-circle img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
-.uni-titles h2 { font-size: 1.35rem; font-weight: 800; color: #FFFFFF; line-height: 1.35; }
-.uni-titles p { font-size: 0.92rem; font-weight: 700; color: var(--gold-bright); margin-top: 3px; }
+
+.hero-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(15,30,54,0.05) 35%, #11223D 100%);
+}
+
+.hero-body {
+    padding: 6px 22px 26px;
+    text-align: center;
+}
+
+.uni-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 18px;
+    text-align: right;
+}
+
+.uni-logo-circle {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    padding: 3px;
+    border: 2px solid var(--gold-bright);
+    box-shadow: 0 0 18px rgba(244, 208, 104, 0.55);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uni-logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.uni-titles h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.35;
+}
+
+.uni-titles p {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--gold-bright);
+    margin-top: 3px;
+}
 
 .author-pill {
-    background: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(244, 208, 104, 0.65);
-    border-radius: 999px; padding: 9px 22px; display: inline-flex; align-items: center;
-    justify-content: center; flex-wrap: wrap; gap: 10px; margin: 0 auto 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(244, 208, 104, 0.65);
+    border-radius: 999px;
+    padding: 9px 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 auto 18px;
 }
-.author-pill .lbl-gold { color: var(--gold-bright); font-weight: 700; font-size: 0.95rem; }
-.author-pill .name-white { color: #FFFFFF; font-weight: 800; font-size: 1.05rem; }
 
-.hero-divider { height: 1px; background: rgba(255, 255, 255, 0.12); margin: 0 auto 18px; width: 92%; }
-.hero-main-title { font-size: 1.7rem; font-weight: 900; color: var(--gold-bright); line-height: 1.45; margin-bottom: 10px; }
-.hero-desc { color: #CBD5E1; font-size: 0.96rem; max-width: 650px; margin: 0 auto 16px; line-height: 1.7; }
-.hero-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+.author-pill .lbl-gold {
+    color: var(--gold-bright);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.author-pill .name-white {
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 1.05rem;
+}
+
+.hero-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+    margin: 0 auto 18px;
+    width: 92%;
+}
+
+.hero-main-title {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: var(--gold-bright);
+    line-height: 1.45;
+    margin-bottom: 10px;
+}
+
+.hero-desc {
+    color: #CBD5E1;
+    font-size: 0.96rem;
+    max-width: 650px;
+    margin: 0 auto 16px;
+    line-height: 1.7;
+}
+
+.hero-badges {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 .hero-badge {
-    background: rgba(11, 21, 40, 0.65); border: 1px solid rgba(244, 208, 104, 0.35);
-    color: #F8FAFC; padding: 6px 14px; border-radius: 10px; font-size: 0.84rem; font-weight: 700;
+    background: rgba(11, 21, 40, 0.65);
+    border: 1px solid rgba(244, 208, 104, 0.35);
+    color: #F8FAFC;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    font-weight: 700;
 }
 
+/* Sticky Status Bar */
 .sticky-bar {
-    position: sticky; top: 0; z-index: 100; background: rgba(19, 34, 56, 0.96);
-    backdrop-filter: blur(12px); border-bottom: 1.5px solid var(--gold-main);
-    padding: 10px 14px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(19, 34, 56, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1.5px solid var(--gold-main);
+    padding: 10px 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
-[data-theme="light"] .sticky-bar { background: rgba(255, 255, 255, 0.96); }
+
+[data-theme="light"] .sticky-bar {
+    background: rgba(255, 255, 255, 0.96);
+}
+
 .sticky-inner {
-    max-width: 820px; margin: 0 auto; display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 8px;
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.stats-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.84rem; font-weight: 700; }
-.stat-pill { padding: 4px 9px; border-radius: 8px; background: var(--bg-card-inner); border: 1px solid var(--border-color); }
-.stat-pill b { font-family: 'Inter', sans-serif; margin-right: 3px; }
+.stats-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
 
-.actions-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.stat-pill {
+    padding: 4px 9px;
+    border-radius: 8px;
+    background: var(--bg-card-inner);
+    border: 1px solid var(--border-color);
+}
+
+.stat-pill b {
+    font-family: 'Inter', sans-serif;
+    margin-right: 3px;
+}
+
+.actions-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
 .btn-ctrl {
-    background: var(--bg-card-inner); color: var(--text-main); border: 1px solid var(--border-color);
-    padding: 6px 11px; border-radius: 8px; font-family: 'Cairo', sans-serif;
-    font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s;
+    background: var(--bg-card-inner);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 6px 11px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
 }
+
 .btn-ctrl:hover, .btn-ctrl.active-filter {
-    border-color: var(--gold-bright); background: var(--selected-bg); color: var(--gold-bright);
+    border-color: var(--gold-bright);
+    background: var(--selected-bg);
+    color: var(--gold-bright);
 }
-[data-theme="light"] .btn-ctrl.active-filter { color: var(--gold-main); }
+
+[data-theme="light"] .btn-ctrl.active-filter {
+    color: var(--gold-main);
+}
 
 .btn-finish-top {
     background: linear-gradient(135deg, var(--gold-main), var(--gold-bright));
-    color: #0B1528; border: none; padding: 6px 13px; border-radius: 8px;
-    font-family: 'Cairo', sans-serif; font-size: 0.82rem; font-weight: 800; cursor: pointer;
+    color: #0B1528;
+    border: none;
+    padding: 6px 13px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
 }
 
 .progress-track {
-    max-width: 820px; margin: 8px auto 0; height: 5px; background: var(--bg-card-inner);
-    border-radius: 99px; overflow: hidden;
+    max-width: 820px;
+    margin: 8px auto 0;
+    height: 5px;
+    background: var(--bg-card-inner);
+    border-radius: 99px;
+    overflow: hidden;
 }
-.progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-main), var(--gold-bright)); width: 0%; transition: width 0.3s ease; }
 
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-main), var(--gold-bright));
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Mode Selector Bar */
 .mode-selector {
-    background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
-    padding: 12px; margin-bottom: 16px; display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px; box-shadow: var(--shadow-card);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    box-shadow: var(--shadow-card);
 }
+
 .mode-btn {
-    padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--border-color);
-    background: var(--bg-card-inner); color: var(--text-secondary); font-family: 'Cairo', sans-serif;
-    font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: 0.2s;
-    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border-color);
+    background: var(--bg-card-inner);
+    color: var(--text-secondary);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
 }
-.mode-btn span.sub-desc { font-size: 0.75rem; font-weight: 600; opacity: 0.85; }
-.mode-btn.active { background: var(--selected-bg); border-color: var(--gold-bright); color: var(--gold-bright); }
-[data-theme="light"] .mode-btn.active { color: var(--gold-main); border-color: var(--gold-main); }
 
+.mode-btn span.sub-desc {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.85;
+}
+
+.mode-btn.active {
+    background: var(--selected-bg);
+    border-color: var(--gold-bright);
+    color: var(--gold-bright);
+}
+
+[data-theme="light"] .mode-btn.active {
+    color: var(--gold-main);
+    border-color: var(--gold-main);
+}
+
+/* Filter Toolbar */
 .toolbar {
-    background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
-    padding: 14px; margin-bottom: 20px; display: flex; flex-direction: column;
-    gap: 10px; box-shadow: var(--shadow-card);
-}
-.filter-row { display: flex; gap: 10px; flex-wrap: wrap; }
-.select-box, .search-box {
-    flex: 1; min-width: 210px; min-height: 44px; padding: 9px 14px; border-radius: 10px;
-    border: 1px solid var(--border-color); background: var(--bg-card-inner); color: var(--text-main);
-    font-family: 'Cairo', 'Inter', sans-serif; font-size: 0.92rem; outline: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: var(--shadow-card);
 }
 
+.filter-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.select-box,
+.search-box {
+    flex: 1;
+    min-width: 210px;
+    min-height: 44px;
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card-inner);
+    color: var(--text-main);
+    font-family: 'Cairo', 'Inter', sans-serif;
+    font-size: 0.92rem;
+    outline: none;
+}
+
+/* Question Card */
 .q-card {
-    background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
-    padding: 22px 18px; margin-bottom: 18px; direction: ltr; text-align: left;
-    font-family: 'Inter', sans-serif; box-shadow: var(--shadow-card); position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 22px 18px;
+    margin-bottom: 18px;
+    direction: ltr;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.2s;
 }
-.q-card.bookmarked-card { border-color: var(--gold-bright); }
+
+.q-card.bookmarked-card {
+    border-color: var(--gold-bright);
+}
+
 .q-header {
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
-    gap: 8px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
 }
+
 .q-badge {
-    background: rgba(229, 193, 88, 0.15); color: var(--gold-bright);
-    border: 1px solid rgba(229, 193, 88, 0.4); padding: 4px 11px; border-radius: 8px;
-    font-size: 0.82rem; font-weight: 700;
+    background: rgba(229, 193, 88, 0.15);
+    color: var(--gold-bright);
+    border: 1px solid rgba(229, 193, 88, 0.4);
+    padding: 4px 11px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
 }
-[data-theme="light"] .q-badge { color: var(--gold-main); }
-.q-header-right { display: flex; align-items: center; gap: 8px; }
-.q-sec-label { font-size: 0.78rem; color: var(--text-secondary); font-weight: 500; }
 
-.btn-card-action {
-    background: var(--bg-card-inner); color: var(--text-secondary); border: 1px solid var(--border-color);
-    padding: 4px 10px; border-radius: 8px; font-family: 'Cairo', sans-serif;
-    font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: 0.2s;
+[data-theme="light"] .q-badge {
+    color: var(--gold-main);
 }
-.btn-card-action.active {
-    background: rgba(244, 208, 104, 0.2); color: var(--gold-bright); border-color: var(--gold-bright);
-}
-[data-theme="light"] .btn-card-action.active { color: var(--gold-main); border-color: var(--gold-main); }
 
-.scratchpad-canvas {
-    display: none; position: absolute; inset: 0; z-index: 50; width: 100%; height: 100%;
-    background: rgba(11, 21, 40, 0.85); border-radius: 16px; touch-action: none; cursor: crosshair;
+.q-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
-.scratchpad-toolbar {
-    display: none; position: absolute; top: 10px; left: 10px; z-index: 60;
-    gap: 6px; background: rgba(19, 34, 56, 0.95); padding: 5px 8px; border-radius: 8px;
-    border: 1px solid var(--gold-main);
-}
-.scratchpad-canvas.active, .scratchpad-toolbar.active { display: flex; }
 
-.q-stem { font-size: 1.06rem; font-weight: 600; color: var(--text-main); margin-bottom: 18px; line-height: 1.55; }
-.options-list { display: flex; flex-direction: column; gap: 10px; }
+.q-sec-label {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.btn-bookmark {
+    background: var(--bg-card-inner);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-bookmark.active {
+    background: rgba(244, 208, 104, 0.2);
+    color: var(--gold-bright);
+    border-color: var(--gold-bright);
+}
+
+[data-theme="light"] .btn-bookmark.active {
+    color: var(--gold-main);
+    border-color: var(--gold-main);
+}
+
+.q-stem {
+    font-size: 1.06rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 18px;
+    line-height: 1.55;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 .option-btn {
-    width: 100%; min-height: 50px; background: var(--bg-card-inner); border: 1.5px solid var(--border-color);
-    color: var(--text-main); padding: 12px 14px; border-radius: 12px; text-align: left;
-    font-family: 'Inter', sans-serif; font-size: 0.95rem; cursor: pointer; display: flex;
-    align-items: center; gap: 12px; transition: all 0.15s ease;
+    width: 100%;
+    min-height: 50px;
+    background: var(--bg-card-inner);
+    border: 1.5px solid var(--border-color);
+    color: var(--text-main);
+    padding: 12px 14px;
+    border-radius: 12px;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.15s ease;
 }
-.option-btn:hover:not(:disabled) { border-color: var(--gold-main); background: var(--selected-bg); }
-.option-btn.exam-selected { background: var(--selected-bg) !important; border-color: var(--gold-bright) !important; font-weight: 600; }
-.option-btn.exam-selected .opt-char { background: var(--gold-bright); color: #0B1528; border-color: var(--gold-bright); }
+
+.option-btn:hover:not(:disabled) {
+    border-color: var(--gold-main);
+    background: var(--selected-bg);
+}
+
+.option-btn.exam-selected {
+    background: var(--selected-bg) !important;
+    border-color: var(--gold-bright) !important;
+    font-weight: 600;
+}
+
+.option-btn.exam-selected .opt-char {
+    background: var(--gold-bright);
+    color: #0B1528;
+    border-color: var(--gold-bright);
+}
 
 .opt-char {
-    min-width: 30px; height: 30px; border-radius: 8px; background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border-color); color: var(--gold-bright); display: inline-flex;
-    align-items: center; justify-content: center; font-weight: 700; font-size: 0.88rem; flex-shrink: 0;
+    min-width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    color: var(--gold-bright);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.88rem;
+    flex-shrink: 0;
 }
-[data-theme="light"] .opt-char { color: var(--gold-main); background: #FFFFFF; }
 
-.option-btn.correct { background: var(--correct-bg) !important; border-color: var(--correct-border) !important; font-weight: 600; }
-.option-btn.correct .opt-char { background: var(--correct-border); color: #FFFFFF; border-color: var(--correct-border); }
-.option-btn.wrong { background: var(--wrong-bg) !important; border-color: var(--wrong-border) !important; }
-.option-btn.wrong .opt-char { background: var(--wrong-border); color: #FFFFFF; border-color: var(--wrong-border); }
+[data-theme="light"] .opt-char {
+    color: var(--gold-main);
+    background: #FFFFFF;
+}
 
-.status-tag { margin-left: auto; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; }
+.option-btn.correct {
+    background: var(--correct-bg) !important;
+    border-color: var(--correct-border) !important;
+    font-weight: 600;
+}
+
+.option-btn.correct .opt-char {
+    background: var(--correct-border);
+    color: #FFFFFF;
+    border-color: var(--correct-border);
+}
+
+.option-btn.wrong {
+    background: var(--wrong-bg) !important;
+    border-color: var(--wrong-border) !important;
+}
+
+.option-btn.wrong .opt-char {
+    background: var(--wrong-border);
+    color: #FFFFFF;
+    border-color: var(--wrong-border);
+}
+
+.status-tag {
+    margin-left: auto;
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
 .feedback-panel {
-    margin-top: 15px; padding: 13px 15px; border-radius: 12px; background: var(--bg-card-inner);
-    border-left: 4px solid var(--gold-main); font-size: 0.91rem; line-height: 1.6;
+    margin-top: 15px;
+    padding: 13px 15px;
+    border-radius: 12px;
+    background: var(--bg-card-inner);
+    border-left: 4px solid var(--gold-main);
+    font-size: 0.91rem;
+    line-height: 1.6;
 }
+
 .feedback-panel.is-correct { border-left-color: var(--correct-border); }
 .feedback-panel.is-wrong { border-left-color: var(--wrong-border); }
 
-.single-nav { display: flex; justify-content: space-between; margin-top: 16px; gap: 10px; }
-.btn-nav {
-    background: var(--gold-main); color: #0B1528; border: none; padding: 10px 20px;
-    border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif;
+.single-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    gap: 10px;
 }
-.btn-nav:disabled { opacity: 0.4; cursor: not-allowed; }
 
-.modal-backdrop {
-    position: fixed; inset: 0; background: rgba(5, 10, 20, 0.85); backdrop-filter: blur(8px);
-    z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px;
+.btn-nav {
+    background: var(--gold-main);
+    color: #0B1528;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
 }
-.modal-backdrop.show { display: flex; }
+
+.btn-nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Final Score Modal */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 10, 20, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.modal-backdrop.show {
+    display: flex;
+}
 
 .result-modal {
-    background: var(--bg-card); border: 2px solid var(--gold-bright); border-radius: 22px;
-    max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 26px 20px;
-    text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    background: var(--bg-card);
+    border: 2px solid var(--gold-bright);
+    border-radius: 22px;
+    max-width: 480px;
+    width: 100%;
+    padding: 28px 22px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
 }
+
 .score-circle {
-    width: 125px; height: 125px; border-radius: 50%; border: 4px solid var(--gold-bright);
-    background: var(--bg-card-inner); display: flex; flex-direction: column; align-items: center;
-    justify-content: center; margin: 14px auto 18px; box-shadow: 0 0 25px rgba(244, 208, 104, 0.3);
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    border: 4px solid var(--gold-bright);
+    background: var(--bg-card-inner);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 14px auto 18px;
+    box-shadow: 0 0 25px rgba(244, 208, 104, 0.3);
 }
-.score-circle b { font-size: 2rem; font-family: 'Inter', sans-serif; color: var(--gold-bright); line-height: 1; }
-.score-circle span { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
 
-.result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
-.res-box { background: var(--bg-card-inner); border: 1px solid var(--border-color); border-radius: 12px; padding: 10px 6px; font-size: 0.85rem; }
-.res-box b { display: block; font-size: 1.25rem; font-family: 'Inter', sans-serif; }
-
-.analytics-panel {
-    background: var(--bg-card-inner); border: 1px solid var(--border-color); border-radius: 14px;
-    padding: 14px; margin: 18px 0; text-align: right;
+.score-circle b {
+    font-size: 2rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--gold-bright);
+    line-height: 1;
 }
-.analytics-panel h4 { font-size: 0.95rem; color: var(--gold-bright); margin-bottom: 10px; }
-.sec-bar-item { margin-bottom: 10px; font-size: 0.82rem; }
-.sec-bar-label { display: flex; justify-content: space-between; margin-bottom: 3px; font-weight: 600; }
-.sec-bar-track { height: 8px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; }
-.sec-bar-fill { height: 100%; border-radius: 99px; }
 
-.modal-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+.score-circle span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 18px 0 22px;
+}
+
+.res-box {
+    background: var(--bg-card-inner);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px 6px;
+    font-size: 0.85rem;
+}
+
+.res-box b {
+    display: block;
+    font-size: 1.25rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
 footer {
-    text-align: center; padding: 28px 16px; color: var(--text-secondary);
-    font-size: 0.9rem; border-top: 1px solid var(--border-color); margin-top: 40px;
+    text-align: center;
+    padding: 28px 16px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 40px;
 }
 
 @media (max-width: 600px) {
@@ -321,21 +768,20 @@ footer {
 </head>
 <body>
 
+<!-- Visual Screen Effects Layer -->
 <div id="fx-overlay"></div>
 
+<!-- Sticky Top Bar -->
 <div class="sticky-bar">
     <div class="sticky-inner">
         <div class="stats-group" id="liveStatsGroup">
-            <span class="stat-pill" id="timerPill" style="display:none; color:var(--gold-bright);">⏱️ <b id="timerDisplay">168:00</b></span>
             <span class="stat-pill">الكل: <b>168</b></span>
             <span class="stat-pill" id="pill-correct" style="color:var(--correct-border)">صح: <b id="st-correct">0</b></span>
             <span class="stat-pill" id="pill-wrong" style="color:var(--wrong-border)">خطأ: <b id="st-wrong">0</b></span>
             <span class="stat-pill" style="color:var(--gold-bright)"><span id="lbl-perc">النسبة:</span> <b id="st-perc">0%</b></span>
         </div>
         <div class="actions-group">
-            <button class="btn-ctrl" id="mistakesFilterBtn" onclick="toggleMistakesFilter()">❌ الأخطاء (<span id="mst-count">0</span>)</button>
             <button class="btn-ctrl" id="bookmarkFilterBtn" onclick="toggleBookmarkFilter()">🔖 المُعلّمة (<span id="bm-count">0</span>)</button>
-            <button class="btn-ctrl" onclick="shuffleCurrentQuestions()">🔀 خلط الأسئلة</button>
             <button class="btn-ctrl" id="viewModeBtn" onclick="toggleViewMode()">سؤال بسؤال</button>
             <button class="btn-ctrl" id="muteBtn" onclick="toggleMute()">🔊</button>
             <button class="btn-ctrl" id="themeBtn" onclick="toggleTheme()">☀️</button>
@@ -349,6 +795,8 @@ footer {
 </div>
 
 <div class="container">
+
+    <!-- Hero Header Card -->
     <header class="hero-card">
         <div class="hero-img-box">
             <img src="https://drahmedwaelcyber.github.io/cvs-quiz/assets/al_azhar_faculty_gate.jpg" alt="كلية الطب جامعة الأزهر">
@@ -364,34 +812,41 @@ footer {
                     <p>كلية معتمدة • Al-Azhar Faculty of Medicine</p>
                 </div>
             </div>
+
             <div class="author-pill">
                 <span class="lbl-gold">إعداد وتطوير:</span>
                 <span class="name-white">د. فتحي أحمد رجب</span>
                 <span class="lbl-gold">(طالب بطب الأزهر)</span>
             </div>
+
             <div class="hero-divider"></div>
+
             <h1 class="hero-main-title">بنك الأسئلة التفاعلي المعتمد لموديول الـ CVS 🫀</h1>
-            <p class="hero-desc">المنصة الطبية الشاملة لطلاب كلية الطب، تجمع كافة أسئلة هستولوجي الموديول مع نظامي التدريب والاختبار، ومسودة رقمية، ومؤقت زمني، وتحليل نقاط الضعف.</p>
+            <p class="hero-desc">
+                المنصة الطبية الشاملة المخصصة لطلاب كلية الطب، تجمع كافة أسئلة هستولوجي الموديول (168 سؤالاً تفاعلياً) مع نظامي التدريب الفوري والاختبار الكامل.
+            </p>
+
             <div class="hero-badges">
                 <span class="hero-badge">⚡ 168 سؤالاً تفاعلياً</span>
-                <span class="hero-badge">⏱️ مؤقت زمني للامتحان</span>
-                <span class="hero-badge">✍️ مسودة رقمية للشخبطة</span>
-                <span class="hero-badge">📊 رادار تحليل نقاط الضعف</span>
+                <span class="hero-badge">📝 وضع تدريب ووضع اختبار</span>
+                <span class="hero-badge">🔖 حفظ الأسئلة للمراجعة</span>
             </div>
         </div>
     </header>
 
+    <!-- Mode Switcher: Training vs Exam -->
     <div class="mode-selector">
         <button class="mode-btn active" id="btnModeTrain" onclick="switchQuizMode('training')">
-            <span>📚 وضع التدريب الفوري</span>
-            <span class="sub-desc">تصحيح فوري بعد كل سؤال + مؤثرات بصرية + درجة نهائية</span>
+            <span>📚 وضع التدريب الفوري (Training Mode)</span>
+            <span class="sub-desc">تصحيح فوري بعد كل سؤال + مؤثرات صوتية وبصرية + درجة نهائية</span>
         </button>
         <button class="mode-btn" id="btnModeExam" onclick="switchQuizMode('exam')">
-            <span>📝 وضع الاختبار الشامل</span>
-            <span class="sub-desc">مؤقت 168 دقيقة + إخفاء الإجابات وإظهار التصحيح في النهاية</span>
+            <span>📝 وضع الاختبار الشامل (Exam Mode)</span>
+            <span class="sub-desc">إخفاء الإجابات أثناء الحل وإظهار الدرجة والتصحيح في النهاية</span>
         </button>
     </div>
 
+    <!-- Search & Section Filter -->
     <section class="toolbar">
         <div class="filter-row">
             <select id="sectionSelect" class="select-box" onchange="onFilterChange()">
@@ -402,30 +857,19 @@ footer {
                 <option value="4">Section 4: Histology of Vessels & Capillaries (132–140)</option>
                 <option value="5">Section 5: Peripheral Circulation & Lymphatics (141–168)</option>
             </select>
-            <input type="search" id="searchInput" class="search-box" placeholder="🔍 ابحث عن أي سؤال أو مصطلح..." oninput="onFilterChange()" dir="ltr">
+            <input type="search" id="searchInput" class="search-box" placeholder="🔍 ابحث عن أي سؤال أو مصطلح (Purkinje, Aorta, Capillary)..." oninput="onFilterChange()" dir="ltr">
         </div>
     </section>
 
+    <!-- Questions Container -->
     <div id="quiz-container"></div>
+
 </div>
 
-<div class="modal-backdrop" id="breakModal">
-    <div class="result-modal" style="max-width: 420px;">
-        <h2 style="color:var(--gold-bright); font-weight:900; margin-bottom:8px;">استراحة بطل! ☕</h2>
-        <p style="color:#CBD5E1; font-size:0.95rem; line-height:1.7;">
-            عاش جداً يا دكتور! قطعت شوطاً ممتازاً في الحل.. 
-            <br>
-            خد استراحة 5 دقايق، اعمل فنجان قهوة تركي محوج أو قهوة فرنساوي بالشوكولاتة، وارجع قفل باقي الموديول بتركيز!
-        </p>
-        <div class="modal-actions" style="margin-top:20px;">
-            <button class="btn-finish-top" style="padding:9px 24px;" onclick="closeBreakModal()">متابعة الحل بتركيز 🚀</button>
-        </div>
-    </div>
-</div>
-
+<!-- Final Score Modal -->
 <div class="modal-backdrop" id="scoreModal">
     <div class="result-modal">
-        <h2 id="modalTitle" style="color:var(--gold-bright); font-weight:900;">نتيجة الاختبار 🏆</h2>
+        <h2 id="modalTitle" style="color:var(--gold-bright); font-weight:900;">نتيجة الاختبار النهائية 🏆</h2>
         <p id="modalSubtitle" style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;"></p>
 
         <div class="score-circle">
@@ -436,11 +880,11 @@ footer {
         <div class="result-grid">
             <div class="res-box" style="border-color:var(--correct-border);">
                 <b id="modalCorrect" style="color:var(--correct-border);">0</b>
-                <span>صحيحة</span>
+                <span>إجابة صحيحة</span>
             </div>
             <div class="res-box" style="border-color:var(--wrong-border);">
                 <b id="modalWrong" style="color:var(--wrong-border);">0</b>
-                <span>خاطئة</span>
+                <span>إجابة خاطئة</span>
             </div>
             <div class="res-box">
                 <b id="modalUnanswered" style="color:var(--gold-bright);">0</b>
@@ -448,14 +892,9 @@ footer {
             </div>
         </div>
 
-        <div class="analytics-panel">
-            <h4>📊 رادار تحليل الأداء ونقاط القوة والضعف:</h4>
-            <div id="analyticsBars"></div>
-        </div>
-
         <div class="modal-actions">
-            <button class="btn-finish-top" style="padding:10px 20px;" onclick="closeScoreModal()">مراجعة الإجابات 📖</button>
-            <button class="btn-ctrl" style="padding:10px 18px;" onclick="closeScoreModal(); resetQuiz();">بدء من جديد 🔄</button>
+            <button class="btn-finish-top" style="padding:10px 20px; font-size:0.95rem;" onclick="closeScoreModal()">مراجعة الإجابات والتصحيح 📖</button>
+            <button class="btn-ctrl" style="padding:10px 18px; font-size:0.9rem;" onclick="closeScoreModal(); resetQuiz();">بدء اختبار جديد 🔄</button>
         </div>
     </div>
 </div>
@@ -465,76 +904,181 @@ footer {
 </footer>
 
 <script>
-const CORRECT_SOUND_FILES = ['correct1.mp4', 'correct2.mp4', 'correct3.mp4', 'correct4.mp4', 'correct5.mp4', 'correct6.mp4', 'correct7.mp4', 'correct8.mp4', 'correct9.mp4', 'correct10.mp4', 'correct1.mp3', 'correct2.mp3', 'correct3.mp3', 'correct4.mp3', 'correct5.mp3', 'correct6.mp3', 'correct7.mp3', 'correct8.mp3', 'correct9.mp3', 'correct10.mp3', 'correct.mp3'];
-const WRONG_SOUND_FILES = ['wrong1.mp4', 'wrong2.mp4', 'wrong3.mp4', 'wrong4.mp4', 'wrong5.mp4', 'wrong6.mp4', 'wrong7.mp4', 'wrong8.mp4', 'wrong9.mp4', 'wrong10.mp4', 'wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 'wrong6.mp3', 'wrong7.mp3', 'wrong8.mp3', 'wrong9.mp3', 'wrong10.mp3', 'wrong.mp3'];
+// ============================================================================
+// 1. نظام الأصوات المتعددة (MP4 & MP3 Support up to 10 files)
+// ============================================================================
+const CORRECT_SOUND_FILES = [
+    'correct1.mp4', 'correct2.mp4', 'correct3.mp4', 'correct4.mp4', 'correct5.mp4',
+    'correct6.mp4', 'correct7.mp4', 'correct8.mp4', 'correct9.mp4', 'correct10.mp4',
+    'correct1.mp3', 'correct2.mp3', 'correct3.mp3', 'correct4.mp3', 'correct5.mp3', 
+    'correct6.mp3', 'correct7.mp3', 'correct8.mp3', 'correct9.mp3', 'correct10.mp3', 'correct.mp3'
+];
 
-let loadedCorrectAudios = [], loadedWrongAudios = [];
-let correctPlayIndex = 0, wrongPlayIndex = 0;
-let currentPlayingAudio = null, isMuted = false;
+const WRONG_SOUND_FILES = [
+    'wrong1.mp4', 'wrong2.mp4', 'wrong3.mp4', 'wrong4.mp4', 'wrong5.mp4',
+    'wrong6.mp4', 'wrong7.mp4', 'wrong8.mp4', 'wrong9.mp4', 'wrong10.mp4',
+    'wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 
+    'wrong6.mp3', 'wrong7.mp3', 'wrong8.mp3', 'wrong9.mp3', 'wrong10.mp3', 'wrong.mp3'
+];
+
+let loadedCorrectAudios = [];
+let loadedWrongAudios = [];
+let correctPlayIndex = 0;
+let wrongPlayIndex = 0;
+let currentPlayingAudio = null;
+let isMuted = false;
 
 function preloadPlaylists() {
-    CORRECT_SOUND_FILES.forEach(f => { let a = new Audio(f); a.addEventListener('canplaythrough', () => { if(!loadedCorrectAudios.includes(a)) loadedCorrectAudios.push(a); }, {once:true}); });
-    WRONG_SOUND_FILES.forEach(f => { let a = new Audio(f); a.addEventListener('canplaythrough', () => { if(!loadedWrongAudios.includes(a)) loadedWrongAudios.push(a); }, {once:true}); });
+    CORRECT_SOUND_FILES.forEach(fileName => {
+        const audio = new Audio();
+        audio.preload = 'auto';
+        audio.addEventListener('canplaythrough', () => {
+            if (!loadedCorrectAudios.includes(audio)) loadedCorrectAudios.push(audio);
+        }, { once: true });
+        audio.src = fileName;
+    });
+
+    WRONG_SOUND_FILES.forEach(fileName => {
+        const audio = new Audio();
+        audio.preload = 'auto';
+        audio.addEventListener('canplaythrough', () => {
+            if (!loadedWrongAudios.includes(audio)) loadedWrongAudios.push(audio);
+        }, { once: true });
+        audio.src = fileName;
+    });
 }
+
 preloadPlaylists();
 
 let synthCorrectStep = 0, synthWrongStep = 0;
 function playSynthTone(isCorrect) {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator(), gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
         if (isCorrect) {
-            const notes = [[523.25, 659.25, 783.99], [587.33, 739.99, 880.00]][synthCorrectStep % 2];
-            synthCorrectStep++; osc.type = 'sine';
+            const melodies = [[523.25, 659.25, 783.99], [587.33, 739.99, 880.00], [440.00, 554.37, 659.25, 880.00]];
+            const notes = melodies[synthCorrectStep % melodies.length];
+            synthCorrectStep++;
+            osc.type = 'sine';
             notes.forEach((freq, i) => osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08));
-            gain.gain.setValueAtTime(0.18, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-            osc.start(); osc.stop(ctx.currentTime + 0.4);
+            gain.gain.setValueAtTime(0.18, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + notes.length * 0.1 + 0.15);
+            osc.start();
+            osc.stop(ctx.currentTime + notes.length * 0.1 + 0.15);
         } else {
-            const notes = [[220, 150], [190, 130]][synthWrongStep % 2];
-            synthWrongStep++; osc.type = 'sawtooth';
+            const buzzes = [[220, 150], [190, 130], [250, 180, 120]];
+            const notes = buzzes[synthWrongStep % buzzes.length];
+            synthWrongStep++;
+            osc.type = 'sawtooth';
             notes.forEach((freq, i) => osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12));
-            gain.gain.setValueAtTime(0.18, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
-            osc.start(); osc.stop(ctx.currentTime + 0.35);
+            gain.gain.setValueAtTime(0.18, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + notes.length * 0.13 + 0.12);
+            osc.start();
+            osc.stop(ctx.currentTime + notes.length * 0.13 + 0.12);
         }
     } catch (e) {}
 }
 
 function playFeedbackSound(isCorrect) {
     if (isMuted) return;
-    if (currentPlayingAudio) { currentPlayingAudio.pause(); currentPlayingAudio.currentTime = 0; }
+    if (currentPlayingAudio) {
+        currentPlayingAudio.pause();
+        currentPlayingAudio.currentTime = 0;
+    }
     const pool = isCorrect ? loadedCorrectAudios : loadedWrongAudios;
     if (pool.length > 0) {
-        let a = isCorrect ? pool[correctPlayIndex % pool.length] : pool[wrongPlayIndex % pool.length];
+        let chosenAudio = isCorrect ? pool[correctPlayIndex % pool.length] : pool[wrongPlayIndex % pool.length];
         if (isCorrect) correctPlayIndex++; else wrongPlayIndex++;
-        currentPlayingAudio = a; a.currentTime = 0; a.play().catch(() => playSynthTone(isCorrect));
-    } else { playSynthTone(isCorrect); }
+        currentPlayingAudio = chosenAudio;
+        chosenAudio.currentTime = 0;
+        chosenAudio.play().catch(() => playSynthTone(isCorrect));
+    } else {
+        playSynthTone(isCorrect);
+    }
 }
 
-function toggleMute() { isMuted = !isMuted; if(isMuted && currentPlayingAudio) currentPlayingAudio.pause(); document.getElementById('muteBtn').innerText = isMuted ? '🔇' : '🔊'; }
+function toggleMute() {
+    isMuted = !isMuted;
+    if (isMuted && currentPlayingAudio) currentPlayingAudio.pause();
+    document.getElementById('muteBtn').innerText = isMuted ? '🔇' : '🔊';
+}
 
+// 2. المؤثرات البصرية على الشاشة
 let fxTimer = null;
 function triggerScreenFX(isCorrect) {
-    const overlay = document.getElementById('fx-overlay'); overlay.innerHTML = ''; overlay.className = ''; void overlay.offsetWidth;
+    const overlay = document.getElementById('fx-overlay');
+    overlay.innerHTML = '';
+    overlay.className = '';
+    void overlay.offsetWidth;
+
     if (isCorrect) {
         overlay.classList.add('flash-green');
         const items = ['🎉', '✨', '🎊', '⭐', '💚', '✅'];
-        for (let i=0; i<36; i++) { let s = document.createElement('span'); s.className='fx-particle'; s.innerText=items[Math.floor(Math.random()*items.length)]; s.style.left=Math.random()*96+'vw'; s.style.fontSize=(18+Math.random()*18)+'px'; s.style.animationDuration=(1.1+Math.random()*1.1)+'s'; s.style.animationDelay=(Math.random()*0.25)+'s'; overlay.appendChild(s); }
+        for (let i = 0; i < 36; i++) {
+            const span = document.createElement('span');
+            span.className = 'fx-particle';
+            span.innerText = items[Math.floor(Math.random() * items.length)];
+            span.style.left = Math.random() * 96 + 'vw';
+            span.style.fontSize = (18 + Math.random() * 18) + 'px';
+            span.style.animationDuration = (1.1 + Math.random() * 1.1) + 's';
+            span.style.animationDelay = (Math.random() * 0.25) + 's';
+            overlay.appendChild(span);
+        }
     } else {
-        overlay.classList.add('flash-red'); document.body.classList.add('shake-anim'); setTimeout(()=>document.body.classList.remove('shake-anim'), 450);
-        const items = ['❌', '✖️', '🚫', '❌'];
-        for (let i=0; i<32; i++) { let s = document.createElement('span'); s.className='fx-particle'; s.innerText=items[Math.floor(Math.random()*items.length)]; s.style.left=Math.random()*96+'vw'; s.style.fontSize=(20+Math.random()*20)+'px'; s.style.animationDuration=(1.0+Math.random()*1.0)+'s'; s.style.animationDelay=(Math.random()*0.2)+'s'; overlay.appendChild(s); }
+        overlay.classList.add('flash-red');
+        document.body.classList.add('shake-anim');
+        setTimeout(() => document.body.classList.remove('shake-anim'), 450);
+        const xSymbols = ['❌', '✖️', '🚫', '❌'];
+        for (let i = 0; i < 32; i++) {
+            const span = document.createElement('span');
+            span.className = 'fx-particle';
+            span.innerText = xSymbols[Math.floor(Math.random() * xSymbols.length)];
+            span.style.left = Math.random() * 96 + 'vw';
+            span.style.fontSize = (20 + Math.random() * 20) + 'px';
+            span.style.animationDuration = (1.0 + Math.random() * 1.0) + 's';
+            span.style.animationDelay = (Math.random() * 0.2) + 's';
+            overlay.appendChild(span);
+        }
     }
-    clearTimeout(fxTimer); fxTimer = setTimeout(()=> {overlay.className=''; overlay.innerHTML='';}, 2200);
+    clearTimeout(fxTimer);
+    fxTimer = setTimeout(() => { overlay.className = ''; overlay.innerHTML = ''; }, 2200);
 }
 
-function initTheme() { applyTheme(localStorage.getItem('fathy_cvs_theme') || 'dark'); }
-function applyTheme(theme) { if (theme === 'light') { document.documentElement.setAttribute('data-theme', 'light'); document.getElementById('themeBtn').innerText = '🌙'; } else { document.documentElement.removeAttribute('data-theme'); document.getElementById('themeBtn').innerText = '☀️'; } }
-function toggleTheme() { const n = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; localStorage.setItem('fathy_cvs_theme', n); applyTheme(n); }
+// 3. المظهر
+function initTheme() {
+    const saved = localStorage.getItem('fathy_cvs_theme') || 'dark';
+    applyTheme(saved);
+}
+
+function applyTheme(theme) {
+    if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.getElementById('themeBtn').innerText = '🌙';
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        document.getElementById('themeBtn').innerText = '☀️';
+    }
+}
+
+function toggleTheme() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const next = isLight ? 'dark' : 'light';
+    localStorage.setItem('fathy_cvs_theme', next);
+    applyTheme(next);
+}
+
 initTheme();
 
-const specificExplanations = { 75: "Both the coronary artery and umbilical artery are described as 'special type' muscular arteries. This key follows the 'thick wall with well-developed IEL/EEL' description, which matches the coronary artery; the umbilical artery is instead characterized by a poorly-developed IEL (see Q78)." };
-const defaultRawQuestions=[
+// 4. قاعدة البيانات (168 سؤال)
+const specificExplanations = {
+    75: "Both the coronary artery and umbilical artery are described as 'special type' muscular arteries. This key follows the 'thick wall with well-developed IEL/EEL' description, which matches the coronary artery; the umbilical artery is instead characterized by a poorly-developed IEL (see Q78)."
+};
+
+const rawQuestions=[
 [1,1,"As regards the histology of cardiac muscle, which of the following is TRUE?",["It can regenerate from satellite cells","It contains intermediate filaments only, with no other cytoskeletal proteins","It has numerous caveolae like smooth muscle","It is a multinucleated (syncytial) cell","It joins to adjacent cells by intercalated discs"],"E"],
 [2,1,"In a histological section of the heart wall, Purkinje fibers are located in the:",["Epicardium","Fibrous layer of parietal pericardium","Myocardium proper (mid-wall)","Serous layer of parietal pericardium","Subendocardium"],"E"],
 [3,1,"In a histological section of the heart wall, coronary vessels are typically found in the:",["Endocardium","Subendocardium","Myocardium only","Epicardium","Fibrous pericardium"],"D"],
@@ -705,56 +1249,68 @@ const defaultRawQuestions=[
 [168,5,"A structure described as 'resting on an incomplete basal lamina, lined by endothelial cells, and forming a blind-ended irregular channel with anchoring filaments' is best identified as a:",["Fenestrated blood capillary","Sinusoidal capillary","Lymphatic capillary","Muscular venule","Metarteriole"],"C"]
 ];
 
-let rawQuestions = JSON.parse(JSON.stringify(defaultRawQuestions));
-const sectionNames = { 1:"Section 1: Heart & Cardiomyocytes", 2:"Section 2: Fibrous Skeleton & Valves", 3:"Section 3: Blood Vessels", 4:"Section 4: Histology of Vessels", 5:"Section 5: Peripheral Circulation" };
+const sectionNames = {
+    1: "Section 1: Heart & Cardiomyocytes",
+    2: "Section 2: Fibrous Skeleton & Valves",
+    3: "Section 3: Blood Vessels",
+    4: "Section 4: Histology of Vessels",
+    5: "Section 5: Peripheral Circulation"
+};
 
+// 5. إدارة الحالة (State Management)
 let quizMode = localStorage.getItem('fathy_cvs_mode') || 'training';
 let examSubmitted = JSON.parse(localStorage.getItem('fathy_cvs_exam_sub') || 'false');
-let userAnswers = {};
-try { userAnswers = JSON.parse(localStorage.getItem('fathy_cvs_histo_ans') || '{}'); } catch(e) {}
+let userAnswers = JSON.parse(localStorage.getItem('fathy_cvs_histo_ans') || '{}');
 let bookmarkedIds = JSON.parse(localStorage.getItem('fathy_cvs_bookmarks') || '[]');
-let showBookmarksOnly = false, showMistakesOnly = false, singleMode = false, currentIdx = 0;
-
-let examTimeSeconds = 168 * 60, timerInterval = null;
-function startExamTimer() {
-    clearInterval(timerInterval); document.getElementById('timerPill').style.display = 'inline-block';
-    timerInterval = setInterval(() => {
-        if (examTimeSeconds <= 0) { clearInterval(timerInterval); finishAndShowScore(); alert('انتهى وقت الاختبار!'); return; }
-        examTimeSeconds--; const m = Math.floor(examTimeSeconds/60), s = examTimeSeconds%60;
-        document.getElementById('timerDisplay').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-    }, 1000);
-}
-function stopExamTimer() { clearInterval(timerInterval); document.getElementById('timerPill').style.display = 'none'; }
+let showBookmarksOnly = false;
+let singleMode = false;
+let currentIdx = 0;
 
 function switchQuizMode(mode) {
     if (quizMode === mode) return;
-    quizMode = mode; localStorage.setItem('fathy_cvs_mode', mode);
-    if (mode === 'training') { examSubmitted = false; localStorage.setItem('fathy_cvs_exam_sub', 'false'); stopExamTimer(); }
-    else { if (!examSubmitted) startExamTimer(); }
-    updateModeButtons(); updateStats(); renderQuestions();
-}
-function updateModeButtons() { document.getElementById('btnModeTrain').classList.toggle('active', quizMode==='training'); document.getElementById('btnModeExam').classList.toggle('active', quizMode==='exam'); }
-
-function shuffleCurrentQuestions() {
-    for (let i = rawQuestions.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [rawQuestions[i], rawQuestions[j]] = [rawQuestions[j], rawQuestions[i]]; }
-    const letters = ['A', 'B', 'C', 'D', 'E'];
-    rawQuestions.forEach(q => {
-        const origCorrect = q[3][letters.indexOf(q[4])];
-        for (let i = q[3].length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [q[3][i], q[3][j]] = [q[3][j], q[3][i]]; }
-        q[4] = letters[q[3].indexOf(origCorrect)];
-    });
-    currentIdx = 0; renderQuestions(); alert('تم خلط الأسئلة 🔀');
+    quizMode = mode;
+    localStorage.setItem('fathy_cvs_mode', mode);
+    if (mode === 'training') {
+        examSubmitted = false;
+        localStorage.setItem('fathy_cvs_exam_sub', 'false');
+    }
+    updateModeButtons();
+    updateStats();
+    renderQuestions();
 }
 
-let lastBreakCount = 0;
-function checkMilestoneBreak(sc) { if (quizMode === 'training' && (sc === 50 || sc === 100) && sc > lastBreakCount) { lastBreakCount = sc; document.getElementById('breakModal').classList.add('show'); } }
-function closeBreakModal() { document.getElementById('breakModal').classList.remove('show'); }
+function updateModeButtons() {
+    document.getElementById('btnModeTrain').classList.toggle('active', quizMode === 'training');
+    document.getElementById('btnModeExam').classList.toggle('active', quizMode === 'exam');
+}
 
-function toggleBookmark(id) { const idx = bookmarkedIds.indexOf(id); if (idx===-1) bookmarkedIds.push(id); else bookmarkedIds.splice(idx,1); localStorage.setItem('fathy_cvs_bookmarks', JSON.stringify(bookmarkedIds)); updateStats(); renderQuestions(); }
-function toggleBookmarkFilter() { showBookmarksOnly = !showBookmarksOnly; showMistakesOnly = false; currentIdx = 0; document.getElementById('bookmarkFilterBtn').classList.toggle('active-filter', showBookmarksOnly); document.getElementById('mistakesFilterBtn').classList.remove('active-filter'); renderQuestions(); }
-function toggleMistakesFilter() { showMistakesOnly = !showMistakesOnly; showBookmarksOnly = false; currentIdx = 0; document.getElementById('mistakesFilterBtn').classList.toggle('active-filter', showMistakesOnly); document.getElementById('bookmarkFilterBtn').classList.remove('active-filter'); renderQuestions(); }
-function toggleViewMode() { singleMode = !singleMode; currentIdx = 0; document.getElementById('viewModeBtn').innerText = singleMode ? 'عرض الكل' : 'سؤال بسؤال'; renderQuestions(); }
-function onFilterChange() { currentIdx = 0; renderQuestions(); }
+function toggleBookmark(qId) {
+    const idx = bookmarkedIds.indexOf(qId);
+    if (idx === -1) bookmarkedIds.push(qId);
+    else bookmarkedIds.splice(idx, 1);
+    localStorage.setItem('fathy_cvs_bookmarks', JSON.stringify(bookmarkedIds));
+    document.getElementById('bm-count').innerText = bookmarkedIds.length;
+    renderQuestions();
+}
+
+function toggleBookmarkFilter() {
+    showBookmarksOnly = !showBookmarksOnly;
+    currentIdx = 0;
+    document.getElementById('bookmarkFilterBtn').classList.toggle('active-filter', showBookmarksOnly);
+    renderQuestions();
+}
+
+function toggleViewMode() {
+    singleMode = !singleMode;
+    currentIdx = 0;
+    document.getElementById('viewModeBtn').innerText = singleMode ? 'عرض الكل' : 'سؤال بسؤال';
+    renderQuestions();
+}
+
+function onFilterChange() {
+    currentIdx = 0;
+    renderQuestions();
+}
 
 function getFiltered() {
     const sec = parseInt(document.getElementById('sectionSelect').value, 10);
@@ -763,115 +1319,238 @@ function getFiltered() {
         const mSec = sec === 0 || q[1] === sec;
         const mSearch = !qStr || q[2].toLowerCase().includes(qStr) || q[3].some(o => o.toLowerCase().includes(qStr));
         const mBm = !showBookmarksOnly || bookmarkedIds.includes(q[0]);
-        const mMst = !showMistakesOnly || (userAnswers[q[0]] && userAnswers[q[0]] !== q[4]);
-        return mSec && mSearch && mBm && mMst;
+        return mSec && mSearch && mBm;
     });
 }
 
-function selectAnswer(id, letter) {
+function selectAnswer(qId, letter) {
     if (quizMode === 'training') {
-        if (userAnswers[id]) return;
-        userAnswers[id] = letter; localStorage.setItem('fathy_cvs_histo_ans', JSON.stringify(userAnswers));
-        const isOk = (letter === rawQuestions.find(x=>x[0]===id)[4]);
-        playFeedbackSound(isOk); triggerScreenFX(isOk); updateStats(); renderQuestions();
-        const cnt = Object.keys(userAnswers).length; checkMilestoneBreak(cnt);
-        if (cnt === rawQuestions.length) setTimeout(() => finishAndShowScore(), 900);
+        if (userAnswers[qId]) return;
+        userAnswers[qId] = letter;
+        localStorage.setItem('fathy_cvs_histo_ans', JSON.stringify(userAnswers));
+
+        const q = rawQuestions.find(x => x[0] === qId);
+        const isCorrect = (letter === q[4]);
+        playFeedbackSound(isCorrect);
+        triggerScreenFX(isCorrect);
+
+        updateStats();
+        renderQuestions();
+
+        if (Object.keys(userAnswers).length === rawQuestions.length) {
+            setTimeout(() => finishAndShowScore(), 900);
+        }
     } else {
         if (examSubmitted) return;
-        userAnswers[id] = letter; localStorage.setItem('fathy_cvs_histo_ans', JSON.stringify(userAnswers));
-        updateStats(); renderQuestions();
+        userAnswers[qId] = letter;
+        localStorage.setItem('fathy_cvs_histo_ans', JSON.stringify(userAnswers));
+        updateStats();
+        renderQuestions();
     }
 }
 
-function generateAnalyticsHTML() {
-    const st = { 1:{n:'Heart',t:0,c:0}, 2:{n:'Skeleton & Valves',t:0,c:0}, 3:{n:'Arteries & Veins',t:0,c:0}, 4:{n:'Capillaries',t:0,c:0}, 5:{n:'Peripheral & Lymph',t:0,c:0} };
-    rawQuestions.forEach(q => { st[q[1]].t++; if(userAnswers[q[0]] === q[4]) st[q[1]].c++; });
-    let html = '';
-    Object.keys(st).forEach(s => {
-        const i = st[s], p = i.t>0 ? Math.round((i.c/i.t)*100) : 0;
-        let c = p>=75 ? '#10B981' : (p>=50 ? '#E5C158' : '#EF4444');
-        html += `<div class="sec-bar-item"><div class="sec-bar-label"><span>${i.n}</span><span style="color:${c};">${i.c}/${i.t} (${p}%)</span></div><div class="sec-bar-track"><div class="sec-bar-fill" style="width:${p}%; background:${c};"></div></div></div>`;
-    }); return html;
-}
-
 function finishAndShowScore() {
-    if (quizMode === 'exam') { examSubmitted = true; localStorage.setItem('fathy_cvs_exam_sub', 'true'); stopExamTimer(); }
+    if (quizMode === 'exam' && !examSubmitted) {
+        examSubmitted = true;
+        localStorage.setItem('fathy_cvs_exam_sub', 'true');
+    }
+
     let c = 0, w = 0;
-    Object.keys(userAnswers).forEach(id => { const q = rawQuestions.find(x=>x[0]==id); if(q) { if(userAnswers[id]===q[4]) c++; else w++; } });
-    const tot = rawQuestions.length, ans = c+w, p = tot>0 ? Math.round((c/tot)*100) : 0;
-    document.getElementById('modalTitle').innerText = quizMode==='exam' ? 'نتيجة الاختبار 🏆' : 'النتيجة النهائية 🏆';
-    document.getElementById('modalSubtitle').innerText = `أجبت على ${ans} من ${tot}`;
-    document.getElementById('modalPerc').innerText = p+'%'; document.getElementById('modalRatio').innerText = `${c} / ${tot}`;
-    document.getElementById('modalCorrect').innerText = c; document.getElementById('modalWrong').innerText = w; document.getElementById('modalUnanswered').innerText = tot-ans;
-    document.getElementById('analyticsBars').innerHTML = generateAnalyticsHTML();
+    Object.keys(userAnswers).forEach(qId => {
+        const q = rawQuestions.find(x => x[0] == qId);
+        if (q) {
+            if (userAnswers[qId] === q[4]) c++;
+            else w++;
+        }
+    });
+
+    const total = rawQuestions.length;
+    const answered = c + w;
+    const unanswered = total - answered;
+    const perc = total > 0 ? Math.round((c / total) * 100) : 0;
+
+    document.getElementById('modalTitle').innerText = quizMode === 'exam' ? 'نتيجة الاختبار الشامل 🏆' : 'نتيجة التدريب النهائية 🏆';
+    document.getElementById('modalSubtitle').innerText = `أجبت على ${answered} من أصل ${total} سؤالاً`;
+    document.getElementById('modalPerc').innerText = perc + '%';
+    document.getElementById('modalRatio').innerText = `${c} / ${total}`;
+    document.getElementById('modalCorrect').innerText = c;
+    document.getElementById('modalWrong').innerText = w;
+    document.getElementById('modalUnanswered').innerText = unanswered;
+
     document.getElementById('scoreModal').classList.add('show');
-    playFeedbackSound(p>=50); if(p>=50) triggerScreenFX(true);
-    updateStats(); renderQuestions();
+    playFeedbackSound(perc >= 50);
+    if (perc >= 50) triggerScreenFX(true);
+
+    updateStats();
+    renderQuestions();
 }
 
-function closeScoreModal() { document.getElementById('scoreModal').classList.remove('show'); }
-function moveSingle(s, max) { const n = currentIdx+s; if(n>=0 && n<max) { currentIdx=n; renderQuestions(); window.scrollTo({top:320, behavior:'smooth'}); } }
-
-function toggleScratchpad(id) {
-    const c = document.getElementById(`scratch-${id}`), t = document.getElementById(`toolbar-${id}`);
-    const act = c.classList.toggle('active'); t.classList.toggle('active', act);
-    if(act && !c.dataset.init) { setupScratchCanvas(c); c.dataset.init = 'true'; }
+function closeScoreModal() {
+    document.getElementById('scoreModal').classList.remove('show');
 }
-function clearScratchpad(id) { const c = document.getElementById(`scratch-${id}`); c.getContext('2d').clearRect(0,0,c.width,c.height); }
-function setupScratchCanvas(c) {
-    const ctx = c.getContext('2d'); c.width = c.parentElement.offsetWidth; c.height = c.parentElement.offsetHeight; let d = false;
-    const getPos = e => { const r = c.getBoundingClientRect(), x = e.touches ? e.touches[0].clientX : e.clientX, y = e.touches ? e.touches[0].clientY : e.clientY; return {x: x-r.left, y: y-r.top}; };
-    const start = e => { d=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.strokeStyle='#F4D068'; ctx.lineWidth=2.5; ctx.lineCap='round'; };
-    const draw = e => { if(!d)return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); };
-    c.addEventListener('mousedown', start); c.addEventListener('mousemove', draw); c.addEventListener('mouseup', ()=>d=false);
-    c.addEventListener('touchstart', e=>{e.preventDefault(); start(e);}); c.addEventListener('touchmove', e=>{e.preventDefault(); draw(e);}); c.addEventListener('touchend', ()=>d=false);
+
+function moveSingle(step, maxLen) {
+    const next = currentIdx + step;
+    if (next >= 0 && next < maxLen) {
+        currentIdx = next;
+        renderQuestions();
+        window.scrollTo({ top: 320, behavior: 'smooth' });
+    }
 }
 
 function renderQuestions() {
-    const cont = document.getElementById('quiz-container'); cont.innerHTML = '';
-    const letters = ['A','B','C','D','E'], filt = getFiltered();
-    if(filt.length===0) { cont.innerHTML = `<div class="q-card" style="text-align:center;">لا توجد أسئلة.</div>`; return; }
-    const list = singleMode ? [filt[currentIdx]] : filt;
-    const rev = (quizMode==='training') || (quizMode==='exam' && examSubmitted);
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+    const filtered = getFiltered();
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<div class="q-card" style="text-align:center; direction:rtl;">${showBookmarksOnly ? 'لا توجد أسئلة مُعلّمة حالياً. اضغط على زر "🔖 علّم السؤال" بجانب أي سؤال لحفظه هنا.' : 'لا توجد أسئلة مطابقة لبحثك.'}</div>`;
+        return;
+    }
+
+    const list = singleMode ? [filtered[currentIdx]] : filtered;
+    const revealAnswers = (quizMode === 'training') || (quizMode === 'exam' && examSubmitted);
 
     list.forEach((q, idx) => {
-        const [id, sec, text, opts, ans] = q, ch = userAnswers[id], isBm = bookmarkedIds.includes(id), pos = singleMode ? (currentIdx+1) : (idx+1);
-        const card = document.createElement('div'); card.className = 'q-card'+(isBm?' bookmarked-card':'');
-        
-        let oHTML = '';
-        opts.forEach((ot, i) => {
-            const l = letters[i]; let c = 'option-btn', t = '', dis = false;
-            if(rev && ch) { dis=true; if(l===ans) { c+=' correct'; t=`<span class="status-tag" style="color:var(--correct-border)">✔ Correct</span>`; } else if(l===ch) { c+=' wrong'; t=`<span class="status-tag" style="color:var(--wrong-border)">✖ Wrong</span>`; } }
-            else if(quizMode==='exam' && examSubmitted && !ch) { dis=true; if(l===ans) { c+=' correct'; t=`<span class="status-tag" style="color:var(--correct-border)">✔ Key</span>`; } }
-            else if(quizMode==='exam' && !examSubmitted && ch===l) { c+=' exam-selected'; t=`<span class="status-tag" style="color:var(--gold-bright)">تم الاختيار</span>`; }
-            oHTML += `<button class="${c}" ${dis?'disabled':''} onclick="selectAnswer(${id}, '${l}')"><span class="opt-char">${l}</span><span style="flex:1;">${ot}</span>${t}</button>`;
+        const [id, sec, text, options, ans] = q;
+        const chosen = userAnswers[id];
+        const isBm = bookmarkedIds.includes(id);
+        const pos = singleMode ? (currentIdx + 1) : (idx + 1);
+
+        const card = document.createElement('div');
+        card.className = 'q-card' + (isBm ? ' bookmarked-card' : '');
+
+        let optsHTML = '';
+        options.forEach((optText, oIdx) => {
+            const l = letters[oIdx];
+            let cls = 'option-btn';
+            let tag = '';
+            let isDisabled = false;
+
+            if (revealAnswers && chosen) {
+                isDisabled = true;
+                if (l === ans) {
+                    cls += ' correct';
+                    tag = `<span class="status-tag" style="color:var(--correct-border)">✔ Correct</span>`;
+                } else if (l === chosen && chosen !== ans) {
+                    cls += ' wrong';
+                    tag = `<span class="status-tag" style="color:var(--wrong-border)">✖ Wrong</span>`;
+                }
+            } else if (quizMode === 'exam' && examSubmitted && !chosen) {
+                isDisabled = true;
+                if (l === ans) {
+                    cls += ' correct';
+                    tag = `<span class="status-tag" style="color:var(--correct-border)">✔ Correct Key</span>`;
+                }
+            } else if (quizMode === 'exam' && !examSubmitted && chosen === l) {
+                cls += ' exam-selected';
+                tag = `<span class="status-tag" style="color:var(--gold-bright)">تم الاختيار</span>`;
+            }
+
+            optsHTML += `
+                <button type="button" class="${cls}" ${isDisabled ? 'disabled' : ''} onclick="selectAnswer(${id}, '${l}')">
+                    <span class="opt-char">${l}</span>
+                    <span style="flex:1;">${optText}</span>
+                    ${tag}
+                </button>
+            `;
         });
 
-        const fb = (rev && (ch || examSubmitted)) ? `<div class="feedback-panel ${ch===ans?'is-correct':'is-wrong'}"><div style="font-weight:700; color:${ch===ans?'var(--correct-border)':'var(--wrong-border)'}; margin-bottom:4px;">${ch===ans?`✔ إجابة صحيحة (${ans})`: (ch?`✖ إجابتك (${ch}) خاطئة — الصحيحة (${ans})`:`⚠️ لم تُجب — الصحيحة (${ans})`)}</div><div><strong>Key:</strong> (${ans}) ${opts[letters.indexOf(ans)]}</div>${specificExplanations[id]?`<div style="margin-top:8px; font-size:0.86rem; color:var(--text-secondary);">💡 <strong>Note:</strong> ${specificExplanations[id]}</div>`:''}</div>` : '';
-        const nv = singleMode ? `<div class="single-nav"><button class="btn-nav" ${currentIdx===0?'disabled':''} onclick="moveSingle(-1, ${filt.length})">← السابق</button><button class="btn-nav" ${currentIdx>=filt.length-1?'disabled':''} onclick="moveSingle(1, ${filt.length})">التالي →</button></div>` : '';
+        const correctFull = options[letters.indexOf(ans)];
+        const noteHTML = specificExplanations[id] ? `<div style="margin-top:8px; padding-top:8px; border-top:1px solid var(--border-color); color:var(--text-secondary); font-size:0.86rem;">💡 <strong>Note:</strong> ${specificExplanations[id]}</div>` : '';
 
-        card.innerHTML = `<canvas id="scratch-${id}" class="scratchpad-canvas"></canvas><div id="toolbar-${id}" class="scratchpad-toolbar"><button class="btn-card-action" onclick="clearScratchpad(${id})">🧹 مسح</button><button class="btn-card-action" onclick="toggleScratchpad(${id})">✕</button></div><div class="q-header"><span class="q-badge">Q ${pos} of ${filt.length} (#${id})</span><div class="q-header-right"><span class="q-sec-label">${sectionNames[sec]}</span><button class="btn-card-action" onclick="toggleScratchpad(${id})">✍️ مسودة</button><button class="btn-card-action ${isBm?'active':''}" onclick="toggleBookmark(${id})">🔖</button></div></div><div class="q-stem">${text}</div><div class="options-list">${oHTML}</div>${fb}${nv}`;
-        cont.appendChild(card);
+        let feedbackHTML = '';
+        if (revealAnswers && (chosen || examSubmitted)) {
+            const isOk = chosen === ans;
+            feedbackHTML = `
+                <div class="feedback-panel ${isOk ? 'is-correct' : 'is-wrong'}">
+                    <div style="font-weight:700; color:${isOk ? 'var(--correct-border)' : 'var(--wrong-border)'}; margin-bottom:4px;">
+                        ${isOk ? `✔ إجابة صحيحة (${ans})` : (chosen ? `✖ إجابتك (${chosen}) خاطئة — الإجابة الصحيحة هي (${ans})` : `⚠️ لم تُجب على هذا السؤال — الإجابة الصحيحة هي (${ans})`)}
+                    </div>
+                    <div><strong>Answer Key:</strong> (${ans}) ${correctFull}</div>
+                    ${noteHTML}
+                </div>
+            `;
+        }
+
+        let navHTML = '';
+        if (singleMode) {
+            navHTML = `
+                <div class="single-nav">
+                    <button class="btn-nav" ${currentIdx === 0 ? 'disabled' : ''} onclick="moveSingle(-1, ${filtered.length})">← Previous</button>
+                    <button class="btn-nav" ${currentIdx >= filtered.length - 1 ? 'disabled' : ''} onclick="moveSingle(1, ${filtered.length})">Next →</button>
+                </div>
+            `;
+        }
+
+        card.innerHTML = `
+            <div class="q-header">
+                <span class="q-badge">Question ${pos} of ${filtered.length} (#${id})</span>
+                <div class="q-header-right">
+                    <span class="q-sec-label">${sectionNames[sec]}</span>
+                    <button type="button" class="btn-bookmark ${isBm ? 'active' : ''}" onclick="toggleBookmark(${id})">
+                        ${isBm ? '🔖 مُعلّم للمراجعة' : '🔖 علّم السؤال'}
+                    </button>
+                </div>
+            </div>
+            <div class="q-stem">${text}</div>
+            <div class="options-list">${optsHTML}</div>
+            ${feedbackHTML}
+            ${navHTML}
+        `;
+        container.appendChild(card);
     });
 }
 
 function updateStats() {
-    let c=0, w=0; Object.keys(userAnswers).forEach(id=>{ const q=rawQuestions.find(x=>x[0]==id); if(q){ if(userAnswers[id]===q[4]) c++; else w++; } });
-    document.getElementById('bm-count').innerText = bookmarkedIds.length; document.getElementById('mst-count').innerText = w;
-    document.getElementById('progressFill').style.width = Math.round(((c+w)/rawQuestions.length)*100)+'%';
-    if(quizMode==='exam' && !examSubmitted) { document.getElementById('pill-correct').style.display='none'; document.getElementById('pill-wrong').style.display='none'; document.getElementById('lbl-perc').innerText='تم حل:'; document.getElementById('st-perc').innerText=`${c+w}/168`; }
-    else { document.getElementById('pill-correct').style.display='inline-block'; document.getElementById('pill-wrong').style.display='inline-block'; document.getElementById('st-correct').innerText=c; document.getElementById('st-wrong').innerText=w; document.getElementById('lbl-perc').innerText='النسبة:'; document.getElementById('st-perc').innerText=((c+w)>0?Math.round((c/(c+w))*100):0)+'%'; }
+    let c = 0, w = 0;
+    Object.keys(userAnswers).forEach(qId => {
+        const q = rawQuestions.find(x => x[0] == qId);
+        if (q) {
+            if (userAnswers[qId] === q[4]) c++;
+            else w++;
+        }
+    });
+    const done = c + w;
+    const prog = Math.round((done / rawQuestions.length) * 100);
+
+    document.getElementById('bm-count').innerText = bookmarkedIds.length;
+    document.getElementById('progressFill').style.width = prog + '%';
+
+    if (quizMode === 'exam' && !examSubmitted) {
+        document.getElementById('pill-correct').style.display = 'none';
+        document.getElementById('pill-wrong').style.display = 'none';
+        document.getElementById('lbl-perc').innerText = 'تم حل:';
+        document.getElementById('st-perc').innerText = `${done} / 168`;
+    } else {
+        document.getElementById('pill-correct').style.display = 'inline-block';
+        document.getElementById('pill-wrong').style.display = 'inline-block';
+        document.getElementById('st-correct').innerText = c;
+        document.getElementById('st-wrong').innerText = w;
+        const perc = done > 0 ? Math.round((c / done) * 100) : 0;
+        document.getElementById('lbl-perc').innerText = 'النسبة:';
+        document.getElementById('st-perc').innerText = perc + '%';
+    }
 }
 
-window.addEventListener('keydown', e => {
-    if(['input','textarea','select'].includes(document.activeElement.tagName.toLowerCase())) return;
-    const f=getFiltered(); if(f.length===0) return;
-    const k=e.key.toUpperCase();
-    if(['A','B','C','D','E'].includes(k)) selectAnswer(singleMode?f[currentIdx][0]:f[0][0], k);
-    else if(singleMode && (e.key==='ArrowRight'||e.key==='ArrowLeft')) { if(e.key==='ArrowRight') moveSingle(1,f.length); if(e.key==='ArrowLeft') moveSingle(-1,f.length); }
-});
+function resetQuiz() {
+    if (confirm('هل تريد تصفير جميع إجاباتك والبدء من جديد؟')) {
+        userAnswers = {};
+        examSubmitted = false;
+        localStorage.removeItem('fathy_cvs_histo_ans');
+        localStorage.setItem('fathy_cvs_exam_sub', 'false');
+        updateStats();
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
 
-window.onload = function() { updateModeButtons(); if(quizMode==='exam'&&!examSubmitted) startExamTimer(); updateStats(); renderQuestions(); };
+window.onload = function() {
+    updateModeButtons();
+    updateStats();
+    renderQuestions();
+};
 </script>
 </body>
 </html>
