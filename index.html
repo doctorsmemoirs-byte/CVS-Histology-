@@ -6,7 +6,7 @@
 <title>CVS Histology Bank | By Dr. Fathy Ahmed Ragab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* Premium Medical UI Theme */
 :root {
@@ -18,14 +18,15 @@
     --text-main: #F8FAFC;
     --text-secondary: #94A3B8;
     --border-color: #334155;
-    --correct-bg: rgba(16, 185, 129, 0.1);
+    --correct-bg: rgba(16, 185, 129, 0.15);
     --correct-border: #10B981;
-    --wrong-bg: rgba(239, 68, 68, 0.1);
+    --wrong-bg: rgba(239, 68, 68, 0.15);
     --wrong-border: #EF4444;
     --selected-bg: rgba(14, 165, 233, 0.15);
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
+
 [data-theme="light"] {
     --bg-main: #F1F5F9;
     --bg-card: #FFFFFF;
@@ -40,9 +41,9 @@
     --wrong-bg: #FEE2E2;
     --wrong-border: #DC2626;
     --selected-bg: #E0F2FE;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
     background-color: var(--bg-main); color: var(--text-main);
@@ -50,46 +51,46 @@ body {
     padding-bottom: 60px; transition: background-color 0.3s ease, color 0.3s ease;
 }
 .container { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+
+/* FX Overlay */
 #fx-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 9999; transition: background-color 0.2s ease; }
-#fx-overlay.flash-green { background-color: rgba(16, 185, 129, 0.08); }
-#fx-overlay.flash-red { background-color: rgba(239, 68, 68, 0.08); }
+#fx-overlay.flash-green { background-color: rgba(16, 185, 129, 0.1); }
+#fx-overlay.flash-red { background-color: rgba(239, 68, 68, 0.1); }
+
+/* Navigation */
 .top-nav {
     position: sticky; top: 0; z-index: 100; background: var(--bg-card);
     border-bottom: 1px solid var(--border-color); padding: 12px 16px; box-shadow: var(--shadow-sm);
 }
 .nav-inner { max-width: 860px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 .stats-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.85rem; font-weight: 700; font-family: 'Inter', sans-serif; }
-.stat-pill { padding: 4px 10px; border-radius: 6px; background: var(--bg-card-inner); border: 1px solid var(--border-color); color: var(--text-secondary); }
+.stat-pill { padding: 6px 12px; border-radius: 6px; background: var(--bg-card-inner); border: 1px solid var(--border-color); color: var(--text-secondary); }
 .stat-pill b { color: var(--text-main); margin-right: 4px; }
 .stat-pill.hl-green { border-color: var(--correct-border); color: var(--correct-border); background: var(--correct-bg); }
 .stat-pill.hl-red { border-color: var(--wrong-border); color: var(--wrong-border); background: var(--wrong-bg); }
+
+/* Timer Badge */
+.timer-badge { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; background: rgba(14, 165, 233, 0.1); border: 1px solid var(--primary); color: var(--primary); font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.9rem; }
+
 .actions-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.btn-ctrl {
-    background: var(--bg-card-inner); color: var(--text-main); border: 1px solid var(--border-color);
-    padding: 6px 14px; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.85rem;
-    font-weight: 700; cursor: pointer; transition: 0.2s ease;
-}
+.btn-ctrl { background: var(--bg-card-inner); color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s ease; }
 .btn-ctrl:hover, .btn-ctrl.active-filter { border-color: var(--primary); color: var(--primary); background: var(--selected-bg); }
-.btn-primary {
-    background: var(--primary); color: #FFFFFF; border: none; padding: 6px 16px;
-    border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s ease;
-}
+.btn-primary { background: var(--primary); color: #FFFFFF; border: none; padding: 8px 16px; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s ease; }
 .btn-primary:hover { background: var(--primary-hover); }
 .progress-track { max-width: 860px; margin: 12px auto 0; height: 6px; background: var(--bg-card-inner); border-radius: 4px; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
-.hero-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin: 24px 0; box-shadow: var(--shadow-md); text-align: center; }
-.logos-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.logo-circle {
-    width: 80px; height: 80px; background: #FFFFFF; border-radius: 50%;
-    padding: 4px; border: 2px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; justify-content: center; align-items: center;
-}
+
+/* Hero Section */
+.hero-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 32px 24px; margin: 24px 0; box-shadow: var(--shadow-md); text-align: center; }
+.logos-row { display: flex; justify-content: center; gap: 40px; align-items: center; margin-bottom: 24px; }
+.logo-circle { width: 100px; height: 100px; background: #FFFFFF; border-radius: 50%; padding: 6px; border: 2px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; justify-content: center; align-items: center; }
 .logo-circle img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
-.sadaqa-text {
-    font-size: 1rem; font-weight: 600; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;
-    padding: 12px; border-radius: 8px; background: var(--bg-card-inner); border: 1px solid var(--border-color);
-}
-.hero-title { font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
-.hero-subtitle { font-size: 1rem; font-weight: 600; color: var(--primary); margin-bottom: 20px; }
+.hero-batch { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.hero-title { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 900; color: var(--text-main); margin-bottom: 12px; line-height: 1.3; }
+.hero-subtitle { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--primary); margin-bottom: 24px; }
+.sadaqa-text { font-size: 1.1rem; font-weight: 700; color: var(--text-main); line-height: 1.7; padding: 16px; border-radius: 8px; background: var(--bg-card-inner); border: 1px solid var(--border-color); max-width: 600px; margin: 0 auto; }
+
+/* Modes & Filters */
 .mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
 .mode-btn { background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: 8px; cursor: pointer; text-align: center; transition: 0.2s ease; box-shadow: var(--shadow-sm); }
 .mode-btn strong { display: block; font-size: 1.05rem; color: var(--text-main); margin-bottom: 4px; font-family: 'Cairo', sans-serif; }
@@ -99,26 +100,45 @@ body {
 .filter-bar { background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: 8px; margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap; box-shadow: var(--shadow-sm); }
 .form-control { flex: 1; min-width: 200px; padding: 10px 14px; background: var(--bg-card-inner); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 6px; font-family: 'Inter', 'Cairo', sans-serif; font-size: 0.95rem; outline: none; transition: 0.2s; }
 .form-control:focus { border-color: var(--primary); }
-.q-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow-sm); direction: ltr; text-align: left; }
+
+/* Question Cards */
+.q-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-md); direction: ltr; text-align: left; }
 .q-card.bookmarked { border-left: 4px solid var(--primary); }
 .q-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px; }
-.q-number { background: var(--bg-card-inner); color: var(--text-secondary); padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; border: 1px solid var(--border-color); }
+.q-number { background: var(--bg-card-inner); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; border: 1px solid var(--border-color); }
 .q-actions { display: flex; gap: 10px; align-items: center; }
-.q-text { font-size: 1.1rem; font-weight: 600; color: var(--text-main); line-height: 1.6; margin-bottom: 20px; font-family: 'Inter', sans-serif; }
-.options-list { display: flex; flex-direction: column; gap: 10px; }
-.opt-btn { background: var(--bg-card-inner); border: 1px solid var(--border-color); padding: 14px 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 16px; text-align: left; color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif; transition: 0.2s ease; line-height: 1.4; }
+.q-text { font-size: 1.15rem; font-weight: 600; color: var(--text-main); line-height: 1.6; margin-bottom: 24px; font-family: 'Inter', sans-serif; }
+
+/* Options Layout (A, B, C, D) */
+.options-list { display: flex; flex-direction: column; gap: 12px; }
+.opt-btn { display: flex; align-items: center; width: 100%; min-height: 60px; background: var(--bg-card-inner); border: 1px solid var(--border-color); padding: 14px 16px; border-radius: 8px; cursor: pointer; text-align: left; color: var(--text-secondary); transition: 0.2s ease; }
 .opt-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--text-main); background: var(--selected-bg); }
-.opt-char { min-width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; font-weight: 700; flex-shrink: 0; }
+.opt-char { min-width: 36px; height: 36px; display: inline-flex; justify-content: center; align-items: center; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; font-weight: 800; margin-right: 16px; flex-shrink: 0; font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text-secondary); }
+.opt-text { flex: 1; font-size: 1rem; font-family: 'Inter', sans-serif; line-height: 1.4; }
+
 .opt-btn.exam-selected { border-color: var(--primary); background: var(--selected-bg); color: var(--text-main); }
 .opt-btn.exam-selected .opt-char { background: var(--primary); color: #fff; border-color: var(--primary); }
 .opt-btn.correct { background: var(--correct-bg) !important; border-color: var(--correct-border) !important; color: var(--text-main); }
 .opt-btn.correct .opt-char { background: var(--correct-border); color: #fff; border-color: var(--correct-border); }
 .opt-btn.wrong { background: var(--wrong-bg) !important; border-color: var(--wrong-border) !important; color: var(--text-main); }
 .opt-btn.wrong .opt-char { background: var(--wrong-border); color: #fff; border-color: var(--wrong-border); }
-.feedback-box { margin-top: 16px; padding: 16px; border-radius: 8px; background: var(--bg-card-inner); border: 1px solid var(--border-color); font-size: 0.95rem; border-left: 4px solid var(--text-secondary); }
+
+/* Feedback & ChatGPT */
+.feedback-box { margin-top: 20px; padding: 18px; border-radius: 8px; background: var(--bg-card-inner); border: 1px solid var(--border-color); border-left: 4px solid var(--text-secondary); }
 .feedback-box.ic { border-left-color: var(--correct-border); }
 .feedback-box.iw { border-left-color: var(--wrong-border); }
+.feedback-status { font-weight: 800; font-size: 1.05rem; font-family: 'Inter', sans-serif; margin-bottom: 6px; letter-spacing: 0.5px; }
+.feedback-box.ic .feedback-status { color: var(--correct-border); }
+.feedback-box.iw .feedback-status { color: var(--wrong-border); }
+.feedback-key { color: var(--text-main); font-size: 0.95rem; font-family: 'Inter', sans-serif; margin-bottom: 8px; }
+.note-box { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-color); font-size: 0.9rem; color: var(--text-secondary); }
+
+.btn-chatgpt { display: inline-flex; align-items: center; gap: 8px; background: #10A37F; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.95rem; margin-top: 14px; transition: 0.2s ease; border: 1px solid #0f8f6f; cursor: pointer; }
+.btn-chatgpt:hover { background: #0d8a6b; }
+
 .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+
+/* Modals */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
 .modal-overlay.show { display: flex; }
 .modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; width: 100%; max-width: 460px; padding: 30px 24px; text-align: center; box-shadow: var(--shadow-md); }
@@ -129,7 +149,13 @@ body {
 .stat-box { background: var(--bg-card-inner); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; }
 .stat-box b { display: block; font-size: 1.2rem; font-family: 'Inter', sans-serif; margin-bottom: 4px; }
 footer { text-align: center; padding: 24px; color: var(--text-secondary); font-size: 0.9rem; margin-top: 20px; border-top: 1px solid var(--border-color); }
-@media (max-width: 600px) { .mode-selector { grid-template-columns: 1fr; } .hero-title { font-size: 1.4rem; } .logo-circle { width: 60px; height: 60px; } }
+
+@media (max-width: 600px) {
+    .mode-selector { grid-template-columns: 1fr; }
+    .hero-title { font-size: 1.5rem; }
+    .logos-row { gap: 20px; }
+    .logo-circle { width: 70px; height: 70px; }
+}
 </style>
 </head>
 <body>
@@ -139,6 +165,7 @@ footer { text-align: center; padding: 24px; color: var(--text-secondary); font-s
 <nav class="top-nav">
     <div class="nav-inner">
         <div class="stats-group">
+            <span class="timer-badge" id="timerBadge">⏱️ <span id="stopwatch">00:00</span></span>
             <span class="stat-pill">Total: <b>168</b></span>
             <span class="stat-pill hl-green" id="p-c">Correct: <b id="s-c">0</b></span>
             <span class="stat-pill hl-red" id="p-w">Wrong: <b id="s-w">0</b></span>
@@ -159,24 +186,25 @@ footer { text-align: center; padding: 24px; color: var(--text-secondary); font-s
 <div class="container">
     <header class="hero-section">
         <div class="logos-row">
-            <div class="logo-circle"><img src="med-logo.png" alt="Faculty of Medicine"></div>
-            <div class="logo-circle"><img src="uni-logo.png" alt="Al-Azhar University"></div>
+            <div class="logo-circle"><img src="med-logo.jpg" alt="Faculty of Medicine Logo"></div>
+            <div class="logo-circle"><img src="uni-logo.jpg" alt="Al-Azhar University Logo"></div>
         </div>
+        <h3 class="hero-batch">Faculty of Medicine, Al-Azhar University, Cairo — Batch 62</h3>
+        <h1 class="hero-title">Questions on Histology of Cardiovascular System (CVS) Module</h1>
+        <p class="hero-subtitle">Developed by Fathy Ahmed Ragab, Second-Year Medical Student</p>
         <div class="sadaqa-text">
             هذا العمل صدقة جارية على روح والدي رحمه الله رحمة واسعة وأسكنه الفردوس الأعلى من الجنة.<br>أسألكم الدعاء.
         </div>
-        <h1 class="hero-title">Questions on Histology of CVS</h1>
-        <p class="hero-subtitle">By Fathy Ahmed Ragab (Second Year Medical Student)</p>
     </header>
 
     <div class="mode-selector">
         <div class="mode-btn active" id="bTr" onclick="sM('training')">
             <strong>Training Mode</strong>
-            <span>Instant Feedback + Correct Answers</span>
+            <span>Instant Feedback + ChatGPT Explanations</span>
         </div>
         <div class="mode-btn" id="bEx" onclick="sM('exam')">
             <strong>Exam Mode</strong>
-            <span>Hidden Answers + Final Score</span>
+            <span>Hidden Answers + Final Score + Stopwatch</span>
         </div>
     </div>
 
@@ -199,6 +227,7 @@ footer { text-align: center; padding: 24px; color: var(--text-secondary); font-s
     <div class="modal-content">
         <h2 style="color:var(--text-main); font-family:'Inter', sans-serif;">EXAM COMPLETED</h2>
         <p id="mS" style="color:var(--text-secondary); margin-top:8px;"></p>
+        <p id="mTime" style="color:var(--primary); font-weight:700; margin-top:4px; font-family:'Inter', sans-serif;"></p>
         <div class="score-display"><b id="mP">0%</b><span id="mR">0 / 168</span></div>
         <div class="grid-3">
             <div class="stat-box" style="border-bottom: 3px solid var(--correct-border);"><b id="mC" style="color:var(--correct-border);">0</b><span style="color:var(--text-secondary); font-size:0.85rem;">Correct</span></div>
@@ -213,6 +242,21 @@ footer { text-align: center; padding: 24px; color: var(--text-secondary); font-s
 <footer>Developed By <strong>Fathy Ahmed Ragab</strong> • Al-Azhar Faculty of Medicine © 2026</footer>
 
 <script>
+// --- Timer Setup ---
+let timeElapsed = 0;
+let timerInt = null;
+function startTimer() {
+    clearInterval(timerInt);
+    timerInt = setInterval(() => {
+        timeElapsed++;
+        let m = Math.floor(timeElapsed / 60);
+        let s = timeElapsed % 60;
+        document.getElementById('stopwatch').innerText = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }, 1000);
+}
+function stopTimer() { clearInterval(timerInt); }
+
+// --- Audio Setup ---
 const CA=['correct1.mp4','correct2.mp4','correct3.mp4','correct4.mp4','correct5.mp4','correct1.mp3','correct2.mp3','correct.mp3'];
 const WA=['wrong1.mp4','wrong2.mp4','wrong3.mp4','wrong4.mp4','wrong5.mp4','wrong1.mp3','wrong2.mp3','wrong.mp3'];
 let lC=[],lW=[],cI=0,wI=0,cp=null,mut=false;
@@ -220,12 +264,28 @@ CA.forEach(f=>{let a=new Audio(f);a.addEventListener('canplaythrough',()=>lC.pus
 WA.forEach(f=>{let a=new Audio(f);a.addEventListener('canplaythrough',()=>lW.push(a),{once:true});a.src=f});
 function ply(ok){if(mut)return;if(cp)cp.pause();let p=ok?lC:lW;if(p.length>0){let a=ok?p[cI%p.length]:p[wI%p.length];if(ok)cI++;else wI++;cp=a;a.currentTime=0;a.play().catch(()=>{})}}
 function tM(){mut=!mut;if(mut&&cp)cp.pause();document.getElementById('mtB').innerText=mut?'🔇':'🔊'}
+
+// --- Theme Setup ---
 function applyTheme(theme) { if(theme==='light'){document.documentElement.setAttribute('data-theme', 'light');}else{document.documentElement.removeAttribute('data-theme');} }
 function toggleTheme() { const n = document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'; localStorage.setItem('f_cvs_th', n); applyTheme(n); }
 applyTheme(localStorage.getItem('f_cvs_th')||'dark');
+
+// --- FX Setup ---
 let fxT=null;
 function fx(ok){let o=document.getElementById('fx-overlay'); o.className=ok?'flash-green':'flash-red'; clearTimeout(fxT); fxT=setTimeout(()=>{o.className=''}, 300);}
 
+// --- ChatGPT Integration ---
+function askChatGPT(promptEncoded) {
+    const text = decodeURIComponent(promptEncoded);
+    navigator.clipboard.writeText(text).then(() => {
+        alert("تم نسخ السؤال والإجابة بنجاح! 📋\n\nسيتم فتح ChatGPT الآن.. قم بعمل (لصق / Paste) هناك لتعرف الشرح.");
+        window.open('https://chatgpt.com/', '_blank');
+    }).catch(err => {
+        alert("حدث خطأ في النسخ. الرجاء المحاولة مرة أخرى.");
+    });
+}
+
+// --- Data ---
 const sE={75:"Both the coronary artery and umbilical artery are described as 'special type' muscular arteries. This key follows the 'thick wall with well-developed IEL/EEL' description, which matches the coronary artery; the umbilical artery is instead characterized by a poorly-developed IEL (see Q78)."};
 const RQ=[
 [1,1,"As regards the histology of cardiac muscle, which of the following is TRUE?",["It can regenerate from satellite cells","It contains intermediate filaments only, with no other cytoskeletal proteins","It has numerous caveolae like smooth muscle","It is a multinucleated (syncytial) cell","It joins to adjacent cells by intercalated discs"],"E"],
@@ -397,17 +457,89 @@ const RQ=[
 [167,5,"Regarding the connections of lymphatic capillaries compared to blood capillaries, which is TRUE?",["Both are open at both ends, connecting to arterioles and venules","Lymphatic capillaries are blind-ended, connecting only to larger lymphatic vessels, while blood capillaries are open at both ends (connecting to arterioles and venules)","Blood capillaries are blind-ended while lymphatic capillaries are open at both ends","Neither type of capillary has any connections to larger vessels","Both types are blind-ended"],"B"],
 [168,5,"A structure described as 'resting on an incomplete basal lamina, lined by endothelial cells, and forming a blind-ended irregular channel with anchoring filaments' is best identified as a:",["Fenestrated blood capillary","Sinusoidal capillary","Lymphatic capillary","Muscular venule","Metarteriole"],"C"]
 ];
+
 let qM=localStorage.getItem('f_cvs_m')||'training',eS=JSON.parse(localStorage.getItem('f_cvs_e')||'false'),uA=JSON.parse(localStorage.getItem('f_cvs_a')||'{}'),bI=JSON.parse(localStorage.getItem('f_cvs_b')||'[]');
 let sBO=false,sM=false,cIdx=0; const L=['A','B','C','D','E'];
-function sM_f(m){if(qM===m)return;qM=m;localStorage.setItem('f_cvs_m',m);if(m==='training'){eS=false;localStorage.setItem('f_cvs_e','false')}uMB();uSt();ren()}
-function uMB(){document.getElementById('bTr').className='mb'+(qM==='training'?' act':'');document.getElementById('bEx').className='mb'+(qM==='exam'?' act':'')}
-function tB(id=null){if(id){const i=bI.indexOf(id);if(i===-1)bI.push(id);else bI.splice(i,1);localStorage.setItem('f_cvs_b',JSON.stringify(bI));ren()}else{sBO=!sBO;cIdx=0;document.getElementById('bmB').classList.toggle('act',sBO);ren()}}
-function tV(){sM=!sM;cIdx=0;document.getElementById('vMB').innerText=sM?'1 By 1':'List All';ren()}
+
+function sM_f(m){if(qM===m)return;qM=m;localStorage.setItem('f_cvs_m',m);if(m==='training'){eS=false;localStorage.setItem('f_cvs_e','false');stopTimer();document.getElementById('timerBadge').style.display='none';}else{startTimer();document.getElementById('timerBadge').style.display='inline-flex';}uMB();uSt();ren()}
+function uMB(){document.getElementById('bTr').className='mode-btn'+(qM==='training'?' active':'');document.getElementById('bEx').className='mode-btn'+(qM==='exam'?' active':'')}
+function togBm(id=null){if(id){const i=bI.indexOf(id);if(i===-1)bI.push(id);else bI.splice(i,1);localStorage.setItem('f_cvs_b',JSON.stringify(bI));document.getElementById('bmC').innerText=bI.length;ren()}else{sBO=!sBO;cIdx=0;document.getElementById('bmB').classList.toggle('active-filter',sBO);ren()}}
+function tV(){sM=!sM;cIdx=0;document.getElementById('vMB').innerText=sM?'1 By 1 Mode':'List All Mode';ren()}
 function sA(id,l){if(qM==='training'){if(uA[id])return;uA[id]=l;localStorage.setItem('f_cvs_a',JSON.stringify(uA));let q=RQ.find(x=>x[0]===id),ok=l===q[4];ply(ok);fx(ok);uSt();ren();if(Object.keys(uA).length===168)setTimeout(fin,900)}else{if(eS)return;uA[id]=l;localStorage.setItem('f_cvs_a',JSON.stringify(uA));uSt();ren()}}
 function gF(){const sc=parseInt(document.getElementById('sSl').value,10),qs=document.getElementById('sIn').value.toLowerCase().trim();return RQ.filter(q=>(sc===0||q[1]===sc)&&(!qs||q[2].toLowerCase().includes(qs)||q[3].some(o=>o.toLowerCase().includes(qs)))&&(!sBO||bI.includes(q[0])))}
-function ren(){const C=document.getElementById('qC');C.innerHTML='';const F=gF();if(!F.length){C.innerHTML=`<div class="qc" style="text-align:center">No questions.</div>`;return}const ls=sM?[F[cIdx]]:F,rv=qM==='training'||(qM==='exam'&&eS);ls.forEach((q,i)=>{let[id,sc,tx,op,an]=q,ch=uA[id],ib=bI.includes(id),ps=sM?cIdx+1:i+1,cd=document.createElement('div');cd.className='qc'+(ib?' bk':'');let oH='';op.forEach((o,j)=>{let l=L[j],c='ob',t='',d=false;if(rv&&ch){d=true;if(l===an){c+=' co';t=`<span class="stg" style="color:var(--cbr)">✔ CORRECT</span>`}else if(l===ch){c+=' wr';t=`<span class="stg" style="color:var(--wbr)">✖ WRONG</span>`}}else if(qM==='exam'&&eS&&!ch){d=true;if(l===an){c+=' co';t=`<span class="stg" style="color:var(--cbr)">✔ KEY</span>`}}else if(qM==='exam'&&!eS&&ch===l){c+=' es';t=`<span class="stg" style="color:var(--pri)">SELECTED</span>`}oH+=`<button class="${c}" ${d?'disabled':''} onclick="sA(${id},'${l}')"><span class="och">${l}</span><span style="flex:1">${o}</span>${t}</button>`});let nH=sE[id]?`<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--brd);font-size:.86rem;color:var(--sec)">💡 <strong style="color:var(--pri)">Note:</strong> ${sE[id]}</div>`:'';let fH=(rv&&(ch||eS))?`<div class="fbx ${ch===an?'ic':'iw'}"><div style="font-weight:900;color:var(--${ch===an?'cbr':'wbr'});margin-bottom:4px">${ch===an?`✔ SUCCESS (\${an})`:ch?`✖ FAILED (${ch}) — KEY: (${an})`:`⚠️ SKIPPED — KEY: (\${an})`}</div><div><strong style="color:var(--txt)">KEY:</strong> (${an}) ${op[L.indexOf(an)]}</div>${nH}</div>`:'';let nV=sM?`<div class="nb"><button class="bp" ${cIdx===0?'disabled':''} onclick="mv(-1,${F.length})">← PREV</button><button class="bp" ${cIdx>=F.length-1?'disabled':''} onclick="mv(1,${F.length})">NEXT →</button></div>`:'';cd.innerHTML=`<div class="qh"><span class="qn">Q ${ps} / ${F.length} (#${id})</span><div class="qa"><span style="font-size:.78rem;color:var(--sec)">SEC ${sc}</span><button class="bc ${ib?'act':''}" onclick="tB(${id})">${ib?'🔖 SAVED':'🔖 SAVE'}</button></div></div><div class="qt">${tx}</div><div class="ol">${oH}</div>${fH}${nV}`;C.appendChild(cd)})}
-function uSt(){let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});let d=c+w,p=Math.round((d/168)*100);document.getElementById('bmC').innerText=bI.length;document.getElementById('pF').style.width=p+'%';if(qM==='exam'&&!eS){document.getElementById('p-c').style.display='none';document.getElementById('p-w').style.display='none';document.getElementById('l-p').innerText='DONE:';document.getElementById('s-p').innerText=`${d}/168`}else{document.getElementById('p-c').style.display='inline-block';document.getElementById('p-w').style.display='inline-block';document.getElementById('s-c').innerText=c;document.getElementById('s-w').innerText=w;document.getElementById('l-p').innerText='SCORE:';document.getElementById('s-p').innerText=(d>0?Math.round((c/d)*100):0)+'%'}}
-function fin(){if(qM==='exam'&&!eS){eS=true;localStorage.setItem('f_cvs_e','true')}let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});let d=c+w,u=168-d,p=Math.round((c/168)*100);document.getElementById('mS').innerText=`Answered ${d} of 168`;document.getElementById('mP').innerText=p+'%';document.getElementById('mR').innerText=`${c} / 168`;document.getElementById('mC').innerText=c;document.getElementById('mW').innerText=w;document.getElementById('mU').innerText=u;document.getElementById('sMd').classList.add('sh');let ok=p>=50;ply(ok);if(ok)fx(true);uSt();ren()}
-function cMd(){document.getElementById('sMd').classList.remove('sh')} function mv(s,m){let n=cIdx+s;if(n>=0&&n<m){cIdx=n;ren();window.scrollTo({top:320,behavior:'smooth'})}} function rst(){if(confirm('Reset all progress?')){uA={};eS=false;localStorage.removeItem('f_cvs_a');localStorage.setItem('f_cvs_e','false');uSt();ren();window.scrollTo({top:0,behavior:'smooth'})}}
-window.onload=()=>{uMB();uSt();ren()};
-</script></body></html>
+
+function ren(){
+    const C=document.getElementById('qC');C.innerHTML='';const F=gF();
+    if(!F.length){C.innerHTML=`<div class="q-card" style="text-align:center">No matching questions found.</div>`;return}
+    const ls=sM?[F[cIdx]]:F,rv=qM==='training'||(qM==='exam'&&eS);
+    ls.forEach((q,i)=>{
+        let[id,sc,tx,op,an]=q,ch=uA[id],ib=bI.includes(id),ps=sM?cIdx+1:i+1,cd=document.createElement('div');
+        cd.className='q-card'+(ib?' bookmarked':'');
+        let oH='';
+        op.forEach((o,j)=>{
+            let l=L[j],c='opt-btn',t='',d=false;
+            if(rv&&ch){
+                d=true;if(l===an){c+=' correct';t=`<span class="status-tag" style="color:var(--correct-border)">✔ CORRECT</span>`}
+                else if(l===ch){c+=' wrong';t=`<span class="status-tag" style="color:var(--wrong-border)">✖ WRONG</span>`}
+            }else if(qM==='exam'&&eS&&!ch){
+                d=true;if(l===an){c+=' correct';t=`<span class="status-tag" style="color:var(--correct-border)">✔ KEY</span>`}
+            }else if(qM==='exam'&&!eS&&ch===l){
+                c+=' exam-selected';t=`<span class="status-tag" style="color:var(--primary)">SELECTED</span>`
+            }
+            oH+=`<button class="${c}" ${d?'disabled':''} onclick="sA(${id},'${l}')"><span class="opt-char">${l}</span><span class="opt-text">${o}</span>${t}</button>`
+        });
+        
+        let nH=sE[id]?`<div class="note-box">💡 <strong style="color:var(--primary)">Note:</strong> ${sE[id]}</div>`:'';
+        
+        // ChatGPT Integration
+        let chatPrompt=`مرحباً، أنا طالب أدرس مادة الهستولوجي (Histology of CVS). أرجو شرح إجابة هذا السؤال لي بالتفصيل وبأسلوب مبسط:\n\nالسؤال: ${tx}\nالإجابة الصحيحة هي: (${an}) ${op[L.indexOf(an)]}\n\nلماذا هذه الإجابة صحيحة؟ ولماذا باقي الخيارات خاطئة؟`;
+        let chatBtn=`<button class="btn-chatgpt" onclick="askChatGPT('${encodeURIComponent(chatPrompt)}')">🤖 اسأل ChatGPT (نسخ وفتح)</button>`;
+        
+        let fH=(rv&&(ch||eS))?`<div class="feedback-box ${ch===an?'ic':'iw'}"><div class="feedback-status">${ch===an?`✔ SUCCESS (\${an})`:ch?`✖ FAILED (${ch}) — CORRECT IS (${an})`:`⚠️ SKIPPED — CORRECT IS (\${an})`}</div><div class="feedback-key"><strong>KEY:</strong> (${an}) ${op[L.indexOf(an)]}</div>${nH}${chatBtn}</div>`:'';
+        
+        let nV=sM?`<div class="nav-buttons"><button class="btn-primary" ${cIdx===0?'disabled':''} onclick="mv(-1,${F.length})">← PREV</button><button class="btn-primary" ${cIdx>=F.length-1?'disabled':''} onclick="mv(1,${F.length})">NEXT →</button></div>`:'';
+        
+        cd.innerHTML=`<div class="q-header"><span class="q-number">Q ${ps} / ${F.length} (#${id})</span><div class="q-actions"><span style="font-size:0.8rem;color:var(--text-secondary);text-transform:uppercase">SEC ${sc}</span><button class="btn-ctrl ${ib?'active-filter':''}" onclick="tB(${id})">${ib?'🔖 SAVED':'🔖 SAVE'}</button></div></div><div class="q-text">${tx}</div><div class="options-list">${oH}</div>${fH}${nV}`;
+        C.appendChild(cd);
+    });
+}
+
+function uSt(){
+    let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});
+    let d=c+w,p=Math.round((d/168)*100);document.getElementById('bmC').innerText=bI.length;document.getElementById('pF').style.width=p+'%';
+    if(qM==='exam'&&!eS){document.getElementById('p-c').style.display='none';document.getElementById('p-w').style.display='none';document.getElementById('l-p').innerText='DONE:';document.getElementById('s-p').innerText=`${d} / 168`}
+    else{document.getElementById('p-c').style.display='inline-flex';document.getElementById('p-w').style.display='inline-flex';document.getElementById('s-c').innerText=c;document.getElementById('s-w').innerText=w;document.getElementById('l-p').innerText='SCORE:';document.getElementById('s-p').innerText=(d>0?Math.round((c/d)*100):0)+'%'}
+}
+
+function fin(){
+    if(qM==='exam'&&!eS){eS=true;localStorage.setItem('f_cvs_e','true'); stopTimer();}
+    let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});
+    let d=c+w,u=168-d,p=Math.round((c/168)*100);
+    document.getElementById('mS').innerText=`Answered ${d} out of 168`;
+    if(qM==='exam') document.getElementById('mTime').innerText=`Time elapsed: ${document.getElementById('stopwatch').innerText}`;
+    else document.getElementById('mTime').innerText='';
+    document.getElementById('mP').innerText=p+'%';document.getElementById('mR').innerText=`${c} / 168`;
+    document.getElementById('mC').innerText=c;document.getElementById('mW').innerText=w;document.getElementById('mU').innerText=u;
+    document.getElementById('sMd').classList.add('show');
+    let ok=p>=50;ply(ok);if(ok)fx(true);uSt();ren()
+}
+
+function cMd(){document.getElementById('sMd').classList.remove('show')}
+function mv(s,m){let n=cIdx+s;if(n>=0&&n<m){cIdx=n;ren();window.scrollTo({top:320,behavior:'smooth'})}}
+function rst(){
+    if(confirm('Are you sure you want to start over?')){
+        uA={};eS=false;localStorage.removeItem('f_cvs_a');localStorage.setItem('f_cvs_e','false');
+        timeElapsed=0; document.getElementById('stopwatch').innerText="00:00";
+        if(qM==='exam') startTimer();
+        uSt();ren();window.scrollTo({top:0,behavior:'smooth'})
+    }
+}
+
+window.onload=()=>{
+    uMB();uSt();ren();
+    if(qM==='exam' && !eS) { startTimer(); document.getElementById('timerBadge').style.display='inline-flex'; }
+    else { document.getElementById('timerBadge').style.display='none'; }
+};
+</script>
+</body>
+</html>
