@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Histology of CVS By Fathy Ahmed Ragab (2nd year medical student)</title>
+<title>بنك الأسئلة التفاعلي المعتمد لموديول الـ CVS | د. فتحي أحمد رجب</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -323,7 +323,6 @@ footer {
 
 <div id="fx-overlay"></div>
 
-<!-- Top Sticky Bar -->
 <div class="sticky-bar">
     <div class="sticky-inner">
         <div class="stats-group" id="liveStatsGroup">
@@ -365,20 +364,14 @@ footer {
                     <p>كلية معتمدة • Al-Azhar Faculty of Medicine</p>
                 </div>
             </div>
-
             <div class="author-pill">
                 <span class="lbl-gold">إعداد وتطوير:</span>
                 <span class="name-white">د. فتحي أحمد رجب</span>
                 <span class="lbl-gold">(طالب بطب الأزهر)</span>
             </div>
-
             <div class="hero-divider"></div>
-
             <h1 class="hero-main-title">بنك الأسئلة التفاعلي المعتمد لموديول الـ CVS 🫀</h1>
-            <p class="hero-desc">
-                المنصة الطبية الشاملة المخصصة لطلاب كلية الطب، تجمع كافة أسئلة هستولوجي الموديول (168 سؤالاً تفاعلياً) مع نظامي التدريب الفوري والاختبار الكامل، ومسودة رقمية، ومؤقت زمني، وتحليل نقاط الضعف.
-            </p>
-
+            <p class="hero-desc">المنصة الطبية الشاملة لطلاب كلية الطب، تجمع كافة أسئلة هستولوجي الموديول مع نظامي التدريب والاختبار، ومسودة رقمية، ومؤقت زمني، وتحليل نقاط الضعف.</p>
             <div class="hero-badges">
                 <span class="hero-badge">⚡ 168 سؤالاً تفاعلياً</span>
                 <span class="hero-badge">⏱️ مؤقت زمني للامتحان</span>
@@ -390,16 +383,17 @@ footer {
 
     <div class="mode-selector">
         <button class="mode-btn active" id="btnModeTrain" onclick="switchQuizMode('training')">
-            <span>📚 وضع التدريب الفوري (Training Mode)</span>
-            <span class="sub-desc">تصحيح فوري بعد كل سؤال + مؤثرات صوتية وبصرية + درجة نهائية</span>
+            <span>📚 وضع التدريب الفوري</span>
+            <span class="sub-desc">تصحيح فوري بعد كل سؤال + مؤثرات بصرية + درجة نهائية</span>
         </button>
         <button class="mode-btn" id="btnModeExam" onclick="switchQuizMode('exam')">
-            <span>📝 وضع الاختبار الشامل (Exam Mode)</span>
-            <span class="sub-desc">مؤقت 168 دقيقة + إخفاء الإجابات وإظهار التصحيح والتحليل في النهاية</span>
+            <span>📝 وضع الاختبار الشامل</span>
+            <span class="sub-desc">مؤقت 168 دقيقة + إخفاء الإجابات وإظهار التصحيح في النهاية</span>
         </button>
     </div>
 
     <section class="toolbar">
         <div class="filter-row">
             <select id="sectionSelect" class="select-box" onchange="onFilterChange()">
-                <option valu
+                <option value="0">جميع أقسام الهستولوجي (168 سؤالاً)</option>
+                <option value="1">Section 1: Heart, Cardiac Muscle & Cardiomyocytes (1–51)</opti
