@@ -905,29 +905,20 @@ footer {
 
 <script>
 // ============================================================================
-// 1. نظام تبديل الأصوات المتعددة الذكي (Multi-Sound Playlist System)
-// ارفع في حسابك على GitHub أي عدد تريد من الأصوات بهذه الأسماء:
-// للإجابات الصحيحة: correct1.mp3, correct2.mp3, correct3.mp3, correct4.mp3, correct5.mp3
-// للإجابات الخاطئة: wrong1.mp3, wrong2.mp3, wrong3.mp3, wrong4.mp3, wrong5.mp3
-// سيقوم الكود تلقائياً باكتشاف الملفات التي رفعتها والتبديل بينها في كل سؤال!
+// 1. نظام الأصوات المتعددة (MP4 & MP3 Support up to 10 files)
 // ============================================================================
-
 const CORRECT_SOUND_FILES = [
-    'correct1.mp3',
-    'correct2.mp3',
-    'correct3.mp3',
-    'correct4.mp3',
-    'correct5.mp3',
-    'correct.mp3'
+    'correct1.mp4', 'correct2.mp4', 'correct3.mp4', 'correct4.mp4', 'correct5.mp4',
+    'correct6.mp4', 'correct7.mp4', 'correct8.mp4', 'correct9.mp4', 'correct10.mp4',
+    'correct1.mp3', 'correct2.mp3', 'correct3.mp3', 'correct4.mp3', 'correct5.mp3', 
+    'correct6.mp3', 'correct7.mp3', 'correct8.mp3', 'correct9.mp3', 'correct10.mp3', 'correct.mp3'
 ];
 
 const WRONG_SOUND_FILES = [
-    'wrong1.mp3',
-    'wrong2.mp3',
-    'wrong3.mp3',
-    'wrong4.mp3',
-    'wrong5.mp3',
-    'wrong.mp3'
+    'wrong1.mp4', 'wrong2.mp4', 'wrong3.mp4', 'wrong4.mp4', 'wrong5.mp4',
+    'wrong6.mp4', 'wrong7.mp4', 'wrong8.mp4', 'wrong9.mp4', 'wrong10.mp4',
+    'wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 
+    'wrong6.mp3', 'wrong7.mp3', 'wrong8.mp3', 'wrong9.mp3', 'wrong10.mp3', 'wrong.mp3'
 ];
 
 let loadedCorrectAudios = [];
@@ -937,15 +928,12 @@ let wrongPlayIndex = 0;
 let currentPlayingAudio = null;
 let isMuted = false;
 
-// فحص وتحميل الملفات الصوتية الموجودة فعلياً في المستودع تلقائياً
 function preloadPlaylists() {
     CORRECT_SOUND_FILES.forEach(fileName => {
         const audio = new Audio();
         audio.preload = 'auto';
         audio.addEventListener('canplaythrough', () => {
-            if (!loadedCorrectAudios.includes(audio)) {
-                loadedCorrectAudios.push(audio);
-            }
+            if (!loadedCorrectAudios.includes(audio)) loadedCorrectAudios.push(audio);
         }, { once: true });
         audio.src = fileName;
     });
@@ -954,9 +942,7 @@ function preloadPlaylists() {
         const audio = new Audio();
         audio.preload = 'auto';
         audio.addEventListener('canplaythrough', () => {
-            if (!loadedWrongAudios.includes(audio)) {
-                loadedWrongAudios.push(audio);
-            }
+            if (!loadedWrongAudios.includes(audio)) loadedWrongAudios.push(audio);
         }, { once: true });
         audio.src = fileName;
     });
@@ -964,9 +950,7 @@ function preloadPlaylists() {
 
 preloadPlaylists();
 
-// نغمات احتياطية متنوعة في حال لم تكن ملفات الـ mp3 قد رُفعت بعد
-let synthCorrectStep = 0;
-let synthWrongStep = 0;
+let synthCorrectStep = 0, synthWrongStep = 0;
 function playSynthTone(isCorrect) {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -976,33 +960,21 @@ function playSynthTone(isCorrect) {
         gain.connect(ctx.destination);
 
         if (isCorrect) {
-            const melodies = [
-                [523.25, 659.25, 783.99],
-                [587.33, 739.99, 880.00],
-                [440.00, 554.37, 659.25, 880.00]
-            ];
+            const melodies = [[523.25, 659.25, 783.99], [587.33, 739.99, 880.00], [440.00, 554.37, 659.25, 880.00]];
             const notes = melodies[synthCorrectStep % melodies.length];
             synthCorrectStep++;
             osc.type = 'sine';
-            notes.forEach((freq, i) => {
-                osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
-            });
+            notes.forEach((freq, i) => osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08));
             gain.gain.setValueAtTime(0.18, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + notes.length * 0.1 + 0.15);
             osc.start();
             osc.stop(ctx.currentTime + notes.length * 0.1 + 0.15);
         } else {
-            const buzzes = [
-                [220, 150],
-                [190, 130],
-                [250, 180, 120]
-            ];
+            const buzzes = [[220, 150], [190, 130], [250, 180, 120]];
             const notes = buzzes[synthWrongStep % buzzes.length];
             synthWrongStep++;
             osc.type = 'sawtooth';
-            notes.forEach((freq, i) => {
-                osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
-            });
+            notes.forEach((freq, i) => osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12));
             gain.gain.setValueAtTime(0.18, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + notes.length * 0.13 + 0.12);
             osc.start();
@@ -1013,25 +985,14 @@ function playSynthTone(isCorrect) {
 
 function playFeedbackSound(isCorrect) {
     if (isMuted) return;
-
-    // إيقاف أي صوت سابق شغال حتى لا تتداخل الأصوات
     if (currentPlayingAudio) {
         currentPlayingAudio.pause();
         currentPlayingAudio.currentTime = 0;
     }
-
     const pool = isCorrect ? loadedCorrectAudios : loadedWrongAudios;
-
     if (pool.length > 0) {
-        // اختيار الصوت التالي بالترتيب التبادلي (أو عشوائياً بدون تكرار)
-        let chosenAudio;
-        if (isCorrect) {
-            chosenAudio = pool[correctPlayIndex % pool.length];
-            correctPlayIndex++;
-        } else {
-            chosenAudio = pool[wrongPlayIndex % pool.length];
-            wrongPlayIndex++;
-        }
+        let chosenAudio = isCorrect ? pool[correctPlayIndex % pool.length] : pool[wrongPlayIndex % pool.length];
+        if (isCorrect) correctPlayIndex++; else wrongPlayIndex++;
         currentPlayingAudio = chosenAudio;
         chosenAudio.currentTime = 0;
         chosenAudio.play().catch(() => playSynthTone(isCorrect));
@@ -1042,13 +1003,11 @@ function playFeedbackSound(isCorrect) {
 
 function toggleMute() {
     isMuted = !isMuted;
-    if (isMuted && currentPlayingAudio) {
-        currentPlayingAudio.pause();
-    }
+    if (isMuted && currentPlayingAudio) currentPlayingAudio.pause();
     document.getElementById('muteBtn').innerText = isMuted ? '🔇' : '🔊';
 }
 
-// 2. المؤثرات البصرية على الشاشة في وضع التدريب
+// 2. المؤثرات البصرية على الشاشة
 let fxTimer = null;
 function triggerScreenFX(isCorrect) {
     const overlay = document.getElementById('fx-overlay');
@@ -1073,7 +1032,6 @@ function triggerScreenFX(isCorrect) {
         overlay.classList.add('flash-red');
         document.body.classList.add('shake-anim');
         setTimeout(() => document.body.classList.remove('shake-anim'), 450);
-
         const xSymbols = ['❌', '✖️', '🚫', '❌'];
         for (let i = 0; i < 32; i++) {
             const span = document.createElement('span');
@@ -1086,12 +1044,8 @@ function triggerScreenFX(isCorrect) {
             overlay.appendChild(span);
         }
     }
-
     clearTimeout(fxTimer);
-    fxTimer = setTimeout(() => {
-        overlay.className = '';
-        overlay.innerHTML = '';
-    }, 2200);
+    fxTimer = setTimeout(() => { overlay.className = ''; overlay.innerHTML = ''; }, 2200);
 }
 
 // 3. المظهر
@@ -1119,7 +1073,7 @@ function toggleTheme() {
 
 initTheme();
 
-// 4. قاعدة بيانات الأسئلة (168 سؤالاً)
+// 4. قاعدة البيانات (168 سؤال)
 const specificExplanations = {
     75: "Both the coronary artery and umbilical artery are described as 'special type' muscular arteries. This key follows the 'thick wall with well-developed IEL/EEL' description, which matches the coronary artery; the umbilical artery is instead characterized by a poorly-developed IEL (see Q78)."
 };
