@@ -1,69 +1,408 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Questions on Histology of CVS | By Fathy Ahmed Ragab</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"><style>
-:root{--bg-m:#0a0a0f;--bg-c:#151520;--bg-ci:#1f1f2e;--cy:#00f0ff;--pk:#ff003c;--tm:#fff;--ts:#a0a0b0;--bc:#2a2a40;--cb:#00ff80;--wb:#ff003c;--sh-cy:0 0 10px rgba(0,240,255,.5),0 0 20px rgba(0,240,255,.3);--sh-pk:0 0 10px rgba(255,0,60,.5),0 0 20px rgba(255,0,60,.3)}
-*{box-sizing:border-box;margin:0;padding:0} body{background:var(--bg-m) radial-gradient(circle at 15% 50%,rgba(0,240,255,.03) 0,transparent 50%);color:var(--tm);font-family:'Cairo','Inter',sans-serif;line-height:1.65;padding-bottom:70px;overflow-x:hidden}
-.cnt{max-width:820px;margin:20px auto;padding:0 14px} #fx{position:fixed;inset:0;pointer-events:none;z-index:9999;transition:.3s} .fg{background:rgba(0,255,128,.1);box-shadow:inset 0 0 80px rgba(0,255,128,.5)} .fr{background:rgba(255,0,60,.1);box-shadow:inset 0 0 80px rgba(255,0,60,.5)}
-@keyframes shk{0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)}} .sha{animation:shk .4s ease} .fxp{position:absolute;top:-50px;user-select:none;pointer-events:none;animation:fd linear forwards;text-shadow:0 0 10px rgba(255,255,255,.8)} @keyframes fd{100%{transform:translateY(105vh) rotate(360deg) scale(1.2);opacity:0}}
-.hc{background:var(--bg-c);border:2px solid var(--bc);border-top:4px solid var(--cy);border-bottom:4px solid var(--pk);border-radius:12px;overflow:hidden;position:relative;margin-bottom:24px;box-shadow:0 8px 30px rgba(0,0,0,.6)}
-.hb{padding:0 24px 30px;text-align:center;position:relative;z-index:10} .sb{background:rgba(255,0,60,.1);border:1px solid rgba(255,0,60,.4);padding:12px 20px;border-radius:8px;margin-bottom:20px;display:inline-block;box-shadow:var(--sh-pk)} .stx{font-size:1.05rem;font-weight:800;color:#fff;text-shadow:0 0 5px var(--pk);line-height:1.6}
-.ht{font-family:'Inter',sans-serif;font-size:1.85rem;font-weight:900;color:var(--tm);text-transform:uppercase;letter-spacing:1px;margin:10px 0 5px;text-shadow:0 0 15px var(--cy)} .ha{font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:600;color:var(--cy);margin-bottom:20px}
-.hbg{display:flex;justify-content:center;flex-wrap:wrap;gap:12px} .hbd{background:var(--bg-ci);border:1px solid var(--bc);color:var(--ts);padding:6px 16px;border-radius:4px;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;transition:.3s} .hbd:hover{border-color:var(--cy);color:var(--cy);box-shadow:var(--sh-cy)}
-.stb{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:2px solid var(--cy);padding:12px 14px;box-shadow:0 5px 20px rgba(0,0,0,.8)} .si{max-width:820px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.sg{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.85rem;font-weight:800;font-family:'Inter'} .sp{padding:4px 10px;border-radius:4px;background:var(--bg-c);border:1px solid var(--bc);color:var(--ts)} .sp b{color:var(--tm);margin-right:4px} .hg{border-color:var(--cb);color:var(--cb);box-shadow:inset 0 0 5px rgba(0,255,128,.2)} .hr{border-color:var(--wb);color:var(--wb);box-shadow:inset 0 0 5px rgba(255,0,60,.2)} .hcy{border-color:var(--cy);color:var(--cy);box-shadow:inset 0 0 5px rgba(0,240,255,.2)}
-.ag{display:flex;align-items:center;gap:8px;flex-wrap:wrap} .bc{background:var(--bg-c);color:var(--tm);border:1px solid var(--bc);padding:6px 12px;border-radius:4px;font-family:'Cairo';font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s;text-transform:uppercase} .bc:hover,.bc.act{border-color:var(--pk);background:rgba(255,0,60,.1);color:var(--pk);box-shadow:var(--sh-pk)}
-.bf{background:0 0;color:var(--cy);border:1px solid var(--cy);padding:6px 14px;border-radius:4px;font-family:'Cairo';font-size:.82rem;font-weight:800;cursor:pointer;transition:.3s;text-transform:uppercase;box-shadow:inset 0 0 5px rgba(0,240,255,.2)} .bf:hover{background:var(--cy);color:#000;box-shadow:var(--sh-cy)} .ptr{max-width:820px;margin:10px auto 0;height:4px;background:var(--bg-c);border-radius:2px;overflow:hidden} .pfi{height:100%;background:var(--cy);width:0%;transition:.3s;box-shadow:0 0 10px var(--cy)}
-.ms{background:var(--bg-c);border:1px solid var(--bc);border-radius:8px;padding:12px;margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px} .mb{padding:14px;border-radius:6px;border:1px solid var(--bc);background:var(--bg-ci);color:var(--ts);font-family:'Cairo';font-size:1rem;font-weight:800;cursor:pointer;transition:.3s;display:flex;flex-direction:column;align-items:center;gap:4px} .mb.act{background:rgba(0,240,255,.05);border-color:var(--cy);color:var(--cy);box-shadow:inset 0 0 15px rgba(0,240,255,.15)} .sd{font-size:.75rem;font-weight:600;opacity:.7}
-.tb{background:var(--bg-c);border:1px solid var(--bc);border-radius:8px;padding:14px;margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap} .sbx{flex:1;min-width:210px;min-height:44px;padding:9px 14px;border-radius:4px;border:1px solid var(--bc);background:var(--bg-ci);color:var(--tm);font-family:'Inter','Cairo';font-size:.92rem;outline:0;transition:.2s} .sbx:focus{border-color:var(--pk);box-shadow:inset 0 0 5px rgba(255,0,60,.3)}
-.qc{background:var(--bg-c);border:1px solid var(--bc);border-radius:8px;padding:24px 20px;margin-bottom:20px;direction:ltr;text-align:left;font-family:'Inter';border-left:3px solid transparent;transition:.3s} .qc:hover{border-left-color:var(--cy);background:rgba(21,21,32,.9)} .qc.bk{border-left-color:var(--pk)} .qh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px dashed var(--bc)} .qbd{background:rgba(0,240,255,.1);color:var(--cy);border:1px solid rgba(0,240,255,.3);padding:4px 12px;border-radius:4px;font-size:.82rem;font-weight:800;letter-spacing:1px}
-.qhr{display:flex;align-items:center;gap:10px} .bca{background:0 0;color:var(--ts);border:1px solid var(--bc);padding:4px 10px;border-radius:4px;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s} .bca:hover,.bca.act{color:var(--pk);border-color:var(--pk);background:rgba(255,0,60,.1)}
-.qsm{font-size:1.1rem;font-weight:600;color:#fff;margin-bottom:20px;line-height:1.6} .ol{display:flex;flex-direction:column;gap:12px} .ob{width:100%;min-height:52px;background:var(--bg-ci);border:1px solid var(--bc);color:var(--ts);padding:12px 16px;border-radius:6px;text-align:left;font-family:'Inter';font-size:.96rem;cursor:pointer;display:flex;align-items:center;gap:14px;transition:.2s;position:relative;overflow:hidden} .ob:hover:not(:disabled){border-color:var(--cy);color:#fff;background:rgba(0,240,255,.05)} .ob.es{border-color:var(--cy)!important;background:rgba(0,240,255,.1)!important;color:#fff} .ob.es .oc{background:var(--cy);color:#000;border-color:var(--cy)}
-.oc{min-width:32px;height:32px;border-radius:4px;background:rgba(255,255,255,.05);border:1px solid var(--bc);color:var(--ts);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;flex-shrink:0} .ob.co{background:rgba(0,255,128,.15)!important;border-color:var(--cb)!important;color:#fff} .ob.co .oc{background:var(--cb);color:#000;border-color:var(--cb)} .ob.wr{background:rgba(255,0,60,.15)!important;border-color:var(--wb)!important;color:#fff} .ob.wr .oc{background:var(--wb);color:#fff;border-color:var(--wb)} .stg{margin-left:auto;font-size:.8rem;font-weight:800;flex-shrink:0;text-transform:uppercase}
-.fp{margin-top:18px;padding:16px;border-radius:6px;background:rgba(0,0,0,.3);border:1px solid var(--bc);border-left:4px solid var(--ts);font-size:.95rem;line-height:1.6} .fp.ic{border-left-color:var(--cb);border-color:rgba(0,255,128,.3)} .fp.iw{border-left-color:var(--wb);border-color:rgba(255,0,60,.3)}
-.md{position:fixed;inset:0;background:rgba(5,5,8,.9);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px} .md.sh{display:flex} .rm{background:var(--bg-c);border:1px solid var(--cy);border-radius:8px;max-width:480px;width:100%;padding:30px 24px;text-align:center;box-shadow:var(--sh-cy)} .scc{width:130px;height:130px;border-radius:50%;border:3px solid var(--cy);background:rgba(0,240,255,.05);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:16px auto 24px;box-shadow:inset 0 0 20px rgba(0,240,255,.2)} .scc b{font-size:2.2rem;font-family:'Inter';color:var(--cy);line-height:1;text-shadow:0 0 10px var(--cy)} .scc span{font-size:.85rem;color:var(--ts);margin-top:6px;font-weight:600} .rg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px} .rbx{background:rgba(0,0,0,.3);border:1px solid var(--bc);border-radius:6px;padding:12px 6px} .rbx b{display:block;font-size:1.3rem;font-family:'Inter';margin-bottom:4px}
-footer{text-align:center;padding:30px 16px;color:var(--ts);font-size:.9rem;border-top:1px solid var(--bc);margin-top:40px} @media(max-width:600px){.ht{font-size:1.6rem}.ms{grid-template-columns:1fr}.stx{font-size:.95rem}}
-</style></head><body>
-<div id="fx"></div>
-<div class="stb"><div class="si"><div class="sg">
-<span class="sp">Total: <b>168</b></span><span class="sp hg" id="p-c">Correct: <b id="s-c">0</b></span><span class="sp hr" id="p-w">Wrong: <b id="s-w">0</b></span><span class="sp hcy"><span id="l-p">Score:</span> <b id="s-p">0%</b></span></div>
-<div class="ag"><button class="bc" id="bmB" onclick="tB()">🔖 Saved (<span id="bmC">0</span>)</button><button class="bc" id="vMB" onclick="tV()">1 By 1</button><button class="bc" id="mtB" onclick="tM()">🔊</button><button class="bf" onclick="fin()">SUBMIT 🏆</button><button class="bc" onclick="rst()">RESET 🔄</button></div></div>
-<div class="ptr"><div class="pfi" id="pF"></div></div></div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVS Histology Bank | By Dr. Fathy Ahmed Ragab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Premium Medical UI Theme */
+:root {
+    /* Dark Mode (Default) */
+    --bg-main: #0F172A;
+    --bg-card: #1E293B;
+    --bg-card-inner: #0B1120;
+    --primary: #0EA5E9;
+    --primary-hover: #38BDF8;
+    --text-main: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: #334155;
+    --correct-bg: rgba(16, 185, 129, 0.1);
+    --correct-border: #10B981;
+    --wrong-bg: rgba(239, 68, 68, 0.1);
+    --wrong-border: #EF4444;
+    --selected-bg: rgba(14, 165, 233, 0.15);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
 
-<div class="cnt">
-<header class="hc">
-<div style="display:flex;justify-content:space-between;align-items:center;padding:25px 25px 10px 25px">
-<img src="uni-logo.jpg" style="width:85px;height:85px;border-radius:50%;border:2px solid var(--cy);box-shadow:0 0 15px var(--cy);background:#fff;object-fit:contain" alt="Al-Azhar">
-<img src="med-logo.jpg" style="width:85px;height:85px;border-radius:50%;border:2px solid var(--cy);box-shadow:0 0 15px var(--cy);background:#fff;object-fit:contain" alt="Medicine">
+[data-theme="light"] {
+    --bg-main: #F1F5F9;
+    --bg-card: #FFFFFF;
+    --bg-card-inner: #F8FAFC;
+    --primary: #0284C7;
+    --primary-hover: #0369A1;
+    --text-main: #0F172A;
+    --text-secondary: #475569;
+    --border-color: #E2E8F0;
+    --correct-bg: #DCFCE7;
+    --correct-border: #16A34A;
+    --wrong-bg: #FEE2E2;
+    --wrong-border: #DC2626;
+    --selected-bg: #E0F2FE;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Cairo', 'Inter', sans-serif;
+    line-height: 1.6;
+    padding-bottom: 60px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+
+/* Visual Feedback Overlay (Subtle) */
+#fx-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 9999; transition: background-color 0.2s ease; }
+#fx-overlay.flash-green { background-color: rgba(16, 185, 129, 0.08); }
+#fx-overlay.flash-red { background-color: rgba(239, 68, 68, 0.08); }
+
+/* Top Navigation Bar */
+.top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-inner {
+    max-width: 860px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+}
+
+.stats-group {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    font-size: 0.85rem; font-weight: 700; font-family: 'Inter', sans-serif;
+}
+
+.stat-pill {
+    padding: 4px 10px; border-radius: 6px;
+    background: var(--bg-card-inner); border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+.stat-pill b { color: var(--text-main); margin-right: 4px; }
+.stat-pill.hl-green { border-color: var(--correct-border); color: var(--correct-border); background: var(--correct-bg); }
+.stat-pill.hl-red { border-color: var(--wrong-border); color: var(--wrong-border); background: var(--wrong-bg); }
+
+.actions-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.btn-ctrl {
+    background: var(--bg-card-inner); color: var(--text-main);
+    border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 6px;
+    font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 700;
+    cursor: pointer; transition: 0.2s ease;
+}
+.btn-ctrl:hover, .btn-ctrl.active-filter {
+    border-color: var(--primary); color: var(--primary); background: var(--selected-bg);
+}
+
+.btn-primary {
+    background: var(--primary); color: #FFFFFF;
+    border: none; padding: 6px 16px; border-radius: 6px;
+    font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 700;
+    cursor: pointer; transition: 0.2s ease;
+}
+.btn-primary:hover { background: var(--primary-hover); }
+
+/* Progress Bar */
+.progress-track {
+    max-width: 860px; margin: 12px auto 0; height: 6px;
+    background: var(--bg-card-inner); border-radius: 4px; overflow: hidden;
+}
+.progress-fill {
+    height: 100%; background: var(--primary);
+    width: 0%; transition: width 0.3s ease;
+}
+
+/* Hero Section */
+.hero-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.logos-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-circle {
+    width: 80px; height: 80px;
+    background: #FFFFFF; border-radius: 50%;
+    padding: 4px; border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    display: flex; justify-content: center; align-items: center;
+}
+.logo-circle img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+
+.sadaqa-text {
+    font-size: 1rem; font-weight: 600; color: var(--text-secondary);
+    line-height: 1.6; margin-bottom: 20px;
+    padding: 12px; border-radius: 8px; background: var(--bg-card-inner);
+    border: 1px solid var(--border-color);
+}
+
+.hero-title {
+    font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 800;
+    color: var(--text-main); margin-bottom: 8px;
+}
+.hero-subtitle {
+    font-size: 1rem; font-weight: 600; color: var(--primary);
+    margin-bottom: 20px;
+}
+
+/* Controls & Modes */
+.mode-selector {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 20px;
+}
+.mode-btn {
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    padding: 16px; border-radius: 8px; cursor: pointer;
+    text-align: center; transition: 0.2s ease; box-shadow: var(--shadow-sm);
+}
+.mode-btn strong { display: block; font-size: 1.05rem; color: var(--text-main); margin-bottom: 4px; font-family: 'Cairo', sans-serif; }
+.mode-btn span { font-size: 0.8rem; color: var(--text-secondary); }
+.mode-btn.active {
+    border-color: var(--primary); background: var(--selected-bg);
+}
+.mode-btn.active strong { color: var(--primary); }
+
+.filter-bar {
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    padding: 16px; border-radius: 8px; margin-bottom: 24px;
+    display: flex; gap: 12px; flex-wrap: wrap; box-shadow: var(--shadow-sm);
+}
+.form-control {
+    flex: 1; min-width: 200px; padding: 10px 14px;
+    background: var(--bg-card-inner); border: 1px solid var(--border-color);
+    color: var(--text-main); border-radius: 6px; font-family: 'Inter', 'Cairo', sans-serif;
+    font-size: 0.95rem; outline: none; transition: 0.2s;
+}
+.form-control:focus { border-color: var(--primary); }
+
+/* Question Cards */
+.q-card {
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: 12px; padding: 24px; margin-bottom: 20px;
+    box-shadow: var(--shadow-sm); direction: ltr; text-align: left;
+}
+.q-card.bookmarked { border-left: 4px solid var(--primary); }
+
+.q-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;
+}
+.q-number {
+    background: var(--bg-card-inner); color: var(--text-secondary);
+    padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 700;
+    border: 1px solid var(--border-color);
+}
+.q-actions { display: flex; gap: 10px; align-items: center; }
+
+.q-text {
+    font-size: 1.1rem; font-weight: 600; color: var(--text-main);
+    line-height: 1.6; margin-bottom: 20px; font-family: 'Inter', sans-serif;
+}
+
+.options-list { display: flex; flex-direction: column; gap: 10px; }
+.opt-btn {
+    background: var(--bg-card-inner); border: 1px solid var(--border-color);
+    padding: 14px 16px; border-radius: 8px; cursor: pointer;
+    display: flex; align-items: center; gap: 16px; text-align: left;
+    color: var(--text-secondary); font-size: 1rem; font-family: 'Inter', sans-serif;
+    transition: 0.2s ease; line-height: 1.4;
+}
+.opt-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--text-main); background: var(--selected-bg); }
+.opt-char {
+    min-width: 32px; height: 32px; display: flex; justify-content: center; align-items: center;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: 6px; font-weight: 700; flex-shrink: 0;
+}
+
+.opt-btn.exam-selected { border-color: var(--primary); background: var(--selected-bg); color: var(--text-main); }
+.opt-btn.exam-selected .opt-char { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.opt-btn.correct { background: var(--correct-bg) !important; border-color: var(--correct-border) !important; color: var(--text-main); }
+.opt-btn.correct .opt-char { background: var(--correct-border); color: #fff; border-color: var(--correct-border); }
+
+.opt-btn.wrong { background: var(--wrong-bg) !important; border-color: var(--wrong-border) !important; color: var(--text-main); }
+.opt-btn.wrong .opt-char { background: var(--wrong-border); color: #fff; border-color: var(--wrong-border); }
+
+.feedback-box {
+    margin-top: 16px; padding: 16px; border-radius: 8px;
+    background: var(--bg-card-inner); border: 1px solid var(--border-color);
+    font-size: 0.95rem; border-left: 4px solid var(--text-secondary);
+}
+.feedback-box.ic { border-left-color: var(--correct-border); }
+.feedback-box.iw { border-left-color: var(--wrong-border); }
+
+.nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+
+/* Modal */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px); z-index: 2000;
+    display: none; align-items: center; justify-content: center; padding: 16px;
+}
+.modal-overlay.show { display: flex; }
+.modal-content {
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: 12px; width: 100%; max-width: 460px;
+    padding: 30px 24px; text-align: center; box-shadow: var(--shadow-md);
+}
+.score-display {
+    width: 120px; height: 120px; margin: 20px auto;
+    border-radius: 50%; border: 4px solid var(--primary);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    background: var(--bg-card-inner);
+}
+.score-display b { font-size: 2rem; color: var(--primary); font-family: 'Inter', sans-serif; }
+.score-display span { font-size: 0.85rem; color: var(--text-secondary); }
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.stat-box { background: var(--bg-card-inner); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; }
+.stat-box b { display: block; font-size: 1.2rem; font-family: 'Inter', sans-serif; margin-bottom: 4px; }
+
+footer { text-align: center; padding: 24px; color: var(--text-secondary); font-size: 0.9rem; margin-top: 20px; border-top: 1px solid var(--border-color); }
+
+@media (max-width: 600px) {
+    .mode-selector { grid-template-columns: 1fr; }
+    .hero-title { font-size: 1.4rem; }
+    .logo-circle { width: 60px; height: 60px; }
+}
+</style>
+</head>
+<body>
+
+<div id="fx-overlay"></div>
+
+<nav class="top-nav">
+    <div class="nav-inner">
+        <div class="stats-group">
+            <span class="stat-pill">Total: <b>168</b></span>
+            <span class="stat-pill hl-green" id="p-c">Correct: <b id="s-c">0</b></span>
+            <span class="stat-pill hl-red" id="p-w">Wrong: <b id="s-w">0</b></span>
+            <span class="stat-pill" style="border-color:var(--primary); color:var(--primary);"><span id="l-p">Score:</span> <b id="s-p">0%</b></span>
+        </div>
+        <div class="actions-group">
+            <button class="btn-ctrl" id="bmB" onclick="togBm()">🔖 Saved (<span id="bmC">0</span>)</button>
+            <button class="btn-ctrl" id="vMB" onclick="tV()">1 By 1 Mode</button>
+            <button class="btn-ctrl" id="mtB" onclick="tM()">🔊</button>
+            <button class="btn-ctrl" onclick="toggleTheme()">🌓</button>
+            <button class="btn-primary" onclick="fin()">SUBMIT EXAM</button>
+            <button class="btn-ctrl" onclick="rst()">RESET</button>
+        </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="pF"></div></div>
+</nav>
+
+<div class="container">
+    <header class="hero-section">
+        <div class="logos-row">
+            <div class="logo-circle"><img src="med-logo.png" alt="Faculty of Medicine"></div>
+            <div class="logo-circle"><img src="uni-logo.png" alt="Al-Azhar University"></div>
+        </div>
+        <div class="sadaqa-text">
+            هذا العمل صدقة جارية على روح والدي رحمه الله رحمة واسعة وأسكنه الفردوس الأعلى من الجنة.<br>أسألكم الدعاء.
+        </div>
+        <h1 class="hero-title">Questions on Histology of CVS</h1>
+        <p class="hero-subtitle">By Fathy Ahmed Ragab (Second Year Medical Student)</p>
+    </header>
+
+    <div class="mode-selector">
+        <div class="mode-btn active" id="bTr" onclick="sM('training')">
+            <strong>Training Mode</strong>
+            <span>Instant Feedback + Correct Answers</span>
+        </div>
+        <div class="mode-btn" id="bEx" onclick="sM('exam')">
+            <strong>Exam Mode</strong>
+            <span>Hidden Answers + Final Score</span>
+        </div>
+    </div>
+
+    <div class="filter-bar">
+        <select id="sSl" class="form-control" onchange="ren()" dir="ltr">
+            <option value="0">All Sections (168 Questions)</option>
+            <option value="1">Section 1: Heart, Cardiac Muscle & Cardiomyocytes</option>
+            <option value="2">Section 2: Fibrous Skeleton & Heart Valves</option>
+            <option value="3">Section 3: Blood Vessels — Arteries & Veins</option>
+            <option value="4">Section 4: Histology of Vessels & Capillaries</option>
+            <option value="5">Section 5: Peripheral Circulation & Lymphatics</option>
+        </select>
+        <input type="search" id="sIn" class="form-control" placeholder="Search questions..." oninput="ren()" dir="ltr">
+    </div>
+
+    <div id="qC"></div>
 </div>
-<div class="hb"><div class="sb"><div class="stx">هذا العمل صدقة جارية على روح والدي رحمه الله رحمة واسعة واسكنه الفردوس الاعلى من الجنة<br>اسالكم الدعاء</div></div>
-<h1 class="ht">QUESTIONS ON HISTOLOGY OF CVS</h1><p class="ha">By Fathy Ahmed Ragab (Second Year Medical Student)</p>
-<div class="hbg"><span class="hbd">168 INTERACTIVE QS</span><span class="hbd">TRAINING & EXAM HUD</span><span class="hbd">SAVE BOOKMARKS</span></div></div></header>
 
-<div class="ms">
-<button class="mb act" id="bTr" onclick="sM('training')"><span style="color:#fff">🟢 TRAINING MODE</span><span class="sd">Instant Feedback + FX</span></button>
-<button class="mb" id="bEx" onclick="sM('exam')"><span style="color:#fff">🔴 EXAM MODE</span><span class="sd">Hidden Answers</span></button></div>
+<div class="modal-overlay" id="sMd">
+    <div class="modal-content">
+        <h2 style="color:var(--text-main); font-family:'Inter', sans-serif;">EXAM COMPLETED</h2>
+        <p id="mS" style="color:var(--text-secondary); margin-top:8px;"></p>
+        
+        <div class="score-display">
+            <b id="mP">0%</b>
+            <span id="mR">0 / 168</span>
+        </div>
 
-<section class="tb"><div style="width:100%;display:flex;gap:10px;flex-wrap:wrap">
-<select id="sSl" class="sbx" onchange="ren()" dir="ltr"><option value="0">All Sections (168)</option><option value="1">Section 1: Heart, Cardiac Muscle</option><option value="2">Section 2: Fibrous Skeleton</option><option value="3">Section 3: Blood Vessels</option><option value="4">Section 4: Histology of Vessels</option><option value="5">Section 5: Peripheral Circulation</option></select>
-<input type="search" id="sIn" class="sbx" placeholder="Search keywords..." oninput="ren()" dir="ltr"></div></section>
-<div id="qC"></div></div>
+        <div class="grid-3">
+            <div class="stat-box" style="border-bottom: 3px solid var(--correct-border);">
+                <b id="mC" style="color:var(--correct-border);">0</b>
+                <span style="color:var(--text-secondary); font-size:0.85rem;">Correct</span>
+            </div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--wrong-border);">
+                <b id="mW" style="color:var(--wrong-border);">0</b>
+                <span style="color:var(--text-secondary); font-size:0.85rem;">Wrong</span>
+            </div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--border-color);">
+                <b id="mU" style="color:var(--text-main);">0</b>
+                <span style="color:var(--text-secondary); font-size:0.85rem;">Skipped</span>
+            </div>
+        </div>
 
-<div class="md" id="sMd"><div class="rm">
-<h2 style="color:var(--cy);font-weight:900;letter-spacing:1px">MISSION COMPLETE</h2><p id="mS" style="color:var(--ts);margin-top:4px"></p>
-<div class="scc"><b id="mP">0%</b><span id="mR">0 / 168</span></div>
-<div class="rg">
-<div class="rbx" style="border-color:var(--cb)"><b id="mC" style="color:var(--cb)">0</b><span style="color:var(--ts);font-size:.8rem">Correct</span></div>
-<div class="rbx" style="border-color:var(--wb)"><b id="mW" style="color:var(--wb)">0</b><span style="color:var(--ts);font-size:.8rem">Wrong</span></div>
-<div class="rbx" style="border-color:var(--bc)"><b id="mU" style="color:#fff">0</b><span style="color:var(--ts);font-size:.8rem">Skipped</span></div></div>
-<button class="bf" style="width:100%;padding:12px;margin-bottom:10px" onclick="cMd()">REVIEW ANSWERS</button>
-<button class="bc" style="width:100%;padding:10px;background:rgba(255,255,255,.05)" onclick="cMd();rst()">RESTART SYSTEM</button></div></div>
+        <button class="btn-primary" style="width:100%; padding:14px; margin-bottom:12px;" onclick="cMd()">REVIEW ANSWERS</button>
+        <button class="btn-ctrl" style="width:100%; padding:12px;" onclick="cMd();rst()">START OVER</button>
+    </div>
+</div>
+
 <footer>Developed By <strong>Fathy Ahmed Ragab</strong> • Al-Azhar Faculty of Medicine © 2026</footer>
+
 <script>
+// --- Audio Setup ---
 const CA=['correct1.mp4','correct2.mp4','correct3.mp4','correct4.mp4','correct5.mp4','correct1.mp3','correct2.mp3','correct.mp3'];
 const WA=['wrong1.mp4','wrong2.mp4','wrong3.mp4','wrong4.mp4','wrong5.mp4','wrong1.mp3','wrong2.mp3','wrong.mp3'];
-let lC=[],lW=[],cI=0,wI=0,cp=null,mut=false,fxT=null;
-CA.forEach(f=>{let a=new Audio(f);a.addEventListener('canplaythrough',()=>lC.push(a),{once:true});a.src=f});WA.forEach(f=>{let a=new Audio(f);a.addEventListener('canplaythrough',()=>lW.push(a),{once:true});a.src=f});
+let lC=[],lW=[],cI=0,wI=0,cp=null,mut=false;
+CA.forEach(f=>{let a=new Audio(f);a.addEventListener('canplaythrough',()=>lC.push(a),{once:true});a.src=f});
+WA.forEach(f=>{let a=new Audio(f);a.addEventListener('canplaythrough',()=>lW.push(a),{once:true});a.src=f});
 function ply(ok){if(mut)return;if(cp)cp.pause();let p=ok?lC:lW;if(p.length>0){let a=ok?p[cI%p.length]:p[wI%p.length];if(ok)cI++;else wI++;cp=a;a.currentTime=0;a.play().catch(()=>{})}}
 function tM(){mut=!mut;if(mut&&cp)cp.pause();document.getElementById('mtB').innerText=mut?'🔇':'🔊'}
-function fx(ok){let o=document.getElementById('fx');o.innerHTML='';o.className=ok?'fg':'fr';if(!ok){document.body.classList.add('sha');setTimeout(()=>document.body.classList.remove('sha'),450)}let c=ok?['+','⚡','✓','🟢','MAX','HIT']:['MISS','✖','ERROR','⚠'],C=ok?'#00ff80':'#ff003c';for(let i=0;i<(ok?30:25);i++){let s=document.createElement('span');s.className='fxp';s.style.color=C;s.innerText=c[Math.floor(Math.random()*c.length)];s.style.left=Math.random()*96+'vw';s.style.fontSize=(16+Math.random()*18)+'px';s.style.animationDuration=(.8+Math.random()*.8)+'s';o.appendChild(s)}clearTimeout(fxT);fxT=setTimeout(()=>{o.className='';o.innerHTML=''},1800)}
+
+// --- Theme Setup ---
+function applyTheme(theme) { if(theme==='light'){document.documentElement.setAttribute('data-theme', 'light');}else{document.documentElement.removeAttribute('data-theme');} }
+function toggleTheme() { const n = document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'; localStorage.setItem('f_cvs_th', n); applyTheme(n); }
+applyTheme(localStorage.getItem('f_cvs_th')||'dark');
+
+// --- FX Setup ---
+let fxT=null;
+function fx(ok){
+    let o=document.getElementById('fx-overlay'); o.className=ok?'flash-green':'flash-red';
+    clearTimeout(fxT); fxT=setTimeout(()=>{o.className=''}, 300);
+}
+
+// --- Data ---
 const sE={75:"Both the coronary artery and umbilical artery are described as 'special type' muscular arteries. This key follows the 'thick wall with well-developed IEL/EEL' description, which matches the coronary artery; the umbilical artery is instead characterized by a poorly-developed IEL (see Q78)."};
 const RQ=[
 [1,1,"As regards the histology of cardiac muscle, which of the following is TRUE?",["It can regenerate from satellite cells","It contains intermediate filaments only, with no other cytoskeletal proteins","It has numerous caveolae like smooth muscle","It is a multinucleated (syncytial) cell","It joins to adjacent cells by intercalated discs"],"E"],
@@ -238,10 +577,14 @@ const RQ=[
 let qM=localStorage.getItem('f_cvs_m')||'training',eS=JSON.parse(localStorage.getItem('f_cvs_e')||'false'),uA=JSON.parse(localStorage.getItem('f_cvs_a')||'{}'),bI=JSON.parse(localStorage.getItem('f_cvs_b')||'[]');
 let sBO=false,sM=false,cIdx=0; const L=['A','B','C','D','E'];
 function sM(m){if(qM===m)return;qM=m;localStorage.setItem('f_cvs_m',m);if(m==='training'){eS=false;localStorage.setItem('f_cvs_e','false')}uMB();uSt();ren()}
-function uMB(){document.getElementById('bTr').className='mb'+(qM==='training'?' act':'');document.getElementById('bEx').className='mb'+(qM==='exam'?' act':'')}
-function tB(id=null){if(id){const i=bI.indexOf(id);if(i===-1)bI.push(id);else bI.splice(i,1);localStorage.setItem('f_cvs_b',JSON.stringify(bI));document.getElementById('bmC').innerText=bI.length;ren()}else{sBO=!sBO;cIdx=0;document.getElementById('bmB').classList.toggle('act',sBO);ren()}}
-function tV(){sM=!sM;cIdx=0;document.getElementById('vMB').innerText=sM?'1 By 1':'List All';ren()}
+function uMB(){document.getElementById('bTr').className='mode-btn'+(qM==='training'?' active':'');document.getElementById('bEx').className='mode-btn'+(qM==='exam'?' active':'')}
+function togBm(id=null){if(id){const i=bI.indexOf(id);if(i===-1)bI.push(id);else bI.splice(i,1);localStorage.setItem('f_cvs_b',JSON.stringify(bI));document.getElementById('bmC').innerText=bI.length;ren()}else{sBO=!sBO;cIdx=0;document.getElementById('bmB').classList.toggle('active-filter',sBO);ren()}}
+function tV(){sM=!sM;cIdx=0;document.getElementById('vMB').innerText=sM?'1 By 1 Mode':'List All Mode';ren()}
 function sA(id,l){if(qM==='training'){if(uA[id])return;uA[id]=l;localStorage.setItem('f_cvs_a',JSON.stringify(uA));let q=RQ.find(x=>x[0]===id),ok=l===q[4];ply(ok);fx(ok);uSt();ren();if(Object.keys(uA).length===168)setTimeout(fin,900)}else{if(eS)return;uA[id]=l;localStorage.setItem('f_cvs_a',JSON.stringify(uA));uSt();ren()}}
 function gF(){const sc=parseInt(document.getElementById('sSl').value,10),qs=document.getElementById('sIn').value.toLowerCase().trim();return RQ.filter(q=>(sc===0||q[1]===sc)&&(!qs||q[2].toLowerCase().includes(qs)||q[3].some(o=>o.toLowerCase().includes(qs)))&&(!sBO||bI.includes(q[0])))}
-function ren(){const C=document.getElementById('qC');C.innerHTML='';const F=gF();if(!F.length){C.innerHTML=`<div class="qc" style="text-align:center">No questions.</div>`;return}const ls=sM?[F[cIdx]]:F,rv=qM==='training'||(qM==='exam'&&eS);ls.forEach((q,i)=>{let[id,sc,tx,op,an]=q,ch=uA[id],ib=bI.includes(id),ps=sM?cIdx+1:i+1,cd=document.createElement('div');cd.className='qc'+(ib?' bm':'');let oH='';op.forEach((o,j)=>{let l=L[j],c='ob',t='',d=false;if(rv&&ch){d=true;if(l===an){c+=' cr';t=`<span class="stg" style="color:var(--cb)">✔ CORRECT</span>`}else if(l===ch){c+=' wg';t=`<span class="stg" style="color:var(--wb)">✖ WRONG</span>`}}else if(qM==='exam'&&eS&&!ch){d=true;if(l===an){c+=' cr';t=`<span class="stg" style="color:var(--cb)">✔ KEY</span>`}}else if(qM==='exam'&&!eS&&ch===l){c+=' sl';t=`<span class="stg" style="color:var(--cy)">SELECTED</span>`}oH+=`<button class="${c}" ${d?'disabled':''} onclick="sA(${id},'${l}')"><span class="oc">${l}</span><span style="flex:1">${o}</span>${t}</button>`});let nH=sE[id]?`<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--bc);font-size:.86rem;color:var(--ts)">💡 <strong style="color:var(--cy)">Note:</strong> ${sE[id]}</div>`:'';let fH=(rv&&(ch||eS))?`<div class="fp ${ch===an?'ic':'iw'}"><div style="font-weight:900;color:var(--${ch===an?'cb':'wb'});margin-bottom:4px">${ch===an?`✔ SUCCESS (${an})`:ch?`✖ FAILED (${ch}) — KEY: (${an})`:`⚠️ SKIPPED — KEY: (${an})`}</div><div><strong style="color:var(--tm)">KEY:</strong> (${an}) ${op[L.indexOf(an)]}</div>${nH}</div>`:'';let nV=sM?`<div style="display:flex;justify-content:space-between;margin-top:16px"><button class="bf" ${cIdx===0?'disabled':''} onclick="mv(-1,${F.length})">← PREV</button><button class="bf" ${cIdx>=F.length-1?'disabled':''} onclick="mv(1,${F.length})">NEXT →</button></div>`:'';cd.innerHTML=`<div class="qh"><span class="qb">Q ${ps} / ${F.length} (#${id})</span><div class="qhr"><span style="font-size:.78rem;color:var(--ts)">SEC ${sc}</span><button class="bc ${ib?'act':''}" onclick="tB(${id})">${ib?'🔖 SAVED':'🔖 SAVE'}</button></div></div><div class="qsm">${tx}</div><div class="ol">${oH}</div>${fH}${nV}`;C.appendChild(cd)})}
-function uSt(){let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});let d=c+w,p=Math.round((d/168)*100);document.getElementById('bmC').innerText=bI.length;document.getElementById('pF').style.width=p+'%';if(qM==='exam'&&!eS){document.getElementById('p-c').style.display='none';document.getElementById('p-w').style.display='none';document.getElementById('l-p').innerText='DONE:';document.getElementById('s-p').innerText=`${d}/168`}else{document.getElementById('p-c').style.display='inline-block';document.getElementById
+function ren(){const C=document.getElementById('qC');C.innerHTML='';const F=gF();if(!F.length){C.innerHTML=`<div class="q-card" style="text-align:center">No matching questions found.</div>`;return}const ls=sM?[F[cIdx]]:F,rv=qM==='training'||(qM==='exam'&&eS);ls.forEach((q,i)=>{let[id,sc,tx,op,an]=q,ch=uA[id],ib=bI.includes(id),ps=sM?cIdx+1:i+1,cd=document.createElement('div');cd.className='q-card'+(ib?' bookmarked':'');let oH='';op.forEach((o,j)=>{let l=L[j],c='opt-btn',t='',d=false;if(rv&&ch){d=true;if(l===an){c+=' correct';t=`<span class="status-tag" style="color:var(--correct-border)">✔ CORRECT</span>`}else if(l===ch){c+=' wrong';t=`<span class="status-tag" style="color:var(--wrong-border)">✖ WRONG</span>`}}else if(qM==='exam'&&eS&&!ch){d=true;if(l===an){c+=' correct';t=`<span class="status-tag" style="color:var(--correct-border)">✔ KEY</span>`}}else if(qM==='exam'&&!eS&&ch===l){c+=' exam-selected';t=`<span class="status-tag" style="color:var(--primary)">SELECTED</span>`}oH+=`<button class="${c}" ${d?'disabled':''} onclick="sA(${id},'${l}')"><span class="opt-char">${l}</span><span style="flex:1">${o}</span>${t}</button>`});let nH=sE[id]?`<div style="margin-top:12px;padding-top:12px;border-top:1px dashed var(--border-color);font-size:0.9rem;color:var(--text-secondary)">💡 <strong style="color:var(--primary)">Note:</strong> ${sE[id]}</div>`:'';let fH=(rv&&(ch||eS))?`<div class="feedback-box ${ch===an?'ic':'iw'}"><div style="font-weight:800;color:var(--${ch===an?'correct-border':'wrong-border'});margin-bottom:6px">${ch===an?`✔ SUCCESS (\${an})`:ch?`✖ FAILED (${ch}) — CORRECT IS (${an})`:`⚠️ SKIPPED — CORRECT IS (\${an})`}</div><div><strong style="color:var(--text-main)">KEY:</strong> (${an}) ${op[L.indexOf(an)]}</div>${nH}</div>`:'';let nV=sM?`<div class="nav-buttons"><button class="btn-primary" ${cIdx===0?'disabled':''} onclick="mv(-1,${F.length})">← PREV</button><button class="btn-primary" ${cIdx>=F.length-1?'disabled':''} onclick="mv(1,${F.length})">NEXT →</button></div>`:'';cd.innerHTML=`<div class="q-header"><span class="q-number">Q ${ps} / ${F.length} (#${id})</span><div class="q-actions"><span style="font-size:0.8rem;color:var(--text-secondary);text-transform:uppercase">SEC ${sc}</span><button class="btn-ctrl ${ib?'active-filter':''}" onclick="tB(${id})">${ib?'🔖 SAVED':'🔖 SAVE'}</button></div></div><div class="q-text">${tx}</div><div class="options-list">${oH}</div>${fH}${nV}`;C.appendChild(cd)})}
+function uSt(){let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});let d=c+w,p=Math.round((d/168)*100);document.getElementById('bmC').innerText=bI.length;document.getElementById('pF').style.width=p+'%';if(qM==='exam'&&!eS){document.getElementById('p-c').style.display='none';document.getElementById('p-w').style.display='none';document.getElementById('l-p').innerText='DONE:';document.getElementById('s-p').innerText=`${d} / 168`}else{document.getElementById('p-c').style.display='inline-block';document.getElementById('p-w').style.display='inline-block';document.getElementById('s-c').innerText=c;document.getElementById('s-w').innerText=w;document.getElementById('l-p').innerText='SCORE:';document.getElementById('s-p').innerText=(d>0?Math.round((c/d)*100):0)+'%'}}
+function fin(){if(qM==='exam'&&!eS){eS=true;localStorage.setItem('f_cvs_e','true')}let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});let d=c+w,u=168-d,p=Math.round((c/168)*100);document.getElementById('mS').innerText=`Answered ${d} out of 168`;document.getElementById('mP').innerText=p+'%';document.getElementById('mR').innerText=`${c} / 168`;document.getElementById('mC').innerText=c;document.getElementById('mW').innerText=w;document.getElementById('mU').innerText=u;document.getElementById('sMd').classList.add('show');let ok=p>=50;ply(ok);if(ok)fx(true);uSt();ren()}
+function cMd(){document.getElementById('sMd').classList.remove('show')} function mv(s,m){let n=cIdx+s;if(n>=0&&n<m){cIdx=n;ren();window.scrollTo({top:320,behavior:'smooth'})}} function rst(){if(confirm('Are you sure you want to start over?')){uA={};eS=false;localStorage.removeItem('f_cvs_a');localStorage.setItem('f_cvs_e','false');uSt();ren();window.scrollTo({top:0,behavior:'smooth'})}}
+window.onload=()=>{uMB();uSt();ren()};
+</script></body></html>
