@@ -6,7 +6,7 @@
 <title>CVS Histology Bank | By Dr. Fathy Ahmed Ragab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* Premium Medical UI Theme */
 :root {
@@ -48,7 +48,7 @@
 body {
     background-color: var(--bg-main); color: var(--text-main);
     font-family: 'Cairo', 'Inter', sans-serif; line-height: 1.6;
-    padding-bottom: 60px; transition: background-color 0.3s ease, color 0.3s ease;
+    padding-bottom: 80px; transition: background-color 0.3s ease, color 0.3s ease;
 }
 .container { max-width: 860px; margin: 0 auto; padding: 0 16px; }
 
@@ -60,14 +60,13 @@ body {
 @keyframes screenShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)} }
 .shake-anim { animation: screenShake 0.4s ease; }
 
-.fx-particle { position: absolute; user-select: none; pointer-events: none; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-@keyframes fallDown { 0%{transform:translateY(0) rotate(0deg) scale(0.8); opacity:1;} 100%{transform:translateY(105vh) rotate(360deg) scale(1.2); opacity:0;} }
-@keyframes floatUp { 0%{transform:translateY(0) rotate(0deg) scale(0.8); opacity:1;} 100%{transform:translateY(-105vh) rotate(360deg) scale(1.2); opacity:0;} }
-@keyframes burstOut { 0%{transform:translate(0,0) scale(0.5); opacity:1;} 100%{transform:translate(var(--tx), var(--ty)) scale(1.5); opacity:0;} }
+.fx-particle { position: absolute; user-select: none; pointer-events: none; text-shadow: 0 0 10px rgba(255,255,255,0.5); z-index: 10000; }
+@keyframes fallDown { 0%{transform:translateY(-50px) rotate(0deg) scale(0.8); opacity:1;} 100%{transform:translateY(105vh) rotate(360deg) scale(1.2); opacity:0;} }
+@keyframes floatUp { 0%{transform:translateY(105vh) rotate(0deg) scale(0.8); opacity:1;} 100%{transform:translateY(-50px) rotate(360deg) scale(1.2); opacity:0;} }
 
-/* Navigation */
+/* Sticky Navigation */
 .top-nav {
-    position: sticky; top: 0; z-index: 100; background: var(--bg-card);
+    position: sticky; top: 0; z-index: 500; background: var(--bg-card);
     border-bottom: 1px solid var(--border-color); padding: 12px 16px; box-shadow: var(--shadow-sm);
 }
 .nav-inner { max-width: 860px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
@@ -77,7 +76,7 @@ body {
 .stat-pill.hl-green { border-color: var(--correct-border); color: var(--correct-border); background: var(--correct-bg); }
 .stat-pill.hl-red { border-color: var(--wrong-border); color: var(--wrong-border); background: var(--wrong-bg); }
 
-/* Stopwatch Timer */
+/* Timer Badge */
 .timer-badge { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; background: rgba(14, 165, 233, 0.1); border: 1px solid var(--primary); color: var(--primary); font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.95rem; }
 
 .actions-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -98,13 +97,7 @@ body {
 .hero-subtitle { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--primary); margin-bottom: 24px; }
 .sadaqa-text { font-size: 1.1rem; font-weight: 700; color: var(--text-main); line-height: 1.7; padding: 16px; border-radius: 8px; background: var(--bg-card-inner); border: 1px solid var(--border-color); max-width: 650px; margin: 0 auto; }
 
-/* Modes & Filters */
-.mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-.mode-btn { background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: 8px; cursor: pointer; text-align: center; transition: 0.2s ease; box-shadow: var(--shadow-sm); }
-.mode-btn strong { display: block; font-size: 1.05rem; color: var(--text-main); margin-bottom: 4px; font-family: 'Cairo', sans-serif; }
-.mode-btn span { font-size: 0.8rem; color: var(--text-secondary); }
-.mode-btn.active { border-color: var(--primary); background: var(--selected-bg); }
-.mode-btn.active strong { color: var(--primary); }
+/* Filters */
 .filter-bar { background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: 8px; margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap; box-shadow: var(--shadow-sm); }
 .form-control { flex: 1; min-width: 200px; padding: 10px 14px; background: var(--bg-card-inner); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 6px; font-family: 'Inter', 'Cairo', sans-serif; font-size: 0.95rem; outline: none; transition: 0.2s; }
 .form-control:focus { border-color: var(--primary); }
@@ -124,15 +117,23 @@ body {
 .opt-char { min-width: 36px; height: 36px; display: inline-flex; justify-content: center; align-items: center; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; font-weight: 800; margin-right: 16px; flex-shrink: 0; font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text-secondary); }
 .opt-text { flex: 1; font-size: 1rem; font-family: 'Inter', sans-serif; line-height: 1.4; }
 
-.opt-btn.exam-selected { border-color: var(--primary); background: var(--selected-bg); color: var(--text-main); }
-.opt-btn.exam-selected .opt-char { background: var(--primary); color: #fff; border-color: var(--primary); }
+/* Selection States */
+.opt-btn.pending-selected { border-color: var(--primary); background: var(--selected-bg); color: var(--text-main); }
+.opt-btn.pending-selected .opt-char { background: var(--primary); color: #fff; border-color: var(--primary); }
+
 .opt-btn.correct { background: var(--correct-bg) !important; border-color: var(--correct-border) !important; color: var(--text-main); }
 .opt-btn.correct .opt-char { background: var(--correct-border); color: #fff; border-color: var(--correct-border); }
 .opt-btn.wrong { background: var(--wrong-bg) !important; border-color: var(--wrong-border) !important; color: var(--text-main); }
 .opt-btn.wrong .opt-char { background: var(--wrong-border); color: #fff; border-color: var(--wrong-border); }
 
+/* Confirm Button */
+.confirm-ans-btn { margin-top: 16px; width: 100%; padding: 12px; background: var(--primary); color: #fff; font-family: 'Inter', 'Cairo', sans-serif; font-size: 1rem; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: none; }
+.confirm-ans-btn.show { display: block; }
+.confirm-ans-btn:hover { background: var(--primary-hover); }
+
 /* Feedback & ChatGPT */
-.feedback-box { margin-top: 20px; padding: 18px; border-radius: 8px; background: var(--bg-card-inner); border: 1px solid var(--border-color); border-left: 4px solid var(--text-secondary); }
+.feedback-box { margin-top: 20px; padding: 18px; border-radius: 8px; background: var(--bg-card-inner); border: 1px solid var(--border-color); border-left: 4px solid var(--text-secondary); display: none; }
+.feedback-box.show { display: block; }
 .feedback-box.ic { border-left-color: var(--correct-border); }
 .feedback-box.iw { border-left-color: var(--wrong-border); }
 .feedback-status { font-weight: 800; font-size: 1.05rem; font-family: 'Inter', sans-serif; margin-bottom: 6px; letter-spacing: 0.5px; }
@@ -141,7 +142,7 @@ body {
 .feedback-key { color: var(--text-main); font-size: 0.95rem; font-family: 'Inter', sans-serif; margin-bottom: 12px; }
 .note-box { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-color); font-size: 0.9rem; color: var(--text-secondary); }
 
-.btn-chatgpt { display: inline-flex; align-items: center; gap: 8px; background: #10A37F; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.95rem; transition: 0.2s ease; border: 1px solid #0f8f6f; }
+.btn-chatgpt { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #10A37F; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.95rem; margin-top: 14px; transition: 0.2s ease; border: 1px solid #0f8f6f; cursor: pointer; width: 100%; }
 .btn-chatgpt:hover { background: #0d8a6b; }
 
 .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
@@ -149,17 +150,21 @@ body {
 /* Modals */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
 .modal-overlay.show { display: flex; }
-.modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; width: 100%; max-width: 460px; padding: 30px 24px; text-align: center; box-shadow: var(--shadow-md); }
+.modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; width: 100%; max-width: 480px; padding: 30px 24px; text-align: center; box-shadow: var(--shadow-md); max-height: 90vh; overflow-y: auto; }
 .score-display { width: 120px; height: 120px; margin: 20px auto; border-radius: 50%; border: 4px solid var(--primary); display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--bg-card-inner); }
-.score-display b { font-size: 2rem; color: var(--primary); font-family: 'Inter', sans-serif; }
+.score-display b { font-size: 2.2rem; color: var(--primary); font-family: 'Inter', sans-serif; }
 .score-display span { font-size: 0.85rem; color: var(--text-secondary); }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
 .stat-box { background: var(--bg-card-inner); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; }
 .stat-box b { display: block; font-size: 1.2rem; font-family: 'Inter', sans-serif; margin-bottom: 4px; }
+
+.action-buttons-col { display: flex; flex-direction: column; gap: 10px; }
+.btn-outline { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 12px; border-radius: 8px; font-family: 'Cairo', sans-serif; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.btn-outline:hover { background: rgba(14, 165, 233, 0.1); }
+
 footer { text-align: center; padding: 24px; color: var(--text-secondary); font-size: 0.9rem; margin-top: 20px; border-top: 1px solid var(--border-color); }
 
 @media (max-width: 600px) {
-    .mode-selector { grid-template-columns: 1fr; }
     .hero-title { font-size: 1.5rem; }
     .logos-row { gap: 20px; }
     .logo-circle { width: 70px; height: 70px; }
@@ -170,6 +175,7 @@ footer { text-align: center; padding: 24px; color: var(--text-secondary); font-s
 
 <div id="fx-overlay"></div>
 
+<!-- Sticky Nav (Always visible) -->
 <nav class="top-nav">
     <div class="nav-inner">
         <div class="stats-group">
@@ -180,44 +186,33 @@ footer { text-align: center; padding: 24px; color: var(--text-secondary); font-s
             <span class="stat-pill" style="border-color:var(--primary); color:var(--primary);"><span id="l-p">Score:</span> <b id="s-p">0%</b></span>
         </div>
         <div class="actions-group">
-            <button class="btn-ctrl" id="bmB" onclick="togBm()">🔖 Saved (<span id="bmC">0</span>)</button>
-            <button class="btn-ctrl" id="vMB" onclick="tV()">1 By 1 Mode</button>
-            <button class="btn-ctrl" id="mtB" onclick="tM()">🔊</button>
+            <button class="btn-ctrl" id="bmFilterBtn" onclick="toggleBookmarksFilter()">🔖 Saved (<span id="bm-count">0</span>)</button>
+            <button class="btn-ctrl" id="vModeBtn" onclick="tV()">1 By 1</button>
+            <button class="btn-ctrl" id="muteBtn" onclick="toggleMute()">🔊</button>
             <button class="btn-ctrl" onclick="toggleTheme()">🌓</button>
-            <button class="btn-primary" onclick="fin()">SUBMIT EXAM</button>
-            <button class="btn-ctrl" onclick="rst()">RESET</button>
+            <button class="btn-primary" onclick="submitExam()">FINISH & SCORE</button>
+            <button class="btn-ctrl" onclick="resetAll()">RESET</button>
         </div>
     </div>
-    <div class="progress-track"><div class="progress-fill" id="pF"></div></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 </nav>
 
 <div class="container">
     <header class="hero-section">
         <div class="logos-row">
-            <div class="logo-circle"><img src="med-logo.jpg" alt="Faculty of Medicine Logo"></div>
-            <div class="logo-circle"><img src="uni-logo.jpg" alt="Al-Azhar University Logo"></div>
+            <div class="logo-circle"><img src="med-logo.jpg" alt="Faculty of Medicine Logo" onerror="this.src='https://drahmedwaelcyber.github.io/cvs-quiz/assets/al_azhar_faculty_gate.jpg'"></div>
+            <div class="logo-circle"><img src="uni-logo.jpg" alt="Al-Azhar University Logo" onerror="this.src='https://drahmedwaelcyber.github.io/cvs-quiz/assets/al_azhar_logo.png'"></div>
         </div>
         <h3 class="hero-batch">Faculty of Medicine, Al-Azhar University, Cairo — Batch 62</h3>
-        <h1 class="hero-title">Questions on Histology of Cardiovascular System (CVS) Module</h1>
+        <h1 class="hero-title">Questions on Histology of Cardiovascular System (CVS)</h1>
         <p class="hero-subtitle">Developed by Fathy Ahmed Ragab, Second-Year Medical Student</p>
         <div class="sadaqa-text">
             هذا العمل صدقة جارية على روح والدي رحمه الله رحمة واسعة وأسكنه الفردوس الأعلى من الجنة.<br>أسألكم الدعاء.
         </div>
     </header>
 
-    <div class="mode-selector">
-        <div class="mode-btn active" id="bTr" onclick="swMode('training')">
-            <strong>Training Mode</strong>
-            <span>Instant Feedback + ChatGPT Integration</span>
-        </div>
-        <div class="mode-btn" id="bEx" onclick="swMode('exam')">
-            <strong>Exam Mode</strong>
-            <span>Hidden Answers + Final Score</span>
-        </div>
-    </div>
-
     <div class="filter-bar">
-        <select id="sSl" class="form-control" onchange="ren()" dir="ltr">
+        <select id="sectionSelect" class="form-control" onchange="renderQuestions()" dir="ltr">
             <option value="0">All Sections (168 Questions)</option>
             <option value="1">Section 1: Heart, Cardiac Muscle & Cardiomyocytes</option>
             <option value="2">Section 2: Fibrous Skeleton & Heart Valves</option>
@@ -225,121 +220,43 @@ footer { text-align: center; padding: 24px; color: var(--text-secondary); font-s
             <option value="4">Section 4: Histology of Vessels & Capillaries</option>
             <option value="5">Section 5: Peripheral Circulation & Lymphatics</option>
         </select>
-        <input type="search" id="sIn" class="form-control" placeholder="Search questions..." oninput="ren()" dir="ltr">
+        <input type="search" id="searchInput" class="form-control" placeholder="Search questions..." oninput="renderQuestions()" dir="ltr">
     </div>
 
     <div id="qC"></div>
 </div>
 
-<div class="modal-overlay" id="sMd">
+<div class="modal-overlay" id="scoreModal">
     <div class="modal-content">
-        <h2 style="color:var(--text-main); font-family:'Inter', sans-serif;">EXAM COMPLETED</h2>
-        <p id="mS" style="color:var(--text-secondary); margin-top:8px;"></p>
-        <p id="mTime" style="color:var(--primary); font-weight:700; margin-top:4px; font-family:'Inter', sans-serif;"></p>
+        <h2 style="color:var(--text-main); font-family:'Inter', sans-serif; font-weight:900;">TRAINING COMPLETED</h2>
+        <p id="modalSub" style="color:var(--text-secondary); margin-top:8px; font-weight:600;"></p>
+        <p id="modalTime" style="color:var(--primary); font-weight:700; margin-top:4px; font-family:'Inter', sans-serif;"></p>
         
         <div class="score-display">
-            <b id="mP">0%</b>
-            <span id="mR">0 / 168</span>
+            <b id="modalPerc">0%</b>
+            <span id="modalRatio">0 / 168</span>
         </div>
 
         <div class="grid-3">
-            <div class="stat-box" style="border-bottom: 3px solid var(--correct-border);"><b id="mC" style="color:var(--correct-border);">0</b><span style="color:var(--text-secondary); font-size:0.85rem;">Correct</span></div>
-            <div class="stat-box" style="border-bottom: 3px solid var(--wrong-border);"><b id="mW" style="color:var(--wrong-border);">0</b><span style="color:var(--text-secondary); font-size:0.85rem;">Wrong</span></div>
-            <div class="stat-box" style="border-bottom: 3px solid var(--border-color);"><b id="mU" style="color:var(--text-main);">0</b><span style="color:var(--text-secondary); font-size:0.85rem;">Skipped</span></div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--correct-border);"><b id="modalCorrect" style="color:var(--correct-border);">0</b><span style="color:var(--text-secondary); font-size:0.85rem;">Correct</span></div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--wrong-border);"><b id="modalWrong" style="color:var(--wrong-border);">0</b><span style="color:var(--text-secondary); font-size:0.85rem;">Wrong</span></div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--border-color);"><b id="modalSkipped" style="color:var(--text-main);">0</b><span style="color:var(--text-secondary); font-size:0.85rem;">Skipped</span></div>
         </div>
 
-        <button class="btn-primary" style="width:100%; padding:14px; margin-bottom:12px;" onclick="cMd()">REVIEW ANSWERS</button>
-        <button class="btn-ctrl" style="width:100%; padding:12px;" onclick="cMd();rst()">START OVER</button>
+        <div class="action-buttons-col">
+            <button class="btn-primary" style="padding:14px;" onclick="closeModal()">REVIEW ALL ANSWERS 📖</button>
+            <button class="btn-outline" onclick="reviewMistakesOnly()" id="btnMistakes">RE-TAKE MISTAKES ONLY ❌</button>
+            <button class="btn-outline" style="color:#10A37F; border-color:#10A37F;" onclick="shareScore()">SHARE SCORE 🏆</button>
+            <button class="btn-ctrl" style="padding:12px; margin-top:10px;" onclick="closeModal(); resetAll();">START OVER 🔄</button>
+        </div>
     </div>
 </div>
 
 <footer>Developed By <strong>Fathy Ahmed Ragab</strong> • Al-Azhar Faculty of Medicine © 2026</footer>
 
 <script>
-// --- Timer Setup (Runs everywhere now) ---
-let timeElapsed = 0;
-let timerInt = null;
-function startTimer() {
-    clearInterval(timerInt);
-    timerInt = setInterval(() => {
-        timeElapsed++;
-        let m = Math.floor(timeElapsed / 60);
-        let s = timeElapsed % 60;
-        document.getElementById('stopwatch').innerText = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-    }, 1000);
-}
-function stopTimer() { clearInterval(timerInt); }
-
-// --- Audio Setup (8 files each, randomized) ---
-const CA = ['correct1.mp3','correct2.mp3','correct3.mp3','correct4.mp3','correct5.mp3','correct6.mp3','correct7.mp3','correct8.mp3'];
-const WA = ['wrong1.mp3','wrong2.mp3','wrong3.mp3','wrong4.mp3','wrong5.mp3','wrong6.mp3','wrong7.mp3','wrong8.mp3'];
-let lC=[], lW=[], cp=null, mut=false;
-
-CA.forEach(f => { let a=new Audio(f); a.addEventListener('canplaythrough',()=>lC.push(a),{once:true}); a.src=f; });
-WA.forEach(f => { let a=new Audio(f); a.addEventListener('canplaythrough',()=>lW.push(a),{once:true}); a.src=f; });
-
-function ply(ok){
-    if(mut) return;
-    if(cp) cp.pause();
-    let p = ok ? lC : lW;
-    if(p.length > 0){
-        let a = p[Math.floor(Math.random() * p.length)]; // Random Pick!
-        cp = a;
-        a.currentTime = 0;
-        a.play().catch(()=>{});
-    }
-}
-function tM(){mut=!mut; if(mut&&cp)cp.pause(); document.getElementById('mtB').innerText=mut?'🔇':'🔊';}
-
-// --- Theme Setup ---
-function applyTheme(theme) { if(theme==='light'){document.documentElement.setAttribute('data-theme', 'light');}else{document.documentElement.removeAttribute('data-theme');} }
-function toggleTheme() { const n = document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'; localStorage.setItem('f_cvs_th', n); applyTheme(n); }
-applyTheme(localStorage.getItem('f_cvs_th')||'dark');
-
-// --- Dynamic FX (Randomized Shapes & Directions) ---
-let fxT=null;
-function fx(ok) {
-    let o = document.getElementById('fx-overlay'); 
-    o.innerHTML = ''; o.className = ok ? 'flash-green' : 'flash-red';
-    
-    if(!ok) { document.body.classList.add('shake-anim'); setTimeout(()=>document.body.classList.remove('shake-anim'), 450); }
-    
-    // Arrays of emojis
-    let cEmojis = ok ? ['🎉','✨','🎊','⭐','💚','✅','🎈','🚀','🔥','🧠'] : ['❌','✖️','🚫','⚠️','💔','👎','🚨','💀','💣'];
-    let cColor = ok ? '#10B981' : '#EF4444';
-    let directions = ['top', 'bottom', 'center'];
-    let dir = directions[Math.floor(Math.random() * directions.length)];
-
-    for(let i=0; i<35; i++){
-        let s = document.createElement('span');
-        s.className = 'fx-particle';
-        s.style.color = cColor;
-        s.innerText = cEmojis[Math.floor(Math.random() * cEmojis.length)];
-        
-        if (dir === 'top') {
-            s.style.left = Math.random()*96+'vw';
-            s.style.top = '-50px';
-            s.style.animation = `fallDown ${0.8+Math.random()*1.2}s linear forwards`;
-        } else if (dir === 'bottom') {
-            s.style.left = Math.random()*96+'vw';
-            s.style.bottom = '-50px';
-            s.style.animation = `floatUp ${0.8+Math.random()*1.2}s linear forwards`;
-        } else {
-            s.style.left = '50vw'; s.style.top = '50vh';
-            s.style.setProperty('--tx', (Math.random()*200 - 100)+'vw');
-            s.style.setProperty('--ty', (Math.random()*200 - 100)+'vh');
-            s.style.animation = `burstOut ${0.8+Math.random()*0.5}s ease-out forwards`;
-        }
-        
-        s.style.fontSize = (16+Math.random()*24)+'px';
-        o.appendChild(s);
-    }
-    clearTimeout(fxT); fxT=setTimeout(()=>{o.className=''; o.innerHTML='';}, 2000);
-}
-
-// --- Data (168 Questions) ---
-const sE={75:"Both the coronary artery and umbilical artery are described as 'special type' muscular arteries. This key follows the 'thick wall with well-developed IEL/EEL' description, which matches the coronary artery; the umbilical artery is instead characterized by a poorly-developed IEL (see Q78)."};
-const RQ=[
+// --- Global Data & State ---
+const rawQuestions = [
 [1,1,"As regards the histology of cardiac muscle, which of the following is TRUE?",["It can regenerate from satellite cells","It contains intermediate filaments only, with no other cytoskeletal proteins","It has numerous caveolae like smooth muscle","It is a multinucleated (syncytial) cell","It joins to adjacent cells by intercalated discs"],"E"],
 [2,1,"In a histological section of the heart wall, Purkinje fibers are located in the:",["Epicardium","Fibrous layer of parietal pericardium","Myocardium proper (mid-wall)","Serous layer of parietal pericardium","Subendocardium"],"E"],
 [3,1,"In a histological section of the heart wall, coronary vessels are typically found in the:",["Endocardium","Subendocardium","Myocardium only","Epicardium","Fibrous pericardium"],"D"],
@@ -510,84 +427,178 @@ const RQ=[
 [168,5,"A structure described as 'resting on an incomplete basal lamina, lined by endothelial cells, and forming a blind-ended irregular channel with anchoring filaments' is best identified as a:",["Fenestrated blood capillary","Sinusoidal capillary","Lymphatic capillary","Muscular venule","Metarteriole"],"C"]
 ];
 
-let qM=localStorage.getItem('f_cvs_m')||'training',eS=JSON.parse(localStorage.getItem('f_cvs_e')||'false'),uA=JSON.parse(localStorage.getItem('f_cvs_a')||'{}'),bI=JSON.parse(localStorage.getItem('f_cvs_b')||'[]');
-let sBO=false,sM=false,cIdx=0; const L=['A','B','C','D','E'];
+let uA = JSON.parse(localStorage.getItem('f_cvs_a') || '{}');
+let bI = JSON.parse(localStorage.getItem('f_cvs_b') || '[]');
+let mI = JSON.parse(localStorage.getItem('f_cvs_mst') || '[]');
+let pA = {}; 
+let sBO = false, sMO = false, sM = false, cIdx = 0; 
+const L = ['A','B','C','D','E'];
 
-function sM_mode(m){if(qM===m)return;qM=m;localStorage.setItem('f_cvs_m',m);if(m==='training'){eS=false;localStorage.setItem('f_cvs_e','false');}uMB();uSt();ren()}
-function uMB(){document.getElementById('bTr').className='mode-btn'+(qM==='training'?' active':'');document.getElementById('bEx').className='mode-btn'+(qM==='exam'?' active':'')}
-function tB(id=null){if(id){const i=bI.indexOf(id);if(i===-1)bI.push(id);else bI.splice(i,1);localStorage.setItem('f_cvs_b',JSON.stringify(bI));ren()}else{sBO=!sBO;cIdx=0;document.getElementById('bmB').classList.toggle('active-filter',sBO);ren()}}
-function tV(){sM=!sM;cIdx=0;document.getElementById('vMB').innerText=sM?'1 By 1 Mode':'List All Mode';ren()}
-function sA(id,l){if(qM==='training'){if(uA[id])return;uA[id]=l;localStorage.setItem('f_cvs_a',JSON.stringify(uA));let q=RQ.find(x=>x[0]===id),ok=l===q[4];ply(ok);fx(ok);uSt();ren();if(Object.keys(uA).length===168)setTimeout(fin,900)}else{if(eS)return;uA[id]=l;localStorage.setItem('f_cvs_a',JSON.stringify(uA));uSt();ren()}}
-function gF(){const sc=parseInt(document.getElementById('sSl').value,10),qs=document.getElementById('sIn').value.toLowerCase().trim();return RQ.filter(q=>(sc===0||q[1]===sc)&&(!qs||q[2].toLowerCase().includes(qs)||q[3].some(o=>o.toLowerCase().includes(qs)))&&(!sBO||bI.includes(q[0])))}
+// Click Sound functionality
+function playClickSound() {
+    if(isMuted) return;
+    try {
+        let ctx = new (window.AudioContext || window.webkitAudioContext)();
+        let osc = ctx.createOscillator(); let gain = ctx.createGain();
+        osc.type = 'sine'; osc.frequency.setValueAtTime(800, ctx.currentTime);
+        gain.gain.setValueAtTime(0.05, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(); osc.stop(ctx.currentTime + 0.1);
+    } catch(e) {}
+}
+document.addEventListener('click', (e) => {
+    if(e.target.closest('button') || e.target.closest('.opt-btn') || e.target.closest('select')) { playClickSound(); }
+});
 
-function ren(){
-    const C=document.getElementById('qC');C.innerHTML='';const F=gF();
-    if(!F.length){C.innerHTML=`<div class="q-card" style="text-align:center">No matching questions found.</div>`;return}
-    const ls=sM?[F[cIdx]]:F,rv=qM==='training'||(qM==='exam'&&eS);
-    ls.forEach((q,i)=>{
-        let[id,sc,tx,op,an]=q,ch=uA[id],ib=bI.includes(id),ps=sM?cIdx+1:i+1,cd=document.createElement('div');
-        cd.className='q-card'+(ib?' bookmarked':'');
-        let oH='';
-        op.forEach((o,j)=>{
-            let l=L[j],c='opt-btn',t='',d=false;
-            if(rv&&ch){
-                d=true;if(l===an){c+=' correct';t=`<span class="status-tag" style="color:var(--correct-border)">✔ CORRECT</span>`}
-                else if(l===ch){c+=' wrong';t=`<span class="status-tag" style="color:var(--wrong-border)">✖ WRONG</span>`}
-            }else if(qM==='exam'&&eS&&!ch){
-                d=true;if(l===an){c+=' correct';t=`<span class="status-tag" style="color:var(--correct-border)">✔ KEY</span>`}
-            }else if(qM==='exam'&&!eS&&ch===l){
-                c+=' exam-selected';t=`<span class="status-tag" style="color:var(--primary)">SELECTED</span>`
-            }
-            oH+=`<button class="${c}" ${d?'disabled':''} onclick="sA(${id},'${l}')"><span class="opt-char">${l}</span><span class="opt-text">${o}</span>${t}</button>`
+function toggleBookmarksFilter(){
+    sBO=!sBO; sMO=false; cIdx=0; 
+    document.getElementById('bmFilterBtn').classList.toggle('active-filter',sBO);
+    renderQuestions();
+}
+
+function tB(id){
+    let i = bI.indexOf(id);
+    if(i===-1) bI.push(id); else bI.splice(i,1);
+    localStorage.setItem('f_cvs_b',JSON.stringify(bI));
+    document.getElementById('bm-count').innerText=bI.length;
+    renderQuestions();
+}
+
+function tV(){ sM=!sM; cIdx=0; document.getElementById('vModeBtn').innerText=sM?'1 By 1':'List All'; renderQuestions(); }
+
+function getFiltered(){
+    const sc = parseInt(document.getElementById('sectionSelect').value,10);
+    const qs = document.getElementById('searchInput').value.toLowerCase().trim();
+    return RQ.filter(q => {
+        let mSc = (sc===0 || q[1]===sc);
+        let mQs = (!qs || q[2].toLowerCase().includes(qs) || q[3].some(o=>o.toLowerCase().includes(qs)));
+        let mBo = (!sBO || bI.includes(q[0]));
+        let mMs = (!sMO || mI.includes(q[0]));
+        return mSc && mQs && mBo && mMs;
+    });
+}
+
+function selectPending(id, l) {
+    if(uA[id]) return; 
+    pA[id] = l; renderQuestions();
+}
+
+function confirmAnswer(id) {
+    let l = pA[id]; if(!l) return;
+    uA[id] = l; localStorage.setItem('f_cvs_a', JSON.stringify(uA));
+    delete pA[id]; 
+    let q = RQ.find(x=>x[0]===id), ok = (l === q[4]);
+    if(!ok && !mI.includes(id)) { mI.push(id); localStorage.setItem('f_cvs_mst', JSON.stringify(mI)); }
+    else if (ok && mI.includes(id)) { mI.splice(mI.indexOf(id), 1); localStorage.setItem('f_cvs_mst', JSON.stringify(mI)); }
+    ply(ok); fx(ok); if(Object.keys(uA).length === 168) setTimeout(submitExam, 900);
+    uSt(); renderQuestions();
+}
+
+function renderQuestions() {
+    const C = document.getElementById('qC'); C.innerHTML=''; const F = getFiltered();
+    if(!F.length){ C.innerHTML=`<div class="q-card" style="text-align:center">No questions found for this filter.</div>`; return; }
+    const ls = sM ? [F[cIdx]] : F;
+    const rv = true; // Always show feedback in tutor mode
+    
+    ls.forEach((q, i) => {
+        let [id, sc, tx, op, an] = q, ch = uA[id], pending = pA[id], ib = bI.includes(id), ps = sM ? cIdx+1 : F.indexOf(q)+1;
+        let cd = document.createElement('div'); cd.className = 'q-card' + (ib?' bookmarked':'');
+        let oH = '';
+        
+        op.forEach((o, j) => {
+            let l = L[j], c='opt-btn', t='', d=false;
+            if(ch) { 
+                d = true; 
+                if(l === an) { c+=' correct'; t=`<span class="status-tag" style="color:var(--correct-border)">✔ CORRECT</span>`; } 
+                else if(l === ch) { c+=' wrong'; t=`<span class="status-tag" style="color:var(--wrong-border)">✖ WRONG</span>`; } 
+            } 
+            else if(!ch && pending === l) { c+=' pending-selected'; t=`<span class="status-tag" style="color:var(--primary)">SELECTED</span>`; }
+            oH += `<button class="${c}" ${d?'disabled':''} onclick="selectPending(${id},'${l}')"><span class="opt-char">${l}</span><span class="opt-text">${o}</span>${t}</button>`;
         });
         
-        let nH=sE[id]?`<div class="note-box">💡 <strong style="color:var(--primary)">Note:</strong> ${sE[id]}</div>`:'';
+        let confirmBtn = (!ch && pending) ? `<button class="confirm-ans-btn show" onclick="confirmAnswer(${id})">تأكيد الإجابة</button>` : '';
+        let nH = sE[id] ? `<div class="note-box">💡 <strong style="color:var(--primary)">Note:</strong> ${sE[id]}</div>` : '';
+        let chatPrompt = `مرحباً، أدرس مادة الهستولوجي CVS. يرجى شرح إجابة هذا السؤال لي بالتفصيل وبأسلوب مبسط:\n\nالسؤال: ${tx}\nالإجابة الصحيحة هي: (${an}) ${op[L.indexOf(an)]}\n\nلماذا هذه صحيحة والباقي خطأ؟`;
+        let chatBtn = `<button class="btn-chatgpt" onclick="askChatGPT('${encodeURIComponent(chatPrompt)}')">🤖 نسخ الشرح والانتقال لـ ChatGPT</button>`;
+        let fH = (ch) ? `<div class="feedback-box ${ch===an?'ic':'iw'} show"><div class="feedback-status">${ch===an?`✔ SUCCESS (\${an})`:`✖ FAILED (${ch}) — CORRECT IS (${an})`}</div><div class="feedback-key"><strong>KEY:</strong> (${an}) ${op[L.indexOf(an)]}</div>${nH}<div style="margin-top:12px">${chatBtn}</div></div>` : '';
+        let nV = sM ? `<div class="nav-buttons"><button class="btn-primary" ${cIdx===0?'disabled':''} onclick="mv(-1,${F.length})">← PREV</button><button class="btn-primary" ${cIdx>=F.length-1?'disabled':''} onclick="mv(1,${F.length})">NEXT →</button></div>` : '';
         
-        // ChatGPT Direct Link (No Clipboard Needed)
-        let chatPrompt=`مرحباً، أنا أدرس مادة الهستولوجي (Histology of CVS). أرجو شرح إجابة هذا السؤال لي بالتفصيل وبأسلوب مبسط:\n\nالسؤال: ${tx}\nالإجابة الصحيحة هي: (${an}) ${op[L.indexOf(an)]}\n\nلماذا هذه الإجابة صحيحة؟ ولماذا باقي الخيارات خاطئة؟`;
-        let chatBtn=`<a href="https://chatgpt.com/?q=${encodeURIComponent(chatPrompt)}" target="_blank" class="btn-chatgpt">🤖 اسأل ChatGPT عن هذا السؤال</a>`;
-        
-        let fH=(rv&&(ch||eS))?`<div class="feedback-box ${ch===an?'ic':'iw'}"><div class="feedback-status">${ch===an?`✔ SUCCESS (\${an})`:ch?`✖ FAILED (${ch}) — CORRECT IS (${an})`:`⚠️ SKIPPED — CORRECT IS (\${an})`}</div><div class="feedback-key"><strong>KEY:</strong> (${an}) ${op[L.indexOf(an)]}</div>${nH}<div style="margin-top:12px">${chatBtn}</div></div>`:'';
-        
-        let nV=sM?`<div class="nav-buttons"><button class="btn-primary" ${cIdx===0?'disabled':''} onclick="mv(-1,${F.length})">← PREV</button><button class="btn-primary" ${cIdx>=F.length-1?'disabled':''} onclick="mv(1,${F.length})">NEXT →</button></div>`:'';
-        
-        cd.innerHTML=`<div class="q-header"><span class="q-number">Q ${ps} / ${F.length} (#${id})</span><div class="q-actions"><span style="font-size:0.8rem;color:var(--text-secondary);text-transform:uppercase">SEC ${sc}</span><button class="btn-ctrl ${ib?'active-filter':''}" onclick="tB(${id})">${ib?'🔖 SAVED':'🔖 SAVE'}</button></div></div><div class="q-text">${tx}</div><div class="options-list">${oH}</div>${fH}${nV}`;
+        cd.innerHTML=`<div class="q-header"><span class="q-number">Q ${ps} / ${F.length} (#${id})</span><div class="q-actions"><span style="font-size:0.8rem;color:var(--text-secondary);text-transform:uppercase">SEC ${sc}</span><button class="btn-ctrl ${ib?'active-filter':''}" onclick="tB(${id})">${ib?'🔖 SAVED':'🔖 SAVE'}</button></div></div><div class="q-text">${tx}</div><div class="options-list">${oH}</div>${confirmBtn}${fH}${nV}`;
         C.appendChild(cd);
     });
 }
 
+function askChatGPT(promptEncoded) {
+    const text = decodeURIComponent(promptEncoded);
+    navigator.clipboard.writeText(text).catch(err => console.log('Clipboard err'));
+    window.open('https://chatgpt.com/', '_blank');
+}
+
 function uSt(){
-    let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});
-    let d=c+w,p=Math.round((d/168)*100);document.getElementById('bmC').innerText=bI.length;document.getElementById('pF').style.width=p+'%';
-    if(qM==='exam'&&!eS){document.getElementById('p-c').style.display='none';document.getElementById('p-w').style.display='none';document.getElementById('l-p').innerText='DONE:';document.getElementById('s-p').innerText=`${d} / 168`}
-    else{document.getElementById('p-c').style.display='inline-flex';document.getElementById('p-w').style.display='inline-flex';document.getElementById('s-c').innerText=c;document.getElementById('s-w').innerText=w;document.getElementById('l-p').innerText='SCORE:';document.getElementById('s-p').innerText=(d>0?Math.round((c/d)*100):0)+'%'}
+    let c=0, w=0; Object.keys(uA).forEach(i=>{ let q=RQ.find(x=>x[0]==i); if(q){ uA[i]===q[4]?c++:w++; } });
+    let d=c+w, p=Math.round((d/168)*100);
+    document.getElementById('bm-count').innerText=bI.length; document.getElementById('pF').style.width=p+'%';
+    document.getElementById('p-c').style.display='inline-flex'; document.getElementById('p-w').style.display='inline-flex';
+    document.getElementById('s-c').innerText=c; document.getElementById('s-w').innerText=w;
+    document.getElementById('l-p').innerText='SCORE:'; document.getElementById('s-p').innerText=(d>0?Math.round((c/d)*100):0)+'%';
 }
 
-function fin(){
-    if(qM==='exam'&&!eS){eS=true;localStorage.setItem('f_cvs_e','true'); stopTimer();}
-    let c=0,w=0;Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q){uA[i]===q[4]?c++:w++}});
-    let d=c+w,u=168-d,p=Math.round((c/168)*100);
+function submitExam(){
+    let c=0, w=0; Object.keys(uA).forEach(i=>{ let q=RQ.find(x=>x[0]==i); if(q){ uA[i]===q[4]?c++:w++; }});
+    let d=c+w, u=168-d, p=Math.round((c/168)*100);
     document.getElementById('mS').innerText=`Answered ${d} out of 168`;
-    document.getElementById('mTime').innerText=`Time elapsed: ${document.getElementById('stopwatch').innerText}`;
-    document.getElementById('mP').innerText=p+'%';document.getElementById('mR').innerText=`${c} / 168`;
-    document.getElementById('mC').innerText=c;document.getElementById('mW').innerText=w;document.getElementById('mU').innerText=u;
+    document.getElementById('mTime').innerText=`Time spent: ${document.getElementById('stopwatch').innerText}`;
+    document.getElementById('mP').innerText=p+'%'; document.getElementById('mR').innerText=`${c} / 168`;
+    document.getElementById('mC').innerText=c; document.getElementById('mW').innerText=w; document.getElementById('mU').innerText=u;
     document.getElementById('sMd').classList.add('show');
-    let ok=p>=50;ply(ok);if(ok)fx(true);uSt();ren()
+    let ok = p>=50; ply(ok); if(ok) fx(true); uSt(); ren();
 }
 
-function cMd(){document.getElementById('sMd').classList.remove('show')}
-function mv(s,m){let n=cIdx+s;if(n>=0&&n<m){cIdx=n;ren();window.scrollTo({top:320,behavior:'smooth'})}}
-function rst(){
-    if(confirm('Are you sure you want to start over?')){
-        uA={};eS=false;localStorage.removeItem('f_cvs_a');localStorage.setItem('f_cvs_e','false');
-        timeElapsed=0; document.getElementById('stopwatch').innerText="00:00";
-        uSt();ren();window.scrollTo({top:0,behavior:'smooth'})
+function reviewMistakesOnly() {
+    if(mI.length === 0) { alert('You have no mistakes to review!'); return; }
+    sMO = true; sBO = false; sM = false; 
+    mI.forEach(id => { delete uA[id]; delete pA[id]; });
+    localStorage.setItem('f_cvs_a', JSON.stringify(uA));
+    closeModal(); uSt(); renderQuestions();
+    window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function shareScore() {
+    let c=0; Object.keys(uA).forEach(i=>{let q=RQ.find(x=>x[0]==i);if(q&&uA[i]===q[4])c++;});
+    let p=Math.round((c/168)*100);
+    let txt = `حصلت على نسبة ${p}% في أسئلة Histology of CVS 🫀\nكلية الطب جامعة الأزهر بالقاهرة - دفعة 62\nمستنيك تكسر الريكورد! 🔥`;
+    navigator.clipboard.writeText(txt).then(()=>{ alert('تم نسخ النتيجة! تقدر تشاركها على جروب الدفعة دلوقتي 🚀'); });
+}
+
+function closeModal(){ document.getElementById('sMd').classList.remove('show'); }
+function mv(s,m){ let n=cIdx+s; if(n>=0&&n<m){ cIdx=n; renderQuestions(); window.scrollTo({top:320,behavior:'smooth'}); } }
+
+function resetAll(){
+    if(confirm('Are you sure you want to start over and delete your progress?')){
+        uA={}; pA={}; mI=[];
+        localStorage.removeItem('f_cvs_a'); localStorage.removeItem('f_cvs_mst');
+        timeElapsed=0; localStorage.setItem('f_cvs_t', 0);
+        document.getElementById('stopwatch').innerText="00:00";
+        sMO = false; sBO = false; uSt(); renderQuestions(); window.scrollTo({top:0,behavior:'smooth'});
     }
 }
 
-window.onload=()=>{
-    startTimer(); // Timer runs globally now
-    uMB();uSt();ren();
+// Timer Logic
+let timerInt = null; let timeElapsed = parseInt(localStorage.getItem('f_cvs_t') || '0');
+function startTimer() {
+    clearInterval(timerInt);
+    timerInt = setInterval(() => {
+        timeElapsed++; localStorage.setItem('f_cvs_t', timeElapsed);
+        let m = Math.floor(timeElapsed / 60); let s = timeElapsed % 60;
+        document.getElementById('stopwatch').innerText = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }, 1000);
+}
+
+window.onload = () => {
+    let m = Math.floor(timeElapsed / 60); let s = timeElapsed % 60;
+    document.getElementById('stopwatch').innerText = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    startTimer(); uSt(); renderQuestions();
 };
 </script>
 </body>
