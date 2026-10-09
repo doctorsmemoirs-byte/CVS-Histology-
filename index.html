@@ -396,4 +396,482 @@ footer {
         <div class="filter-row">
             <select id="sectionSelect" class="select-box" onchange="onFilterChange()">
                 <option value="0">جميع أقسام الهستولوجي (168 سؤالاً)</option>
-                <option value="1">Section 1: Heart, Cardiac Muscle & Cardiomyocytes (1–51)</opti
+                <option value="1">Section 1: Heart, Cardiac Muscle & Cardiomyocytes (1–51)</option>
+                <option value="2">Section 2: Fibrous Skeleton & Heart Valves (52–68)</option>
+                <option value="3">Section 3: Blood Vessels — Arteries & Veins (69–131)</option>
+                <option value="4">Section 4: Histology of Vessels & Capillaries (132–140)</option>
+                <option value="5">Section 5: Peripheral Circulation & Lymphatics (141–168)</option>
+            </select>
+            <input type="search" id="searchInput" class="search-box" placeholder="🔍 ابحث عن أي سؤال أو مصطلح..." oninput="onFilterChange()" dir="ltr">
+        </div>
+    </section>
+
+    <div id="quiz-container"></div>
+</div>
+
+<div class="modal-backdrop" id="breakModal">
+    <div class="result-modal" style="max-width: 420px;">
+        <h2 style="color:var(--gold-bright); font-weight:900; margin-bottom:8px;">استراحة بطل! ☕</h2>
+        <p style="color:#CBD5E1; font-size:0.95rem; line-height:1.7;">
+            عاش جداً يا دكتور! قطعت شوطاً ممتازاً في الحل.. 
+            <br>
+            خد استراحة 5 دقايق، اعمل فنجان قهوة تركي محوج أو قهوة فرنساوي بالشوكولاتة، وارجع قفل باقي الموديول بتركيز!
+        </p>
+        <div class="modal-actions" style="margin-top:20px;">
+            <button class="btn-finish-top" style="padding:9px 24px;" onclick="closeBreakModal()">متابعة الحل بتركيز 🚀</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="scoreModal">
+    <div class="result-modal">
+        <h2 id="modalTitle" style="color:var(--gold-bright); font-weight:900;">نتيجة الاختبار 🏆</h2>
+        <p id="modalSubtitle" style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;"></p>
+
+        <div class="score-circle">
+            <b id="modalPerc">0%</b>
+            <span id="modalRatio">0 / 168</span>
+        </div>
+
+        <div class="result-grid">
+            <div class="res-box" style="border-color:var(--correct-border);">
+                <b id="modalCorrect" style="color:var(--correct-border);">0</b>
+                <span>صحيحة</span>
+            </div>
+            <div class="res-box" style="border-color:var(--wrong-border);">
+                <b id="modalWrong" style="color:var(--wrong-border);">0</b>
+                <span>خاطئة</span>
+            </div>
+            <div class="res-box">
+                <b id="modalUnanswered" style="color:var(--gold-bright);">0</b>
+                <span>لم تُجب عليها</span>
+            </div>
+        </div>
+
+        <div class="analytics-panel">
+            <h4>📊 رادار تحليل الأداء ونقاط القوة والضعف:</h4>
+            <div id="analyticsBars"></div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-finish-top" style="padding:10px 20px;" onclick="closeScoreModal()">مراجعة الإجابات 📖</button>
+            <button class="btn-ctrl" style="padding:10px 18px;" onclick="closeScoreModal(); resetQuiz();">بدء من جديد 🔄</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    تم إعداد وتطوير المنصة بواسطة <strong>د. فتحي أحمد رجب</strong> • كلية الطب بالقاهرة - جامعة الأزهر © 2026
+</footer>
+
+<script>
+const CORRECT_SOUND_FILES = ['correct1.mp4', 'correct2.mp4', 'correct3.mp4', 'correct4.mp4', 'correct5.mp4', 'correct6.mp4', 'correct7.mp4', 'correct8.mp4', 'correct9.mp4', 'correct10.mp4', 'correct1.mp3', 'correct2.mp3', 'correct3.mp3', 'correct4.mp3', 'correct5.mp3', 'correct6.mp3', 'correct7.mp3', 'correct8.mp3', 'correct9.mp3', 'correct10.mp3', 'correct.mp3'];
+const WRONG_SOUND_FILES = ['wrong1.mp4', 'wrong2.mp4', 'wrong3.mp4', 'wrong4.mp4', 'wrong5.mp4', 'wrong6.mp4', 'wrong7.mp4', 'wrong8.mp4', 'wrong9.mp4', 'wrong10.mp4', 'wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 'wrong6.mp3', 'wrong7.mp3', 'wrong8.mp3', 'wrong9.mp3', 'wrong10.mp3', 'wrong.mp3'];
+
+let loadedCorrectAudios = [], loadedWrongAudios = [];
+let correctPlayIndex = 0, wrongPlayIndex = 0;
+let currentPlayingAudio = null, isMuted = false;
+
+function preloadPlaylists() {
+    CORRECT_SOUND_FILES.forEach(f => { let a = new Audio(f); a.addEventListener('canplaythrough', () => { if(!loadedCorrectAudios.includes(a)) loadedCorrectAudios.push(a); }, {once:true}); });
+    WRONG_SOUND_FILES.forEach(f => { let a = new Audio(f); a.addEventListener('canplaythrough', () => { if(!loadedWrongAudios.includes(a)) loadedWrongAudios.push(a); }, {once:true}); });
+}
+preloadPlaylists();
+
+let synthCorrectStep = 0, synthWrongStep = 0;
+function playSynthTone(isCorrect) {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        if (isCorrect) {
+            const notes = [[523.25, 659.25, 783.99], [587.33, 739.99, 880.00]][synthCorrectStep % 2];
+            synthCorrectStep++; osc.type = 'sine';
+            notes.forEach((freq, i) => osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08));
+            gain.gain.setValueAtTime(0.18, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+            osc.start(); osc.stop(ctx.currentTime + 0.4);
+        } else {
+            const notes = [[220, 150], [190, 130]][synthWrongStep % 2];
+            synthWrongStep++; osc.type = 'sawtooth';
+            notes.forEach((freq, i) => osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12));
+            gain.gain.setValueAtTime(0.18, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+            osc.start(); osc.stop(ctx.currentTime + 0.35);
+        }
+    } catch (e) {}
+}
+
+function playFeedbackSound(isCorrect) {
+    if (isMuted) return;
+    if (currentPlayingAudio) { currentPlayingAudio.pause(); currentPlayingAudio.currentTime = 0; }
+    const pool = isCorrect ? loadedCorrectAudios : loadedWrongAudios;
+    if (pool.length > 0) {
+        let a = isCorrect ? pool[correctPlayIndex % pool.length] : pool[wrongPlayIndex % pool.length];
+        if (isCorrect) correctPlayIndex++; else wrongPlayIndex++;
+        currentPlayingAudio = a; a.currentTime = 0; a.play().catch(() => playSynthTone(isCorrect));
+    } else { playSynthTone(isCorrect); }
+}
+
+function toggleMute() { isMuted = !isMuted; if(isMuted && currentPlayingAudio) currentPlayingAudio.pause(); document.getElementById('muteBtn').innerText = isMuted ? '🔇' : '🔊'; }
+
+let fxTimer = null;
+function triggerScreenFX(isCorrect) {
+    const overlay = document.getElementById('fx-overlay'); overlay.innerHTML = ''; overlay.className = ''; void overlay.offsetWidth;
+    if (isCorrect) {
+        overlay.classList.add('flash-green');
+        const items = ['🎉', '✨', '🎊', '⭐', '💚', '✅'];
+        for (let i=0; i<36; i++) { let s = document.createElement('span'); s.className='fx-particle'; s.innerText=items[Math.floor(Math.random()*items.length)]; s.style.left=Math.random()*96+'vw'; s.style.fontSize=(18+Math.random()*18)+'px'; s.style.animationDuration=(1.1+Math.random()*1.1)+'s'; s.style.animationDelay=(Math.random()*0.25)+'s'; overlay.appendChild(s); }
+    } else {
+        overlay.classList.add('flash-red'); document.body.classList.add('shake-anim'); setTimeout(()=>document.body.classList.remove('shake-anim'), 450);
+        const items = ['❌', '✖️', '🚫', '❌'];
+        for (let i=0; i<32; i++) { let s = document.createElement('span'); s.className='fx-particle'; s.innerText=items[Math.floor(Math.random()*items.length)]; s.style.left=Math.random()*96+'vw'; s.style.fontSize=(20+Math.random()*20)+'px'; s.style.animationDuration=(1.0+Math.random()*1.0)+'s'; s.style.animationDelay=(Math.random()*0.2)+'s'; overlay.appendChild(s); }
+    }
+    clearTimeout(fxTimer); fxTimer = setTimeout(()=> {overlay.className=''; overlay.innerHTML='';}, 2200);
+}
+
+function initTheme() { applyTheme(localStorage.getItem('fathy_cvs_theme') || 'dark'); }
+function applyTheme(theme) { if (theme === 'light') { document.documentElement.setAttribute('data-theme', 'light'); document.getElementById('themeBtn').innerText = '🌙'; } else { document.documentElement.removeAttribute('data-theme'); document.getElementById('themeBtn').innerText = '☀️'; } }
+function toggleTheme() { const n = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; localStorage.setItem('fathy_cvs_theme', n); applyTheme(n); }
+initTheme();
+
+const specificExplanations = { 75: "Both the coronary artery and umbilical artery are described as 'special type' muscular arteries. This key follows the 'thick wall with well-developed IEL/EEL' description, which matches the coronary artery; the umbilical artery is instead characterized by a poorly-developed IEL (see Q78)." };
+const defaultRawQuestions=[
+[1,1,"As regards the histology of cardiac muscle, which of the following is TRUE?",["It can regenerate from satellite cells","It contains intermediate filaments only, with no other cytoskeletal proteins","It has numerous caveolae like smooth muscle","It is a multinucleated (syncytial) cell","It joins to adjacent cells by intercalated discs"],"E"],
+[2,1,"In a histological section of the heart wall, Purkinje fibers are located in the:",["Epicardium","Fibrous layer of parietal pericardium","Myocardium proper (mid-wall)","Serous layer of parietal pericardium","Subendocardium"],"E"],
+[3,1,"In a histological section of the heart wall, coronary vessels are typically found in the:",["Endocardium","Subendocardium","Myocardium only","Epicardium","Fibrous pericardium"],"D"],
+[4,1,"The pale staining of Purkinje fibers in H&E sections is mainly due to:",["Numerous glycogen deposits and few myofibrils","Numerous mitochondria with no glycogen","Well-developed lysosomes","Well-developed rough endoplasmic reticulum","Well-developed smooth endoplasmic reticulum"],"A"],
+[5,1,"All of the following are normally found in the moderator band EXCEPT:",["Purkinje fibers","Cardiac (contractile) muscle cells","Blood capillaries","Smooth muscle fibers","Connective tissue"],"D"],
+[6,1,"The main type of junction in the intercalated disc responsible for electrical coupling between cardiomyocytes (seen by EM) is the:",["Desmosome","Fascia adherens","Gap junction","Tight junction","Hemidesmosome"],"C"],
+[7,1,"The bundle of His (trunk of the AV bundle) mainly courses within the:",["Atrium","Ventricle (interventricular septum)","Heart valves","Aorta","Pulmonary trunk"],"B"],
+[8,1,"T tubules of the cardiac sarcomere are present at the level of the:",["I band","Z line","A band","A-I junction","I-H junction"],"B"],
+[9,1,"Purkinje fibers appear pale in H&E sections mainly because they contain:",["Numerous myofibrils and little glycogen","Few myofibrils, abundant glycogen, and numerous mitochondria","A thick basement membrane","Numerous secretory granules","Dense collagen bundles"],"B"],
+[10,1,"Which of the following statements about cardiac muscle is TRUE?",["It is spindle-shaped like smooth muscle","It is a multinucleated cell like skeletal muscle","Adjacent cells are joined by intercalated discs","It has numerous caveolae","It contains keratin intermediate filaments"],"C"],
+[11,1,"One of the following is NOT normally present in the moderator band:",["Purkinje fibers","Fat cells","Cardiac cells","Smooth muscle fibers","Blood capillaries"],"D"],
+[12,1,"Purkinje fibers are located in which layer of the heart wall?",["Myocardium (mid-thickness)","Epicardium","Subendocardium","Serous layer of parietal pericardium","Fibrous layer of parietal pericardium"],"C"],
+[13,1,"Cardiac Purkinje fibers are characterized by:",["Being absent from the moderator band","Being larger than ordinary ventricular cardiomyocytes","Containing numerous, densely packed myofibrils","Filtering toxins from the blood","Being heavily pigmented with lipofuscin"],"B"],
+[14,1,"Cardiac muscle fibers have all of the following features EXCEPT:",["One centrally located nucleus","Cross striations","Branching and anastomosing to form a network","Well-developed triads at the A-I junction","Glycogen granules at either pole of the nucleus"],"D"],
+[15,1,"One of the following statements about cardiac muscle fibers is INCORRECT:",["They form the myocardium of the heart wall","They are long-lived cells","They do not show cross striations","They contain many mitochondria","They contain diads instead of triads"],"C"],
+[16,1,"In the cardiac muscle sarcomere, T tubules are present at the level of the:",["I band","Z line","A band","A-I junction","I-H junction"],"B"],
+[17,1,"The endocardium is lined by:",["Simple cubical epithelium","Simple squamous epithelium","Stratified squamous epithelium","Simple columnar epithelium","Pseudostratified columnar epithelium"],"B"],
+[18,1,"One of the following statements about cardiac muscle fibers is WRONG:",["They show cross striations","They branch and anastomose","They are joined by intercalated discs","They contain many mitochondria","They have multiple, peripheral nuclei"],"E"],
+[19,1,"Regarding atrial natriuretic factor (ANF), only ONE statement is WRONG. Which is it?",["It is present mainly in the left atrium","It is stored in electron-dense granules","It is released by stretch of the atrial wall","It regulates blood pressure","It acts on the kidney, causing diuresis"],"A"],
+[20,1,"'Endothelium' refers to the epithelium lining the:",["Lung alveoli","The pleura","Bowman's capsule","The loop of Henle","Blood vessels and capillaries"],"E"],
+[21,1,"As regards the light microscopic (LM) appearance of cardiac muscle cells, one of the following is WRONG:",["They are cylindrical, branching, and anastomosing","They show deep basophilic granular sarcoplasm","They show markedly irregular, indistinct striations unlike any pattern seen elsewhere","They have a single, central, oval nucleus","A delicate endomysium surrounds each muscle fiber"],"C"],
+[22,1,"All the following characteristics of Purkinje fibers are TRUE EXCEPT one:",["They are larger in diameter than ordinary cardiac muscle fibers","They stain paler than cardiac muscle fibers","They occur in groups within the moderator band","Their main function is forceful contraction","They are rich in glycogen with few myofibrils"],"D"],
+[23,1,"One of the following statements about the epicardium is WRONG:",["It is the visceral layer of the pericardium","It is a type of serous membrane","It is formed of simple squamous mesothelium on subepithelial connective tissue","It contains branches of the coronary vessels","It contains Purkinje muscle fibers"],"E"],
+[24,1,"Adjacent cardiac muscle cells are connected mainly by:",["Tight junctions only","Desmosomes only","Intercalated discs","Gap junctions only","Microvilli"],"C"],
+[25,1,"The main function of Purkinje fibers is to:",["Produce collagen","Conduct cardiac impulses rapidly","Form the heart valves","Store fat","Produce blood cells"],"B"],
+[26,1,"In a histological photograph, a wavy transverse line crossing cardiac muscle fibers at irregular intervals (the intercalated disc) is best described by which statement?",["It is present at the A-I junction","It bisects the A band","It connects adjacent cardiac muscle cells","It contains keratin intermediate filaments","It is only seen in Purkinje fibers"],"C"],
+[27,1,"The three layers of the heart wall, from innermost to outermost, are arranged as:",["Myocardium - Endocardium - Epicardium","Endocardium - Myocardium - Epicardium","Epicardium - Myocardium - Endocardium","Endocardium - Epicardium - Myocardium","Pericardium - Myocardium - Endocardium"],"B"],
+[28,1,"The subendocardium is functionally significant mainly because it contains:",["Coronary vessels","Adipose tissue","Branches of the cardiac conducting system (e.g., Purkinje fibers)","Mesothelium","Vasa vasorum"],"C"],
+[29,1,"Which layer of the heart wall is the thickest?",["Endocardium","Myocardium","Epicardium","Subendocardium","Parietal pericardium"],"B"],
+[30,1,"The perimysium of cardiac muscle is best described as:",["A network of reticular fibers surrounding each individual fiber","Highly vascularized connective tissue (collagen & elastic fibers) between bundles of fibers","A layer found only in Purkinje fibers","Absent in cardiac muscle","Composed purely of smooth muscle"],"B"],
+[31,1,"The endomysium of cardiac muscle consists mainly of:",["Thick collagen bundles with numerous fibroblasts","A network of reticular fibers surrounding each individual muscle fiber","Elastic lamellae","Adipose tissue","Fenestrated membranes"],"B"],
+[32,1,"Cardiac muscle fibers differ from skeletal muscle fibers in that they typically show:",["Peripheral multiple nuclei","Fainter cross striations, as myofibrils are not perfectly in register due to branching","Complete absence of striations","No connective tissue coverings at all","A true syncytium with no cell boundaries whatsoever"],"B"],
+[33,1,"The nucleus of a typical (contractile) cardiomyocyte is best described as:",["Multiple, peripheral, flattened","Single, central, oval","Single, peripheral, elongated","Absent (the cell is anucleate)","Multiple, central, round"],"B"],
+[34,1,"Around the nuclear poles of a cardiomyocyte, the myofibrils diverge, leaving sarcoplasm that contains all of the following EXCEPT:",["Numerous mitochondria","Glycogen granules","Lipofuscin pigment","A myelin sheath","Golgi apparatus and other organelles"],"D"],
+[35,1,"Compared to skeletal muscle T tubules, cardiac muscle T tubules are:",["Smaller and fewer, located at the A-I junction","Larger and more numerous, located at the Z line","Completely absent","Located at the H band","Found only in Purkinje fibers"],"B"],
+[36,1,"The main function of T tubules in cardiac muscle is:",["Storage of glycogen","Excitation-contraction coupling and increasing surface area for metabolite exchange","Cell-to-cell adhesion","Formation of the fibrous skeleton","Rapid electrical coupling between adjacent cells"],"B"],
+[37,1,"Unlike skeletal muscle, the sarcoplasmic reticulum of cardiac muscle:",["Forms well-developed triads with continuous terminal cisternae","Is less organized, forming diads with T tubules instead of triads","Is completely absent","Surrounds only the nucleus","Contains no calcium at all"],"B"],
+[38,1,"The transverse portion of the intercalated disc is structurally formed mainly of:",["Gap junctions only","Fascia adherens (zonula adherens) and macula adherens (desmosomes attached to desmin)","Tight junctions only","Hemidesmosomes","Occluding junctions"],"B"],
+[39,1,"The longitudinal portion of the intercalated disc is characterized mainly by:",["High-stress fascia adherens","Numerous gap junctions allowing rapid spread of excitation","Desmosomes only","Absence of any junctions","Location strictly at the level of the Z line"],"B"],
+[40,1,"Which portion of the intercalated disc bears most of the mechanical stress during contraction?",["The transverse portion","The longitudinal portion","Both portions equally","Neither; stress is borne entirely by the sarcolemma","The T tubules"],"A"],
+[41,1,"Contractile cardiomyocytes form the majority of the myocardium in:",["Only the atria","Only the ventricles","Both the atria and the ventricles","Only the conducting system","Only the epicardium"],"C"],
+[42,1,"Endocrine cardiomyocytes are located mainly in:",["The ventricles","The atria, especially the right atrium","The epicardium","The AV node exclusively","The interventricular septum"],"B"],
+[43,1,"Compared with contractile cardiomyocytes, endocrine cardiomyocytes are characterized by:",["More myofibrils and fewer secretory granules","Fewer myofibrils and numerous electron-dense secretory granules containing atrial natriuretic factor","Complete absence of a nucleus","Larger diameter with binucleation","Especially well-developed typical intercalated discs"],"B"],
+[44,1,"Nodal cells of the cardiac conducting system are found in all of the following sites EXCEPT the:",["Sinoatrial node","Atrioventricular node","Trunk of the bundle of His","Ventricular myocardium (as Purkinje fibers)","None of the above - all are correct sites for nodal cells"],"D"],
+[45,1,"Compared to the surrounding atrial muscle fibers, nodal cells are:",["Larger, with more myofibrils","Smaller, with fewer myofibrils, and lacking typical intercalated discs","Binucleated and rich in glycogen, identical to Purkinje fibers","Structurally identical to contractile cardiomyocytes","Found only in the ventricles"],"B"],
+[46,1,"Compared to contractile cardiomyocytes, Purkinje fibers transmit cardiac impulses at a rate that is approximately:",["The same speed","About half the speed","About 4-5 times faster","About 100 times slower","They do not conduct impulses at all"],"C"],
+[47,1,"Which cell type of the conducting system is typically larger than ventricular muscle fibers and often binucleated?",["Nodal cells","Purkinje fibers","Endocrine cardiomyocytes","Ordinary contractile cardiomyocytes","Fibroblasts of the endocardium"],"B"],
+[48,1,"The large glycogen content of Purkinje fibers makes them:",["More susceptible to hypoxic injury than contractile cardiomyocytes","More resistant to hypoxia than contractile cardiomyocytes","Unable to conduct electrical impulses","Similar to skeletal muscle in their staining pattern","Deficient in mitochondria"],"B"],
+[49,1,"Regarding growth and regeneration of cardiac muscle, which statement is TRUE?",["Cardiac muscle fibers regenerate readily via satellite cells","Cardiac muscle fibers are a static cell population, lack satellite cells, and cannot regenerate","Injured cardiac fibers are replaced by new cardiomyocytes","Cardiac hypertrophy never occurs in adult life","Cardiomyocytes divide actively by mitosis throughout adult life"],"B"],
+[50,1,"Injured cardiac muscle fibers are typically replaced by:",["New cardiomyocytes derived from satellite cells","Fibrous (scar) connective tissue","Smooth muscle","Adipose tissue","Newly formed Purkinje fibers"],"B"],
+[51,1,"Increased functional demand on the heart (e.g., chronic hypertension) typically produces which adaptive change in the myocardium?",["Hyperplasia (increase in cell number)","Compensatory hypertrophy (increase in cell size)","Atrophy","Regeneration from circulating stem cells","Metaplasia into skeletal muscle"],"B"],
+[52,2,"The functional components of the heart include all of the following EXCEPT:",["Cardiac muscle","Coronary vessels","A conducting system","A fibrous skeleton","Cartilage rings"],"E"],
+[53,2,"The four fibrous rings of the cardiac skeleton encircle the base of all of the following EXCEPT the:",["Aorta","Pulmonary trunk","Right atrioventricular orifice","Left atrioventricular orifice","Superior vena cava"],"E"],
+[54,2,"The histological structure of the fibrous rings of the heart is best described as:",["Loose areolar connective tissue","Dense irregular connective tissue","Hyaline cartilage","Elastic cartilage","Adipose tissue"],"B"],
+[55,2,"The main function of the fibrous rings of the heart is to:",["Conduct the cardiac electrical impulse","Provide an attachment site for the cusps of the four heart valves","Nourish the myocardium","Form the moderator band","Secrete atrial natriuretic factor"],"B"],
+[56,2,"The two fibrous trigones of the heart:",["Are composed of hyaline cartilage","Connect the fibrous rings and represent a thickening of the fibrous skeleton","Contain abundant cardiac muscle fibers","Form the sinoatrial node","Are part of the epicardium"],"B"],
+[57,2,"The membranous part of the interventricular and interatrial septa is characterized by:",["Abundant cardiac muscle fibers","Dense connective tissue devoid of cardiac muscle, containing a short length of the A-V bundle","Being the site of the sinoatrial node","Simple squamous epithelium only, with no connective tissue","Numerous elastic lamellae as in the aorta"],"B"],
+[58,2,"Which of the following is NOT a function of the fibrous skeleton of the heart?",["Support of the heart","Attachment site for cardiac muscle","Conduction of electrical impulses between atria and ventricles","Acting as an electrical insulator between the atria and ventricles","Anchoring the cusps of the valves"],"C"],
+[59,2,"The fibrous skeleton acting as an 'electrical insulator' means that it:",["Speeds up conduction between the atria and ventricles","Prevents free flow of electrical impulses between the atria and ventricles, except through the AV bundle","Generates the cardiac impulse","Is highly vascular tissue","Contains numerous Purkinje fibers"],"B"],
+[60,2,"Each heart valve cusp (leaflet) is composed of how many histological layers?",["Two layers: fibrosa and ventricularis only","Three layers: fibrosa, spongiosa, and ventricularis","Four layers, including a distinct endocardial lining separate from the ventricularis","A single layer of dense connective tissue","Two layers: spongiosa and myocardium"],"B"],
+[61,2,"The layer of the heart valve that forms its core and provides major load-bearing/mechanical integrity is the:",["Fibrosa","Spongiosa","Ventricularis","Endothelium","Chordae tendineae"],"A"],
+[62,2,"The fibrosa of a heart valve is structurally continuous with the:",["Papillary muscles","Dense irregular connective tissue of the fibrous rings","Moderator band","Subendocardium only","Myocardium"],"B"],
+[63,2,"The spongiosa layer of a heart valve is best described as:",["The core of the valve, bearing the major mechanical load","Dense irregular connective tissue continuous with the fibrous rings","Loose connective tissue located on the atrial/arterial side, acting as a shock absorber","A layer that continues into the chordae tendineae","A layer entirely absent from the atrioventricular valves"],"C"],
+[64,2,"The function of the spongiosa layer of a heart valve is to:",["Bear the major mechanical load of the cusp","Absorb shock and reduce the strength of vibrations associated with valve closure","Attach the valve to the papillary muscles","Conduct cardiac impulses","Supply the valve with blood"],"B"],
+[65,2,"The ventricularis layer of a heart valve is characterized by:",["Location on the atrial side of the valve","Dense connective tissue rich in elastic fibers, adjacent to the ventricular surface, covered by endothelium","Composition of loose connective tissue only","Complete absence of any covering epithelium","Being absent in the semilunar valves"],"B"],
+[66,2,"In atrioventricular valves, the ventricularis layer continues into the:",["Fibrous rings","Chordae tendineae","Moderator band","Coronary sinus","Bundle of His"],"B"],
+[67,2,"Chordae tendineae are best described as:",["Muscular projections from the ventricular wall","Fibrous cords covered by endothelium, extending from the valve's free edges to the papillary muscles","Part of the fibrous trigone","Layers of the epicardium","Nodal tissue of the conducting system"],"B"],
+[68,2,"Papillary muscles are best described as:",["Fibrous cords connecting valve cusps to the chordae tendineae","Muscular projections from the ventricular wall to which the chordae tendineae attach","Part of the fibrous skeleton","Structures located only in the atria","A type of nodal cell"],"B"],
+[69,3,"Fenestrated capillaries with a diaphragm are typically present in the:",["Muscles and brain","Connective tissue","Exocrine glands","Renal glomeruli","Stratified epithelial tissue"],"D"],
+[70,3,"The aorta and inferior vena cava are both lined by which type of epithelium?",["Simple cuboidal epithelium","Simple squamous epithelium (endothelium)","Stratified squamous epithelium","Simple columnar epithelium","Transitional epithelium"],"B"],
+[71,3,"Which of the following vessels shows longitudinally arranged smooth muscle in its tunica adventitia?",["Arterioles","Capillaries","Large veins (e.g., inferior vena cava)","Basilar artery","Metarterioles"],"C"],
+[72,3,"Which of the following vessels has the highest amount of elastic fibers in its tunica media?",["Descending aorta","Inferior vena cava","Pulmonary vein","Superior vena cava","Thoracic duct"],"A"],
+[73,3,"Well-developed internal and external elastic laminae are most characteristic of:",["Collecting venules","Medium-sized arteries","Medium-sized veins","Metarterioles","Post-capillary venules"],"B"],
+[74,3,"Which of the following is a medium-sized artery with well-developed internal and external elastic laminae?",["Blood sinusoid","Coronary artery","Metarteriole","Thoracic duct","Ulnar vein"],"B"],
+[75,3,"Which of the following muscular arteries is typically described as having a thick wall with well-developed internal and external elastic laminae?",["Coronary artery","Umbilical artery","Great saphenous vein","Superior vena cava","Thoracic duct"],"A"],
+[76,3,"The thickest tunic in the wall of a typical vein is the:",["Tunica intima","Tunica media","Tunica adventitia","Internal elastic lamina","External elastic lamina"],"C"],
+[77,3,"A pluripotential (stem) cell found around post-capillary venules is the:",["Fibroblast","Macrophage","Pericyte","Mast cell","Plasma cell"],"C"],
+[78,3,"A medium-sized artery characterized by mucoid connective tissue in its adventitia and a poorly developed internal elastic lamina is the:",["Coronary artery","Umbilical artery","Radial artery","Basilar artery","Femoral artery"],"B"],
+[79,3,"Regarding the tunica adventitia of the inferior vena cava, which of the following statements is INCORRECT?",["It forms about 70% of the wall thickness","It contains longitudinally arranged smooth muscle fibers","It contains numerous vasa vasorum","It has NO vasa vasorum at all","It is composed of dense fibroelastic connective tissue"],"D"],
+[80,3,"The vessel with an incomplete smooth muscle coat that regulates blood flow into the capillary bed is the:",["Arteriole","Metarteriole","Venule","Muscular artery","Elastic artery"],"B"],
+[81,3,"According to standard histology teaching, the diameter of a typical blood capillary is approximately:",["40 mm","40 µm","7-9 µm","20 nm","100 µm"],"C"],
+[82,3,"Blood capillaries are lined by:",["Simple cuboidal epithelium","Simple squamous epithelium","Stratified squamous epithelium","Simple columnar epithelium","Pseudostratified columnar epithelium"],"B"],
+[83,3,"A well-developed internal elastic lamina is characteristic of which of the following vessels?",["Medium-sized veins","Inferior vena cava","Superior vena cava","Basilar artery","Umbilical artery"],"D"],
+[84,3,"Medium-sized veins are best characterized by:",["A thick tunica media","A relatively thick tunica adventitia","A well-developed internal elastic lamina","A well-developed external elastic lamina","Complete absence of vasa vasorum"],"B"],
+[85,3,"Vasa vasorum are best described as vessels that are:",["Found in the tunica adventitia of small arteries only","Found in the tunica intima of large arteries","Found in the tunica adventitia of large vessels, nourishing the outer wall","A type of small lymphatic vessel","Present to nourish cells of the tunica intima directly"],"C"],
+[86,3,"Which of the following vessels contains longitudinally arranged smooth muscle within its tunica adventitia?",["Basilar artery","Renal vein","Superior vena cava","Inferior vena cava","Arch of the aorta"],"D"],
+[87,3,"The aorta is classified histologically as a(n):",["Elastic artery","Muscular artery","Arteriole","Metarteriole","Distributing artery"],"A"],
+[88,3,"A prominent internal elastic lamina is most clearly seen in:",["Inferior vena cava","Arterioles","Aorta","Muscular (medium-sized) arteries","Medium-sized veins"],"D"],
+[89,3,"Which of the following is TRUE regarding the arteriole?",["It has a very prominent, thick internal elastic lamina at all calibers","It is about 4-5 millimeters in diameter","Its wall always contains numerous vasa vasorum","It has a relatively thick wall compared to its narrow lumen, and no external elastic lamina","It has multiple valves"],"D"],
+[90,3,"Brain capillary endothelial cells are attached to each other mainly by:",["Desmosomes","Fascia occludens (a variant term sometimes used loosely for gap junctions)","Gap junctions","Zonula adherens","Zonula occludens (tight junctions)"],"E"],
+[91,3,"A well-developed internal elastic lamina is characteristically seen in the:",["Basilar artery","Inferior vena cava","Medium-sized veins","Superior vena cava","Umbilical artery"],"A"],
+[92,3,"Which of the following best describes vasa vasorum?",["Blood sinusoids","A named coronary artery","Lymphatic capillaries","Metarterioles","Small vessels in the adventitia of large vessels that nourish the outer vessel wall"],"E"],
+[93,3,"In acute inflammation, the major site of vascular leakage (increased permeability) is the:",["Blood sinusoid","Collecting venule","Metarteriole","Muscular venule","Post-capillary venule"],"E"],
+[94,3,"Only ONE statement about the cerebral (basilar) artery is TRUE. Which is it?",["It has longitudinal smooth muscle fibers in its adventitia","It has a well-developed internal elastic lamina","Its tunica media is especially rich in elastic fibers","Its lumen contains many valves","Its adventitia is formed of mucoid connective tissue"],"B"],
+[95,3,"The smallest blood vessels in the circulatory system are the:",["Arteries","Veins","Capillaries","Arterioles","Venules"],"C"],
+[96,3,"In a photomicrograph of a medium-sized artery, structure '1' (a wavy, refractile band at the intima-media junction) and structure '2' (a thinner wavy band at the media-adventitia junction) are best identified as:",["Structure 1 = internal elastic lamina (intima/media junction); Structure 2 = external elastic lamina (media/adventitia junction), consistent with a medium-sized artery","Structure 1 and 2 are both valves, consistent with a medium-sized vein","Structure 1 = external elastic lamina; Structure 2 = internal elastic lamina","Structure 1 and 2 are both absent in this vessel type","Structure 1 = vasa vasorum; Structure 2 = nervi vasorum"],"A"],
+[97,3,"The wall of a typical blood vessel (excluding capillaries) is composed, from lumen outward, of which sequence of tunics?",["Adventitia - Media - Intima","Intima - Media - Adventitia","Media - Intima - Adventitia","Adventitia - Intima - Media","Intima - Adventitia - Media"],"B"],
+[98,3,"The tunica intima of a blood vessel is composed of:",["Smooth muscle and elastic fibers only","Endothelium plus subendothelial connective tissue (± internal elastic lamina)","Dense irregular connective tissue with vasa vasorum","Mesothelium and adipose tissue","Cardiac muscle fibers"],"B"],
+[99,3,"Endothelial cells of the tunica intima are joined together mainly by:",["Desmosomes","Gap junctions only","Occluding (tight) junctions","Hemidesmosomes","Fascia adherens"],"C"],
+[100,3,"The internal elastic lamina is formed by condensation of elastic fibers within the:",["Tunica media","Tunica adventitia","Subendothelial connective tissue of the tunica intima","Basement membrane of the endothelium","Vasa vasorum"],"C"],
+[101,3,"The internal elastic lamina is fenestrated in order to:",["Allow blood cells to cross directly into the media","Allow diffusion of nutrients to nourish the deeper vessel wall","Anchor smooth muscle cells to the intima","Provide additional elasticity to the media","Help form the external elastic lamina"],"B"],
+[102,3,"The tunica media of a blood vessel typically contains all of the following EXCEPT:",["Concentric, spirally arranged smooth muscle fibers","Elastic fibers","Collagen fibers","Extracellular matrix of proteoglycans","A continuous layer of mesothelium"],"E"],
+[103,3,"The fibers and extracellular matrix of the tunica media are produced mainly by:",["Fibroblasts","Endothelial cells","Smooth muscle cells","Pericytes","Macrophages"],"C"],
+[104,3,"The tunica adventitia of a blood vessel typically contains all of the following EXCEPT:",["Fibroelastic tissue with longitudinally arranged collagen and elastic fibers","Fibroblasts","Vasa vasorum","Nervi vasorum (vasomotor autonomic nerves)","A continuous endothelial lining"],"E"],
+[105,3,"Arteries are classified according to size into which three types?",["Elastic, muscular, and capillary","Large (elastic/conducting), medium-sized (muscular/distributing), and arterioles","Large, small, and sinusoidal","Continuous, fenestrated, and sinusoidal","Coronary, pulmonary, and systemic"],"B"],
+[106,3,"In large elastic (conducting) arteries such as the aorta, the tunica intima forms approximately what percentage of the wall?",["10%","30%","50%","70%","90%"],"A"],
+[107,3,"In large elastic arteries, the tunica media forms approximately 70% of the wall and consists mainly of:",["Smooth muscle only","Fenestrated elastic lamellae, with number/thickness related to blood pressure and age","Collagen fibers only","Mesothelium","Reticular fibers"],"B"],
+[108,3,"In large elastic arteries, the internal and external elastic laminae are:",["Completely absent","Extremely thick and easily distinguished from surrounding tissue","Present but NOT prominent, since they blend with the elastic membranes of the media","Found only in the adventitia","Only seen in arterioles"],"C"],
+[109,3,"In large elastic arteries, vasa vasorum in the tunica adventitia are:",["Absent, since the wall is thin","Few in number","Numerous, because the thick wall cannot be nourished by diffusion from the lumen alone","Restricted to the tunica intima","Replaced entirely by lymphatic capillaries"],"C"],
+[110,3,"Medium-sized (muscular/distributing) arteries include all of the following EXCEPT the:",["Femoral artery","Radial artery","Coronary artery","Aorta","Most other named arteries"],"D"],
+[111,3,"In medium-sized muscular arteries, the prominent internal elastic lamina often appears thrown into folds. This is mainly due to:",["Fenestration by macrophages","Post-mortem contraction of smooth muscle fibers in the tunica media","Excess collagen deposition","The presence of valves","Compression by vasa vasorum"],"B"],
+[112,3,"In medium-sized muscular arteries, the tunica media forms approximately what percentage of the wall?",["10%","30%","50%","70%","90%"],"C"],
+[113,3,"Regarding vasa vasorum in medium-sized arteries, which statement is correct?",["They are completely absent","They are few, since the thinner wall can be partly nourished by diffusion","They are more numerous than in any large vessel","They are found only in veins","They replace the entire tunica adventitia"],"B"],
+[114,3,"Regarding the coronary artery as a special type of artery, which statement is TRUE?",["Its tunica media is thinner than muscular arteries of the same size","Its tunica media is thicker than muscular arteries of the same size","Its tunica intima never shows musculo-elastic thickening","Its adventitia has a low collagen-to-elastic fiber ratio","It is classified histologically as an elastic artery"],"B"],
+[115,3,"The high collagen-to-elastic fiber ratio in the adventitia of the coronary artery reflects:",["Low tensile strength and high stretchability","High tensile strength and relatively low stretchability","The presence of valves","A fenestrated wall structure","Complete absence of vasa vasorum"],"B"],
+[116,3,"Musculo-elastic thickenings normally seen in the tunica intima of the coronary artery may contribute to the development of:",["Varicose veins","Atherosclerosis","Lymphedema","Aneurysm of the aorta only","Deep vein thrombosis"],"B"],
+[117,3,"The main function of arterioles is to:",["Conduct blood at high pressure over long distances","Control peripheral resistance and regulate blood flow into the capillaries","Store large volumes of blood","Produce atrial natriuretic factor","Drain lymph back to the venous system"],"B"],
+[118,3,"The tunica media of an arteriole is formed of:",["Multiple concentric layers of smooth muscle with prominent elastic lamellae","One to two layers of smooth muscle fibers","Dense irregular connective tissue only","Cardiac muscle fibers","Fenestrated endothelium"],"B"],
+[119,3,"Which statement about the arteriole is TRUE?",["It has a well-developed external elastic lamina","It has a relatively thick wall compared to its narrow lumen, and no external elastic lamina","Its adventitia is the thickest layer of its wall","Its internal elastic lamina becomes more prominent as the vessel narrows","It contains valves like a medium-sized vein"],"B"],
+[120,3,"Comparing large arteries and large veins, which statement is TRUE?",["Veins have a thicker tunica media than arteries","Veins have a thinner intima, a relatively thinner media (~30%), and a thicker relative adventitia (~70%) compared to arteries","Arteries have valves while veins do not","Veins have prominent internal and external elastic laminae while arteries do not","Arteries have a wide, collapsed lumen compared to veins"],"B"],
+[121,3,"Regarding the tunica intima of large veins (e.g., venae cavae, subclavian, portal veins), which is TRUE?",["It has a well-developed internal elastic lamina","It is thin, with NO internal elastic lamina","It contains numerous valves","It shows fenestrated elastic lamellae","It contains cardiac muscle fibers"],"B"],
+[122,3,"The tunica media of large veins forms approximately what percentage of the wall, and is composed mainly of:",["70%; fenestrated elastic lamellae","30%; concentric smooth muscle layers with collagen fibers, and no external elastic lamina","50%; cardiac muscle","10%; endothelium only","90%; adipose tissue"],"B"],
+[123,3,"Near their entry into the heart, the venae cavae and pulmonary trunk show which unique adventitial feature?",["A thick internal elastic lamina","Extensions of atrial cardiac muscle fibers into the adventitia","Complete absence of vasa vasorum","A layer of hyaline cartilage","Numerous lymphatic valves"],"B"],
+[124,3,"The circular and longitudinal arrangement of smooth muscle in the wall of large veins mainly functions to:",["Prevent any blood flow at rest","Provide a peristaltic pumping action helping propel blood toward the heart","Store oxygen for the myocardium","Filter the blood before it reaches the heart","Generate the cardiac impulse"],"B"],
+[125,3,"Medium-sized veins differ from medium-sized arteries in that they typically have:",["A narrower, circular, empty lumen","A wider, collapsed lumen that may contain RBCs, and the presence of valves","A well-developed internal and external elastic lamina","An overall thicker wall","Fewer vasa vasorum"],"B"],
+[126,3,"Valves in medium-sized veins are:",["Absent everywhere in the body","Abundant, especially in veins of the upper and lower limbs, preventing backflow of blood","Found only in arteries","Composed of cardiac muscle tissue","Present only in the venae cavae"],"B"],
+[127,3,"Vasa vasorum are especially numerous in medium-sized veins mainly because:",["The vessel wall is extremely thin and needs no nutrition","Luminal blood in veins has low oxygen content and fewer nutrients, requiring a dedicated blood supply to the wall","Veins have no tunica media","Veins are under very high pressure","Veins lack an adventitia"],"B"],
+[128,3,"The great saphenous vein, as a special type of vein, is characterized by:",["A thin media with minimal smooth muscle","An unusually thick smooth-muscle media plus numerous longitudinal smooth muscle fibers in both the subendothelium and the adventitia","Complete absence of an internal elastic lamina","Being a deep vein with a very short course","A thick internal elastic lamina, as in a muscular artery"],"B"],
+[129,3,"Clinically, the great saphenous vein is important because it is commonly used as a graft in which surgical procedure?",["Renal transplantation","Coronary artery bypass graft (CABG) surgery","Corneal transplantation","Liver transplantation","Hip replacement surgery"],"B"],
+[130,3,"Varicose veins typically result from:",["Excess smooth muscle in the tunica media","Incompetent (damaged) valves in superficial veins, allowing blood to pool and the vein to dilate","Fenestration of the endothelium","A congenital absence of the tunica adventitia","Excess elastic fibers in the vessel wall"],"B"],
+[131,3,"Comparing the tunica adventitia of large arteries and large veins, which statement is correct?",["Large arteries have a thicker (≈70%) adventitia than veins","Large veins have a thicker (≈70%) adventitia relative to their thinner (≈30%) media, while in large arteries the adventitia (≈20%) is thinner than the media (≈70%)","Neither vessel type has a true adventitia","Only veins possess vasa vasorum","Only arteries have longitudinal smooth muscle in the adventitia"],"B"],
+[132,4,"The general histological structure of the wall of a blood vessel (excluding capillaries) is best summarized as:",["A single layer of endothelium with no connective tissue","Three tunics: intima (endothelium + subendothelial CT ± internal elastic lamina), media (smooth muscle, elastic & collagen fibers ± external elastic lamina), and adventitia (connective tissue, vasa vasorum & nerves in large vessels)","Cardiac muscle surrounded by a serosa","Two tunics only: intima and adventitia","A basal lamina surrounded by pericytes only"],"B"],
+[133,4,"The key histological difference between elastic arteries and muscular arteries in the tunica media is that:",["Elastic arteries have many elastic lamellae plus smooth muscle (to withstand pressure and maintain flow), while muscular arteries are mostly smooth muscle with fewer elastic fibers (to distribute blood by regulating diameter)","Muscular arteries have more elastic lamellae than elastic arteries","Elastic arteries lack smooth muscle entirely","Muscular arteries have a media composed only of collagen","There is no meaningful histological difference between them"],"A"],
+[134,4,"Besides overall wall thickness, which additional histological difference distinguishes arteries from veins?",["Arteries have a wide, irregular lumen and lack valves; veins have a narrow, round lumen with valves","Arteries have a narrow, round lumen and lack valves; veins have a wide, irregular lumen and possess valves (in medium-sized veins)","Arteries always contain valves while veins never do","Veins have thicker tunica media than arteries","Arteries lack an adventitia while veins do not"],"B"],
+[135,4,"The diameter of a typical blood capillary is approximately:",["100 µm, enough to allow several RBCs to pass side by side","7-9 µm (also cited as up to 9-12 µm), enough for a single RBC to pass at a time","1 mm","1 nm","500 µm"],"B"],
+[136,4,"Which type of capillary is found in the liver, spleen, and bone marrow?",["Continuous capillaries","Fenestrated capillaries","Sinusoidal (discontinuous) capillaries","Lymphatic capillaries","Metarterioles"],"C"],
+[137,4,"Two important functions of pericytes are:",["Phagocytosis and antigen presentation","Contractile regulation of capillary blood flow, and acting as stem cells that can differentiate into smooth muscle cells or fibroblasts","Hormone secretion and lipid storage","Formation of the basal lamina of epithelium","Producing atrial natriuretic factor"],"B"],
+[138,4,"The principal site of leukocyte transmigration during inflammation, lined by endothelium and surrounding pericytes, is the:",["Muscular venule","Post-capillary venule","Metarteriole","Elastic artery","Lymphatic capillary"],"B"],
+[139,4,"Muscular venules differ from post-capillary venules mainly in that muscular venules:",["Lack any endothelial lining","Possess 1-2 layers of smooth muscle in the tunica media","Are the principal site of leukocyte migration","Have a diameter of only 15-30 µm","Contain cardiac muscle in their wall"],"B"],
+[140,4,"The key histological feature distinguishing lymphatic vessels from veins is that lymphatic vessels:",["Have thicker walls and fewer valves","Have thinner walls, more numerous valves, a discontinuous basal lamina, and most importantly lack red blood cells","Always contain a well-developed tunica media","Have no endothelial lining","Contain smooth muscle identical in amount to arteries"],"B"],
+[141,5,"Peripheral circulation is best defined as:",["The blood supply to the heart itself","The connection between arteries and veins, including capillaries and arteriovenous (A-V) shunts","The lymphatic drainage of the lower limbs only","The coronary circulation exclusively","The pulmonary circulation"],"B"],
+[142,5,"Capillaries make up approximately what percentage of total body vasculature?",["10%","25%","50%","90%","100%"],"D"],
+[143,5,"In a capillary, the endothelial basal lamina is split to enclose which cell type?",["Macrophage","Fibroblast","Pericyte","Mast cell","Plasma cell"],"C"],
+[144,5,"Continuous capillaries (muscular type) are characterized by all of the following EXCEPT:",["No fenestrations in the wall","A continuous basal lamina","Occluding junctions with overlapping marginal folds between endothelial cells","Numerous pinocytotic vesicles","Large fenestrations closed by a diaphragm"],"E"],
+[145,5,"Continuous capillaries contribute to the formation of which of the following barriers?",["Blood-brain barrier, blood-air barrier, and blood-thymus barrier","Blood-liver barrier only","Blood-bone marrow barrier","Blood-spleen barrier","None; continuous capillaries do not form barriers"],"A"],
+[146,5,"The most common type of capillary in the body — found in muscle, lung, skin, and nervous tissue — is the:",["Fenestrated capillary","Sinusoidal capillary","Continuous (muscular type) capillary","Lymphatic capillary","Metarteriole"],"C"],
+[147,5,"Fenestrated capillaries (visceral type) differ from continuous capillaries mainly in that they:",["Have a discontinuous basal lamina","Have numerous fenestrations in the endothelial cells, closed by a thin non-membranous diaphragm derived from the glycocalyx","Lack a basal lamina entirely","Are lined by macrophages instead of endothelial cells","Are found only in the central nervous system"],"B"],
+[148,5,"Fenestrated capillaries are typically found in:",["Skeletal muscle and skin only","Endocrine glands (secretion), the small intestine (absorption), and renal glomeruli","The liver and spleen only","The brain exclusively","The myocardium"],"B"],
+[149,5,"Sinusoidal capillaries (sinusoids) are characterized by all of the following EXCEPT:",["A large diameter (30-40 µm)","An irregular outline","Large fenestrations without diaphragms and wide intercellular gaps","A discontinuous basal lamina supported by reticular fibers","A regular, narrow, circular lumen"],"E"],
+[150,5,"Macrophages are commonly associated with which type of capillary?",["Continuous capillaries","Fenestrated capillaries","Sinusoidal capillaries","Lymphatic capillaries","Metarterioles"],"C"],
+[151,5,"Which type of capillary allows maximal exchange, including movement of whole cells, between blood and tissue?",["Continuous capillaries","Fenestrated capillaries","Sinusoidal capillaries","Lymphatic capillaries","Muscular venules"],"C"],
+[152,5,"An arteriovenous (A-V) anastomosis/shunt is best defined as:",["A capillary bed with an unusually wide lumen","A direct connection between an arteriole and a venule that bypasses the capillary bed","A connection between two arterioles","A type of lymphatic valve","A fenestrated capillary found in the skin"],"B"],
+[153,5,"The arteriolar side of an A-V shunt is characterized by:",["A very thin wall with no smooth muscle","A relatively thick smooth muscle layer and rich autonomic innervation","Complete absence of nerve supply","A wide, fenestrated endothelium","The presence of valves"],"B"],
+[154,5,"Contraction of the smooth muscle at the arteriolar side of an A-V shunt will:",["Close the shunt and direct blood into the capillary bed","Open the shunt and bypass the capillary bed","Have no effect on regional blood flow","Cause vasodilation of the capillary bed","Completely stop blood flow to the region"],"A"],
+[155,5,"Relaxation of the arteriolar smooth muscle of an A-V shunt will:",["Close the shunt","Open the shunt, sending a considerable volume of blood directly into the venule and bypassing the capillary bed","Constrict the capillary bed","Increase capillary exchange","Have no functional effect"],"B"],
+[156,5,"A-V shunts are typically found in all of the following sites EXCEPT:",["Skin of the palm and sole","Nose and lips","Erectile tissue of the penis","Myocardium of the left ventricle","None — all listed sites (A-C) are correct"],"D"],
+[157,5,"When a person is hot, sympathetic nerve fibers acting on cutaneous A-V shunts will:",["Open the shunts, conserving heat","Close the shunts, forcing blood through superficial capillaries to radiate heat","Have no effect on the shunts","Cause the shunts to become fenestrated","Convert the shunts into lymphatic vessels"],"B"],
+[158,5,"When a person is cold, sensory nerve fibers acting on cutaneous A-V shunts will:",["Close the shunts, forcing blood through capillaries to lose heat","Open the shunts, bypassing superficial capillaries to conserve heat","Have no effect on the shunts","Increase capillary fenestration","Increase lymphatic drainage"],"B"],
+[159,5,"The lymphatic system is best defined as:",["A system that supplies oxygenated blood to peripheral tissues","A drainage system that collects excess interstitial fluid (as lymph) and returns it to the blood","The system responsible for cardiac conduction","A system exclusively for transporting red blood cells","The arterial supply to lymphoid organs only"],"B"],
+[160,5,"Lymph is composed mainly of:",["Red blood cells and platelets","Protein-rich fluid removed from the intercellular spaces, and lipids too large to cross intestinal capillary fenestrations","Pure water with no protein or lipid content","Bile and digestive enzymes","Glycogen granules"],"B"],
+[161,5,"The protein and lipid components of lymph cannot be reabsorbed directly by the venous side of the blood circulation mainly because of their:",["Negative charge","Large molecular size","High temperature","Acidic pH","Low solubility in water"],"B"],
+[162,5,"Lymphatic capillaries are structurally characterized by all of the following EXCEPT:",["Blind-ended channels","Irregular shape","An incomplete (discontinuous) basal lamina","Anchoring filaments binding to surrounding connective tissue","A continuous basal lamina identical to that of blood capillaries"],"E"],
+[163,5,"The function of the anchoring filaments of lymphatic capillaries is to:",["Propel lymph forward by contraction","Keep the intercellular openings patent, especially when interstitial pressure rises, allowing fluid entry","Attach the capillary to the venous system directly","Prevent any fluid from entering the capillary","Form the valves of the lymphatic capillary"],"B"],
+[164,5,"Which cell type is associated with continuous and fenestrated capillaries (and post-capillary venules), as opposed to macrophages which are associated with sinusoids?",["Fibroblasts","Pericytes","Mast cells","Plasma cells","Adipocytes"],"B"],
+[165,5,"Regarding large lymphatic vessels compared to veins, which statement is TRUE?",["They are thicker-walled than veins","They resemble veins (having valves for unidirectional flow) but have thinner walls without a clear separation into intima, media, and adventitia","They completely lack valves","They contain as much smooth muscle as arteries","They carry RBCs, just like veins"],"B"],
+[166,5,"Large lymphatic vessels ultimately converge to form which two main channels that empty lymph back into the blood?",["The superior and inferior venae cavae","The thoracic duct and the right lymphatic duct","The hepatic portal vein and splenic vein","The pulmonary trunk and aorta","The coronary sinus and azygos vein"],"B"],
+[167,5,"Regarding the connections of lymphatic capillaries compared to blood capillaries, which is TRUE?",["Both are open at both ends, connecting to arterioles and venules","Lymphatic capillaries are blind-ended, connecting only to larger lymphatic vessels, while blood capillaries are open at both ends (connecting to arterioles and venules)","Blood capillaries are blind-ended while lymphatic capillaries are open at both ends","Neither type of capillary has any connections to larger vessels","Both types are blind-ended"],"B"],
+[168,5,"A structure described as 'resting on an incomplete basal lamina, lined by endothelial cells, and forming a blind-ended irregular channel with anchoring filaments' is best identified as a:",["Fenestrated blood capillary","Sinusoidal capillary","Lymphatic capillary","Muscular venule","Metarteriole"],"C"]
+];
+
+let rawQuestions = JSON.parse(JSON.stringify(defaultRawQuestions));
+const sectionNames = { 1:"Section 1: Heart & Cardiomyocytes", 2:"Section 2: Fibrous Skeleton & Valves", 3:"Section 3: Blood Vessels", 4:"Section 4: Histology of Vessels", 5:"Section 5: Peripheral Circulation" };
+
+let quizMode = localStorage.getItem('fathy_cvs_mode') || 'training';
+let examSubmitted = JSON.parse(localStorage.getItem('fathy_cvs_exam_sub') || 'false');
+let userAnswers = {};
+try { userAnswers = JSON.parse(localStorage.getItem('fathy_cvs_histo_ans') || '{}'); } catch(e) {}
+let bookmarkedIds = JSON.parse(localStorage.getItem('fathy_cvs_bookmarks') || '[]');
+let showBookmarksOnly = false, showMistakesOnly = false, singleMode = false, currentIdx = 0;
+
+let examTimeSeconds = 168 * 60, timerInterval = null;
+function startExamTimer() {
+    clearInterval(timerInterval); document.getElementById('timerPill').style.display = 'inline-block';
+    timerInterval = setInterval(() => {
+        if (examTimeSeconds <= 0) { clearInterval(timerInterval); finishAndShowScore(); alert('انتهى وقت الاختبار!'); return; }
+        examTimeSeconds--; const m = Math.floor(examTimeSeconds/60), s = examTimeSeconds%60;
+        document.getElementById('timerDisplay').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }, 1000);
+}
+function stopExamTimer() { clearInterval(timerInterval); document.getElementById('timerPill').style.display = 'none'; }
+
+function switchQuizMode(mode) {
+    if (quizMode === mode) return;
+    quizMode = mode; localStorage.setItem('fathy_cvs_mode', mode);
+    if (mode === 'training') { examSubmitted = false; localStorage.setItem('fathy_cvs_exam_sub', 'false'); stopExamTimer(); }
+    else { if (!examSubmitted) startExamTimer(); }
+    updateModeButtons(); updateStats(); renderQuestions();
+}
+function updateModeButtons() { document.getElementById('btnModeTrain').classList.toggle('active', quizMode==='training'); document.getElementById('btnModeExam').classList.toggle('active', quizMode==='exam'); }
+
+function shuffleCurrentQuestions() {
+    for (let i = rawQuestions.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [rawQuestions[i], rawQuestions[j]] = [rawQuestions[j], rawQuestions[i]]; }
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+    rawQuestions.forEach(q => {
+        const origCorrect = q[3][letters.indexOf(q[4])];
+        for (let i = q[3].length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [q[3][i], q[3][j]] = [q[3][j], q[3][i]]; }
+        q[4] = letters[q[3].indexOf(origCorrect)];
+    });
+    currentIdx = 0; renderQuestions(); alert('تم خلط الأسئلة 🔀');
+}
+
+let lastBreakCount = 0;
+function checkMilestoneBreak(sc) { if (quizMode === 'training' && (sc === 50 || sc === 100) && sc > lastBreakCount) { lastBreakCount = sc; document.getElementById('breakModal').classList.add('show'); } }
+function closeBreakModal() { document.getElementById('breakModal').classList.remove('show'); }
+
+function toggleBookmark(id) { const idx = bookmarkedIds.indexOf(id); if (idx===-1) bookmarkedIds.push(id); else bookmarkedIds.splice(idx,1); localStorage.setItem('fathy_cvs_bookmarks', JSON.stringify(bookmarkedIds)); updateStats(); renderQuestions(); }
+function toggleBookmarkFilter() { showBookmarksOnly = !showBookmarksOnly; showMistakesOnly = false; currentIdx = 0; document.getElementById('bookmarkFilterBtn').classList.toggle('active-filter', showBookmarksOnly); document.getElementById('mistakesFilterBtn').classList.remove('active-filter'); renderQuestions(); }
+function toggleMistakesFilter() { showMistakesOnly = !showMistakesOnly; showBookmarksOnly = false; currentIdx = 0; document.getElementById('mistakesFilterBtn').classList.toggle('active-filter', showMistakesOnly); document.getElementById('bookmarkFilterBtn').classList.remove('active-filter'); renderQuestions(); }
+function toggleViewMode() { singleMode = !singleMode; currentIdx = 0; document.getElementById('viewModeBtn').innerText = singleMode ? 'عرض الكل' : 'سؤال بسؤال'; renderQuestions(); }
+function onFilterChange() { currentIdx = 0; renderQuestions(); }
+
+function getFiltered() {
+    const sec = parseInt(document.getElementById('sectionSelect').value, 10);
+    const qStr = document.getElementById('searchInput').value.toLowerCase().trim();
+    return rawQuestions.filter(q => {
+        const mSec = sec === 0 || q[1] === sec;
+        const mSearch = !qStr || q[2].toLowerCase().includes(qStr) || q[3].some(o => o.toLowerCase().includes(qStr));
+        const mBm = !showBookmarksOnly || bookmarkedIds.includes(q[0]);
+        const mMst = !showMistakesOnly || (userAnswers[q[0]] && userAnswers[q[0]] !== q[4]);
+        return mSec && mSearch && mBm && mMst;
+    });
+}
+
+function selectAnswer(id, letter) {
+    if (quizMode === 'training') {
+        if (userAnswers[id]) return;
+        userAnswers[id] = letter; localStorage.setItem('fathy_cvs_histo_ans', JSON.stringify(userAnswers));
+        const isOk = (letter === rawQuestions.find(x=>x[0]===id)[4]);
+        playFeedbackSound(isOk); triggerScreenFX(isOk); updateStats(); renderQuestions();
+        const cnt = Object.keys(userAnswers).length; checkMilestoneBreak(cnt);
+        if (cnt === rawQuestions.length) setTimeout(() => finishAndShowScore(), 900);
+    } else {
+        if (examSubmitted) return;
+        userAnswers[id] = letter; localStorage.setItem('fathy_cvs_histo_ans', JSON.stringify(userAnswers));
+        updateStats(); renderQuestions();
+    }
+}
+
+function generateAnalyticsHTML() {
+    const st = { 1:{n:'Heart',t:0,c:0}, 2:{n:'Skeleton & Valves',t:0,c:0}, 3:{n:'Arteries & Veins',t:0,c:0}, 4:{n:'Capillaries',t:0,c:0}, 5:{n:'Peripheral & Lymph',t:0,c:0} };
+    rawQuestions.forEach(q => { st[q[1]].t++; if(userAnswers[q[0]] === q[4]) st[q[1]].c++; });
+    let html = '';
+    Object.keys(st).forEach(s => {
+        const i = st[s], p = i.t>0 ? Math.round((i.c/i.t)*100) : 0;
+        let c = p>=75 ? '#10B981' : (p>=50 ? '#E5C158' : '#EF4444');
+        html += `<div class="sec-bar-item"><div class="sec-bar-label"><span>${i.n}</span><span style="color:${c};">${i.c}/${i.t} (${p}%)</span></div><div class="sec-bar-track"><div class="sec-bar-fill" style="width:${p}%; background:${c};"></div></div></div>`;
+    }); return html;
+}
+
+function finishAndShowScore() {
+    if (quizMode === 'exam') { examSubmitted = true; localStorage.setItem('fathy_cvs_exam_sub', 'true'); stopExamTimer(); }
+    let c = 0, w = 0;
+    Object.keys(userAnswers).forEach(id => { const q = rawQuestions.find(x=>x[0]==id); if(q) { if(userAnswers[id]===q[4]) c++; else w++; } });
+    const tot = rawQuestions.length, ans = c+w, p = tot>0 ? Math.round((c/tot)*100) : 0;
+    document.getElementById('modalTitle').innerText = quizMode==='exam' ? 'نتيجة الاختبار 🏆' : 'النتيجة النهائية 🏆';
+    document.getElementById('modalSubtitle').innerText = `أجبت على ${ans} من ${tot}`;
+    document.getElementById('modalPerc').innerText = p+'%'; document.getElementById('modalRatio').innerText = `${c} / ${tot}`;
+    document.getElementById('modalCorrect').innerText = c; document.getElementById('modalWrong').innerText = w; document.getElementById('modalUnanswered').innerText = tot-ans;
+    document.getElementById('analyticsBars').innerHTML = generateAnalyticsHTML();
+    document.getElementById('scoreModal').classList.add('show');
+    playFeedbackSound(p>=50); if(p>=50) triggerScreenFX(true);
+    updateStats(); renderQuestions();
+}
+
+function closeScoreModal() { document.getElementById('scoreModal').classList.remove('show'); }
+function moveSingle(s, max) { const n = currentIdx+s; if(n>=0 && n<max) { currentIdx=n; renderQuestions(); window.scrollTo({top:320, behavior:'smooth'}); } }
+
+function toggleScratchpad(id) {
+    const c = document.getElementById(`scratch-${id}`), t = document.getElementById(`toolbar-${id}`);
+    const act = c.classList.toggle('active'); t.classList.toggle('active', act);
+    if(act && !c.dataset.init) { setupScratchCanvas(c); c.dataset.init = 'true'; }
+}
+function clearScratchpad(id) { const c = document.getElementById(`scratch-${id}`); c.getContext('2d').clearRect(0,0,c.width,c.height); }
+function setupScratchCanvas(c) {
+    const ctx = c.getContext('2d'); c.width = c.parentElement.offsetWidth; c.height = c.parentElement.offsetHeight; let d = false;
+    const getPos = e => { const r = c.getBoundingClientRect(), x = e.touches ? e.touches[0].clientX : e.clientX, y = e.touches ? e.touches[0].clientY : e.clientY; return {x: x-r.left, y: y-r.top}; };
+    const start = e => { d=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.strokeStyle='#F4D068'; ctx.lineWidth=2.5; ctx.lineCap='round'; };
+    const draw = e => { if(!d)return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); };
+    c.addEventListener('mousedown', start); c.addEventListener('mousemove', draw); c.addEventListener('mouseup', ()=>d=false);
+    c.addEventListener('touchstart', e=>{e.preventDefault(); start(e);}); c.addEventListener('touchmove', e=>{e.preventDefault(); draw(e);}); c.addEventListener('touchend', ()=>d=false);
+}
+
+function renderQuestions() {
+    const cont = document.getElementById('quiz-container'); cont.innerHTML = '';
+    const letters = ['A','B','C','D','E'], filt = getFiltered();
+    if(filt.length===0) { cont.innerHTML = `<div class="q-card" style="text-align:center;">لا توجد أسئلة.</div>`; return; }
+    const list = singleMode ? [filt[currentIdx]] : filt;
+    const rev = (quizMode==='training') || (quizMode==='exam' && examSubmitted);
+
+    list.forEach((q, idx) => {
+        const [id, sec, text, opts, ans] = q, ch = userAnswers[id], isBm = bookmarkedIds.includes(id), pos = singleMode ? (currentIdx+1) : (idx+1);
+        const card = document.createElement('div'); card.className = 'q-card'+(isBm?' bookmarked-card':'');
+        
+        let oHTML = '';
+        opts.forEach((ot, i) => {
+            const l = letters[i]; let c = 'option-btn', t = '', dis = false;
+            if(rev && ch) { dis=true; if(l===ans) { c+=' correct'; t=`<span class="status-tag" style="color:var(--correct-border)">✔ Correct</span>`; } else if(l===ch) { c+=' wrong'; t=`<span class="status-tag" style="color:var(--wrong-border)">✖ Wrong</span>`; } }
+            else if(quizMode==='exam' && examSubmitted && !ch) { dis=true; if(l===ans) { c+=' correct'; t=`<span class="status-tag" style="color:var(--correct-border)">✔ Key</span>`; } }
+            else if(quizMode==='exam' && !examSubmitted && ch===l) { c+=' exam-selected'; t=`<span class="status-tag" style="color:var(--gold-bright)">تم الاختيار</span>`; }
+            oHTML += `<button class="${c}" ${dis?'disabled':''} onclick="selectAnswer(${id}, '${l}')"><span class="opt-char">${l}</span><span style="flex:1;">${ot}</span>${t}</button>`;
+        });
+
+        const fb = (rev && (ch || examSubmitted)) ? `<div class="feedback-panel ${ch===ans?'is-correct':'is-wrong'}"><div style="font-weight:700; color:${ch===ans?'var(--correct-border)':'var(--wrong-border)'}; margin-bottom:4px;">${ch===ans?`✔ إجابة صحيحة (${ans})`: (ch?`✖ إجابتك (${ch}) خاطئة — الصحيحة (${ans})`:`⚠️ لم تُجب — الصحيحة (${ans})`)}</div><div><strong>Key:</strong> (${ans}) ${opts[letters.indexOf(ans)]}</div>${specificExplanations[id]?`<div style="margin-top:8px; font-size:0.86rem; color:var(--text-secondary);">💡 <strong>Note:</strong> ${specificExplanations[id]}</div>`:''}</div>` : '';
+        const nv = singleMode ? `<div class="single-nav"><button class="btn-nav" ${currentIdx===0?'disabled':''} onclick="moveSingle(-1, ${filt.length})">← السابق</button><button class="btn-nav" ${currentIdx>=filt.length-1?'disabled':''} onclick="moveSingle(1, ${filt.length})">التالي →</button></div>` : '';
+
+        card.innerHTML = `<canvas id="scratch-${id}" class="scratchpad-canvas"></canvas><div id="toolbar-${id}" class="scratchpad-toolbar"><button class="btn-card-action" onclick="clearScratchpad(${id})">🧹 مسح</button><button class="btn-card-action" onclick="toggleScratchpad(${id})">✕</button></div><div class="q-header"><span class="q-badge">Q ${pos} of ${filt.length} (#${id})</span><div class="q-header-right"><span class="q-sec-label">${sectionNames[sec]}</span><button class="btn-card-action" onclick="toggleScratchpad(${id})">✍️ مسودة</button><button class="btn-card-action ${isBm?'active':''}" onclick="toggleBookmark(${id})">🔖</button></div></div><div class="q-stem">${text}</div><div class="options-list">${oHTML}</div>${fb}${nv}`;
+        cont.appendChild(card);
+    });
+}
+
+function updateStats() {
+    let c=0, w=0; Object.keys(userAnswers).forEach(id=>{ const q=rawQuestions.find(x=>x[0]==id); if(q){ if(userAnswers[id]===q[4]) c++; else w++; } });
+    document.getElementById('bm-count').innerText = bookmarkedIds.length; document.getElementById('mst-count').innerText = w;
+    document.getElementById('progressFill').style.width = Math.round(((c+w)/rawQuestions.length)*100)+'%';
+    if(quizMode==='exam' && !examSubmitted) { document.getElementById('pill-correct').style.display='none'; document.getElementById('pill-wrong').style.display='none'; document.getElementById('lbl-perc').innerText='تم حل:'; document.getElementById('st-perc').innerText=`${c+w}/168`; }
+    else { document.getElementById('pill-correct').style.display='inline-block'; document.getElementById('pill-wrong').style.display='inline-block'; document.getElementById('st-correct').innerText=c; document.getElementById('st-wrong').innerText=w; document.getElementById('lbl-perc').innerText='النسبة:'; document.getElementById('st-perc').innerText=((c+w)>0?Math.round((c/(c+w))*100):0)+'%'; }
+}
+
+window.addEventListener('keydown', e => {
+    if(['input','textarea','select'].includes(document.activeElement.tagName.toLowerCase())) return;
+    const f=getFiltered(); if(f.length===0) return;
+    const k=e.key.toUpperCase();
+    if(['A','B','C','D','E'].includes(k)) selectAnswer(singleMode?f[currentIdx][0]:f[0][0], k);
+    else if(singleMode && (e.key==='ArrowRight'||e.key==='ArrowLeft')) { if(e.key==='ArrowRight') moveSingle(1,f.length); if(e.key==='ArrowLeft') moveSingle(-1,f.length); }
+});
+
+window.onload = function() { updateModeButtons(); if(quizMode==='exam'&&!examSubmitted) startExamTimer(); updateStats(); renderQuestions(); };
+</script>
+</body>
+</html>
