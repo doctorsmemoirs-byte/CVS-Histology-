@@ -257,14 +257,13 @@ function startTimer() {
 function stopTimer() { clearInterval(timerInt); }
 
 // --- Audio Setup ---
-const CA=['correct1.mp4','correct2.mp4','correct3.mp4','correct4.mp4','correct5.mp4','correct1.mp3','correct2.mp3','correct.mp3'];
-const WA=['wrong1.mp4','wrong2.mp4','wrong3.mp4','wrong4.mp4','wrong5.mp4','wrong1.mp3','wrong2.mp3','wrong.mp3'];
+const CA=['correct1.mp3','correct2.mp3','correct3.mp3','correct4.mp3','correct5.mp3','correct6.mp3','correct7.mp3','correct9.mp3'];
+const WA=['wrong1.mp3','wrong2.mp3','wrong3.mp3','wrong4.mp3','wrong5.mp3','wrong6.mp3','wrong7.mp3','wrong8.mp3'];
 let lC=[],lW=[],cI=0,wI=0,cp=null,mut=false;
 CA.forEach(f=>{let a=new Audio(f);a.addEventListener('canplaythrough',()=>lC.push(a),{once:true});a.src=f});
 WA.forEach(f=>{let a=new Audio(f);a.addEventListener('canplaythrough',()=>lW.push(a),{once:true});a.src=f});
 function ply(ok){if(mut)return;if(cp)cp.pause();let p=ok?lC:lW;if(p.length>0){let a=ok?p[cI%p.length]:p[wI%p.length];if(ok)cI++;else wI++;cp=a;a.currentTime=0;a.play().catch(()=>{})}}
 function tM(){mut=!mut;if(mut&&cp)cp.pause();document.getElementById('mtB').innerText=mut?'🔇':'🔊'}
-
 // --- Theme Setup ---
 function applyTheme(theme) { if(theme==='light'){document.documentElement.setAttribute('data-theme', 'light');}else{document.documentElement.removeAttribute('data-theme');} }
 function toggleTheme() { const n = document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'; localStorage.setItem('f_cvs_th', n); applyTheme(n); }
