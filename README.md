@@ -19,7 +19,6 @@ Created specifically to help first-year medical students, particularly at Al-Azh
 ## 👨‍⚕️ Author
 **Fathy Ahmed Ragab (د. فتحي أحمد رجب)**
 - Medical Student at Al-Azhar University, Cairo.
-- Creator of **medmemo** educational content.
 
 ---
 *Good luck with your studies!*
